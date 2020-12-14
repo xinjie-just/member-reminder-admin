@@ -28,7 +28,7 @@ Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
 
 ## 快速入门
 
-- [如何开始使用？](https://github.com/PanJiaChen/vue-admin-template)。
+- [如何开始使用？](https://panjiachen.github.io/vue-element-admin-site/zh/)。
 
 ### 启动项目
 
@@ -41,5 +41,3 @@ Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
 ### 打包部署上线
 
 1. `npm run build:prod` 生成 dist 包，拷贝 dist 到服务器
-
-2. 或者通过 docker 镜像，`cd docker`, `sh build.sh` 在 docker-compose.yml 中挂载镜像
