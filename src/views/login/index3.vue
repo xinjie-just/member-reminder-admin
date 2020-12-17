@@ -9,19 +9,18 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">Login Form</h3>
       </div>
 
-      <el-form-item prop="phone">
+      <el-form-item prop="username">
         <span class="svg-container">
-          <!-- <i class="el-icon-mobile-phone"></i> -->
-          <svg-icon icon-class="phone" />
+          <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="phone"
-          v-model="loginForm.phone"
-          placeholder="请输入手机号"
-          name="phone"
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="Username"
+          name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -37,7 +36,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="请输入密码"
+          placeholder="Password"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -53,46 +52,48 @@
       <el-button
         :loading="loading"
         type="primary"
-        class="login-btn"
+        style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
         >Login</el-button
       >
 
-      <!-- <div class="tips">
-        <span style="margin-right:20px;">phone: admin</span>
+      <div class="tips">
+        <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
-      </div> -->
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-// import { validUsername } from "@/utils/validate";
+import { validUsername } from "@/utils/validate";
 
 export default {
   name: "Login",
   data() {
-    const validatePhone = (rule, value, callback) => {
-      if (value.length < 1) {
-        callback(new Error("手机号不能为空"));
+    const validateUsername = (rule, value, callback) => {
+      if (!value.length < 1) {
+        callback(new Error("Please enter the correct user name"));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 1) {
-        callback(new Error("密码不能为空"));
+        callback(new Error("The password can not be less than 6 digits"));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        phone: "15982280388",
+        username: "15982280388",
         password: "280388"
       },
       loginRules: {
-        phone: [{ required: true, trigger: "blur", validator: validatePhone }],
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername }
+        ],
         password: [
           { required: true, trigger: "blur", validator: validatePassword }
         ]
@@ -122,23 +123,23 @@ export default {
       });
     },
     handleLogin() {
-      // this.$refs.loginForm.validate(valid => {
-      // if (valid) {
-      this.loading = true;
-      this.$store
-        .dispatch("user/login", this.loginForm)
-        .then(() => {
-          this.$router.push({ path: this.redirect || "/" });
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-      // } else {
-      //   console.log("error submit!!");
-      //   return false;
-      // }
-      // });
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
   }
 };
@@ -192,7 +193,8 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #e41e35;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-container {
@@ -224,7 +226,7 @@ $light_gray: #eee;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: #fff;
+    color: $dark_gray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -247,16 +249,9 @@ $light_gray: #eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: #fff;
+    color: $dark_gray;
     cursor: pointer;
     user-select: none;
-  }
-  .login-btn {
-    width: 100%;
-    margin-bottom: 30px;
-    background-color: #fff;
-    border-color: #fff;
-    color: #e41e35;
   }
 }
 </style>

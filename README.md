@@ -36,7 +36,7 @@ Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
 
 2. `npm run dev` 已开发模式启动项目
 
-3. 账号：admin，密码：admin
+3. 账号：15982280388，密码：280388
 
 ### 打包部署上线
 
