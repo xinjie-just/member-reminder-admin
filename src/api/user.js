@@ -1,6 +1,7 @@
 import request from "@/utils/request";
 
 export function login(data) {
+  console.log("loginData", data);
   return request({
     url: "/api/user/phoneLogin",
     method: "post",
@@ -18,7 +19,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: "/vue-admin-template/user/logout",
-    method: "post"
+    url: "/api/user/logout",
+    method: "get"
   });
 }
