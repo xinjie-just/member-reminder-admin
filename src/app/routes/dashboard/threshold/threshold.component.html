@@ -1,0 +1,53 @@
+<div>
+  <nz-card>
+    <div class="card-head">阈值管理</div>
+  </nz-card>
+  <nz-card>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="6" [nzFor]="'FAQThreshold'" nzRequired>FAQ阈值</nz-form-label>
+        <nz-form-control [nzSm]="10" [nzXs]="14" [nzErrorTip]="FAQThresholdErrorTpl">
+          <input class="hidden" formControlName="FAQThresholdId" />
+          <input nz-input formControlName="FAQThreshold" required id="FAQThreshold" placeHolder="请输入FAQ阈值" />
+          <ng-template #FAQThresholdErrorTpl let-FAQThreshold>
+            <ng-container *ngIf="FAQThreshold.hasError('required')">
+              FAQ阈值是必填项!
+            </ng-container>
+            <ng-container *ngIf="FAQThreshold.hasError('pattern')">
+              FAQ阈值必须是正数!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+        <!-- <a nz-button nzType="link"><i nz-icon nzType="check" nzTheme="outline"></i></a> -->
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="6" [nzFor]="'ReadThreshold'" nzRequired>阅读理解阈值</nz-form-label>
+        <nz-form-control [nzSm]="10" [nzXs]="14" [nzErrorTip]="ReadThresholdErrorTpl">
+          <input class="hidden" formControlName="ReadThresholdId" />
+          <input
+            nz-input
+            formControlName="ReadThreshold"
+            required
+            id="ReadThreshold"
+            placeHolder="请输入阅读理解阈值"
+          />
+          <ng-template #ReadThresholdErrorTpl let-ReadThreshold>
+            <ng-container *ngIf="ReadThreshold.hasError('required')">
+              阅读理解阈值是必填项!
+            </ng-container>
+            <ng-container *ngIf="ReadThreshold.hasError('pattern')">
+              阅读理解阈值必须是正数!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row>
+        <div nz-col [nzSm]="{ span: 10, offset: 4 }" [nzXs]="{ span: 14, offset: 6 }">
+          <button nz-button [nzType]="'primary'" type="submit" [disabled]="!form.valid">
+            确认
+          </button>
+        </div>
+      </div>
+    </form>
+  </nz-card>
+</div>

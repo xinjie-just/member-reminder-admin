@@ -1,0 +1,19 @@
+<div>
+  <nz-card>
+    <div class="card-head">答案生成管理</div>
+  </nz-card>
+  <nz-card>
+    <nz-form-item>
+      <nz-form-label [nzSm]="4" [nzMd]="3" nzFor="answer">启用答案转换</nz-form-label>
+      <nz-form-control [nzSm]="4" [nzMd]="3">
+        <nz-switch
+          [ngModel]="switchValue"
+          [nzLoading]="loading"
+          [nzCheckedChildren]="'启用'"
+          [nzUnCheckedChildren]="'停用'"
+          (ngModelChange)="onChange($event)"
+        ></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-card>
+</div>

@@ -1,0 +1,105 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'modelName'" nzRequired>模型名称</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" required id="modelName" placeholder="请输入模型名称" />
+      <ng-template #nameErrorTpl let-name>
+        <ng-container *ngIf="name.hasError('required')">
+          模型名称是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'type'" nzRequired>模型类型</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="typeErrorTpl">
+      <nz-select id="type" formControlName="type" nzPlaceHolder="请选择一个模型类型">
+        <ng-container *ngFor="let model of completedModels">
+          <nz-option [nzValue]="model.model_id" [nzLabel]="model.title"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #typeErrorTpl let-type>
+        <ng-container *ngIf="type.hasError('required')">
+          模型类型是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <h4>参数设置</h4>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="9" [nzFor]="'epoch'" nzRequired>epoch</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="15" [nzErrorTip]="epochErrorTpl">
+      <input nz-input formControlName="epoch" required id="epoch" placeHolder="请输入epoch(数据集训练次数)参数" />
+      <ng-template #epochErrorTpl let-epoch>
+        <ng-container *ngIf="epoch.hasError('required')">
+          epoch参数是必填项!
+        </ng-container>
+        <ng-container *ngIf="epoch.hasError('pattern')">
+          epoch参数必须是正整数!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="9" [nzFor]="'learningRate'" nzRequired>learning_rate</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="15" [nzErrorTip]="learningRateErrorTpl">
+      <input
+        nz-input
+        formControlName="learningRate"
+        required
+        id="learningRate"
+        placeHolder="请输入learning_rate(学习率)参数"
+      />
+      <ng-template #learningRateErrorTpl let-learningRate>
+        <ng-container *ngIf="learningRate.hasError('required')">
+          learning_rate参数是必填项!
+        </ng-container>
+        <ng-container *ngIf="learningRate.hasError('pattern')">
+          learning_rate参数必须是非负数的数字!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="9" [nzFor]="'batchSize'" nzRequired>batch_size</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="15" [nzErrorTip]="batchSizeErrorTpl">
+      <input nz-input formControlName="batchSize" required id="batchSize" placeHolder="请输入batch_size(批大小)参数" />
+      <ng-template #batchSizeErrorTpl let-batchSize>
+        <ng-container *ngIf="batchSize.hasError('required')">
+          batch_size参数是必填项!
+        </ng-container>
+        <ng-container *ngIf="batchSize.hasError('pattern')">
+          batch_size参数必须是正整数!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="10" [nzFor]="'batchAccumulation'" nzRequired>batch_accumulation</nz-form-label>
+    <nz-form-control [nzSm]="16" [nzXs]="14" [nzErrorTip]="batchAccumulationErrorTpl">
+      <input
+        nz-input
+        formControlName="batchAccumulation"
+        required
+        id="batchAccumulation"
+        placeHolder="请输入batch_accumulation(批次的累积数量)参数"
+      />
+      <ng-template #batchAccumulationErrorTpl let-batchAccumulation>
+        <ng-container *ngIf="batchAccumulation.hasError('required')">
+          batch_accumulation参数是必填项!
+        </ng-container>
+        <ng-container *ngIf="batchAccumulation.hasError('pattern')">
+          batch_accumulation参数必须是正整数!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="text-right">
+    <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
+      取消
+    </button>
+    <button nz-button [nzType]="'primary'" [disabled]="!form.valid" type="submit" [nzLoading]="uploading">
+      确认
+    </button>
+  </div>
+</form>

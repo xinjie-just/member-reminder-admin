@@ -1,0 +1,39 @@
+:host {
+  ::ng-deep {
+    .question-type-form-item {
+      margin-bottom: 8px;
+    }
+
+    .answer-form-label {
+      line-height: 26px;
+    }
+
+    .answer-form-control {
+      .ant-form-item-control {
+        line-height: 26px;
+      }
+      .tip {
+        margin-top: 24px;
+        color: #f5222d;
+      }
+    }
+
+    .dynamic-delete-button,
+    .dynamic-add-button {
+      position: relative;
+      color: #aaa;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      &:hover {
+        color: #666;
+      }
+    }
+
+    .question-input,
+    .question-type-cascader {
+      width: calc(~'100% - 40px');
+      margin-right: 8px;
+    }
+  }
+}

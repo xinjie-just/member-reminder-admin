@@ -1,0 +1,96 @@
+<div>
+  <nz-card nzTitle="{{ title }}">
+    <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
+      <div nz-col>
+        <label for="status">状态：</label>
+        <nz-select id="status" [(ngModel)]="status" nzPlaceHolder="全部" class="status-select">
+          <ng-container *ngFor="let status of statusOption">
+            <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+          </ng-container>
+        </nz-select>
+        <label for="name" class="ml-md">模型名称：</label>
+        <nz-input-group [nzSuffix]="suffixTemplate">
+          <input
+            nz-input
+            class="width-md"
+            [(ngModel)]="name"
+            (keyup.enter)="search()"
+            id="name"
+            name="name"
+            placeholder="请输入模型名称关键字"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplate
+          ><i
+            nz-icon
+            nz-tooltip
+            class="ant-input-clear-icon"
+            nzTheme="fill"
+            nzType="close-circle"
+            *ngIf="name"
+            (click)="name = ''"
+            title="删除"
+          ></i
+        ></ng-template>
+        <button (click)="search()" nz-button class="ml-sm">查询</button>
+      </div>
+      <div nz-col *ngIf="showAddBtn">
+        <button nzType="primary" (click)="add()" nz-button>新增模型</button>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <nz-table
+      #modelsTable
+      [nzData]="models"
+      [nzSize]="'middle'"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzShowTotal]="totalTemplate"
+      [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true"
+      [nzLoading]="tableLoading"
+      [nzLoadingDelay]="2"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getModels()"
+      (nzPageSizeChange)="getModels()"
+    >
+      <thead>
+        <tr>
+          <th class="index">序号</th>
+          <th class="name">模型名称</th>
+          <th class="create-time">生成时间</th>
+          <th class="function">损失函数</th>
+          <th class="status">状态</th>
+          <th class="handle">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let model of modelsTable.data; let i = index">
+          <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
+          <td class="name">{{ model.title }}</td>
+          <td class="create-time">{{ model.create_time }}</td>
+          <td class="function">{{ model.abstract }}</td>
+          <td class="status" appModelStatus [status]="model.state">{{ model.state | modelPipe }}</td>
+          <td class="handle">
+            <button
+              nz-button
+              nzType="link"
+              (click)="onlineModel(model)"
+              [disabled]="model.state === 1 || model.state === 3 || model.inuse === 1"
+              appModelOnlineHandle
+              [status]="model.state"
+              [inuse]="model.inuse"
+            >
+              {{ model.inuse === 0 ? '上线' : '已上线' }}
+            </button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="deleteModel(model)" [disabled]="model.inuse === 1">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+  </nz-card>
+</div>

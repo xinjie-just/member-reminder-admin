@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://www.guizhouyichenjing.com:443",
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

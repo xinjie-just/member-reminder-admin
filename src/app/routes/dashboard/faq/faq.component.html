@@ -1,0 +1,81 @@
+<div>
+  <nz-card nzTitle="问答对库">
+    <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
+      <div nz-col>
+        <label for="question">问题：</label>
+        <nz-input-group [nzSuffix]="suffixTemplate">
+          <input
+            nz-input
+            class="width-md"
+            [(ngModel)]="question"
+            (keyup.enter)="search()"
+            id="question"
+            name="question"
+            placeholder="请输入问题关键字"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplate
+          ><i
+            nz-icon
+            nz-tooltip
+            class="ant-input-clear-icon"
+            nzTheme="fill"
+            nzType="close-circle"
+            *ngIf="question"
+            (click)="question = ''"
+            title="删除"
+          ></i
+        ></ng-template>
+        <button (click)="search()" nz-button class="ml-sm">查询</button>
+      </div>
+      <div nz-col>
+        <button nzType="primary" (click)="addOrUpdateQuestion()" nz-button>新增</button>
+        <button nzType="primary" (click)="importQuestions()" nz-button>导入</button>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <nz-table
+      #questionsTable
+      [nzData]="questions"
+      [nzSize]="'middle'"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzShowTotal]="totalTemplate"
+      [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true"
+      [nzLoading]="tableLoading"
+      [nzLoadingDelay]="2"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getQuestions()"
+      (nzPageSizeChange)="getQuestions()"
+    >
+      <thead>
+        <tr>
+          <th class="index">序号</th>
+          <th class="question">问题</th>
+          <th class="answer">答案</th>
+          <th class="update-time">更新时间</th>
+          <th class="operator">上传人</th>
+          <th class="handle">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let question of questionsTable.data; let i = index">
+          <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
+          <td class="question">{{ question.question }}</td>
+          <td class="answer">{{ question.answer ? (question.answer | sliceAnswer) : '' }}</td>
+          <td class="update-time">{{ question.update_time }}</td>
+          <td class="operator">{{ question.editor }}</td>
+          <td class="handle">
+            <button nz-button nzType="link" (click)="addOrUpdateQuestion(question)">修改</button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="deleteQuestion(question)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+  </nz-card>
+</div>

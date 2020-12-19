@@ -1,0 +1,37 @@
+<form>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'file'" nzRequired>文档上传</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16">
+      <nz-upload
+        [(nzFileList)]="fileList"
+        [nzBeforeUpload]="beforeUpload"
+        [nzMultiple]="true"
+        [nzLimit]="1"
+        [nzSize]="1024"
+        nzAccept=".zip, .txt"
+      >
+        <button nz-button><i nz-icon nzType="upload"></i><span>选择上传文档</span></button>
+      </nz-upload>
+      <div class="upload-limit">
+        <p class="upload-text">1. 支持的文件格式为: .zip 和 .txt 文件</p>
+        <p class="upload-text">2. 每次只能上传一个文件</p>
+        <p class="upload-text">3. 单个 .txt 文件不能超过 1MB</p>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="text-right">
+    <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
+      取消
+    </button>
+    <button
+      nz-button
+      [nzType]="'primary'"
+      [disabled]="fileList.length !== 1"
+      type="submit"
+      [nzLoading]="uploading"
+      (click)="handleUpload()"
+    >
+      确认
+    </button>
+  </div>
+</form>

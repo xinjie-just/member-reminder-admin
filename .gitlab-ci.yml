@@ -1,0 +1,26 @@
+stages:
+  - sonar
+
+variables:
+  GIT_STRATEGY: none
+  PROJECT_REPO_NAMESPACE: lixinjie
+  PROJECT_REPO_NAME: intelligent-robot-MP
+
+before_script:
+  - docker login -u $INTELLIGENT_ROBOT_MANAGEMENT_USER -p $INTELLIGENT_ROBOT_MANAGEMENT_PWD http://dockerhub.datagrand.com
+  - git clone -b $CI_COMMIT_REF_NAME --depth=1 ssh://git@git.datagrand.com:58422/$PROJECT_REPO_NAMESPACE/$PROJECT_REPO_NAME.git
+  - cd $PROJECT_REPO_NAME
+
+sonar:
+  image: dockerhub.datagrand.com/ci_runner/frontend_web:12.17
+  stage: sonar
+  script:
+    - yarn
+    - sh docker/make_sonar_config.sh
+    - cat sonar-project.properties
+    - sonar-scanner
+  allow_failure: false
+  only:
+    - feature/MP-lixinjie
+    - develop
+    - master

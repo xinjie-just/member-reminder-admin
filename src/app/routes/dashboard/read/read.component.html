@@ -1,0 +1,94 @@
+<div>
+  <nz-card nzTitle="文档库" [nzExtra]="extraTemplate">
+    <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
+      <div nz-col>
+        <label for="name">文档内容：</label>
+        <nz-input-group [nzSuffix]="suffixTemplate">
+          <input
+            nz-input
+            class="width-md"
+            [(ngModel)]="name"
+            (keyup.enter)="search()"
+            id="name"
+            name="name"
+            placeholder="请输入文档内容关键字"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplate
+          ><i
+            nz-icon
+            nz-tooltip
+            class="ant-input-clear-icon"
+            nzTheme="fill"
+            nzType="close-circle"
+            *ngIf="name"
+            (click)="name = ''"
+            title="删除"
+          ></i
+        ></ng-template>
+        <button (click)="search()" nz-button class="ml-sm">查询</button>
+      </div>
+      <div nz-col>
+        <button nzType="primary" (click)="upload()" nz-button>上传文档</button>
+      </div>
+    </div>
+  </nz-card>
+  <ng-template #extraTemplate>
+    <a nz-button nzType="link" (click)="refresh()"
+      >重新计算关键词 <i nz-icon [nzType]="'sync'" [nzSpin]="refreshKeyword"></i
+    ></a>
+  </ng-template>
+  <nz-card>
+    <nz-table
+      #documentsTable
+      [nzData]="documents"
+      [nzSize]="'middle'"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzShowTotal]="totalTemplate"
+      [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true"
+      [nzLoading]="tableLoading"
+      [nzLoadingDelay]="2"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getDocuments()"
+      (nzPageSizeChange)="getDocuments()"
+    >
+      <thead>
+        <tr>
+          <th class="index">序号</th>
+          <th class="name">文档名称</th>
+          <th class="summary">摘要</th>
+          <th class="upload-time">上传时间</th>
+          <th class="label-time">最近标注时间</th>
+          <th class="operator">上传人员</th>
+          <th class="handle">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let document of documentsTable.data; let i = index">
+          <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
+          <td class="name">{{ document.title }}</td>
+          <td class="summary">{{ document.abstract ? (document.abstract | sliceAnswer) : '' }}</td>
+          <td class="upload-time">{{ document.create_time }}</td>
+          <td class="label-time">{{ document.update_time }}</td>
+          <td class="operator">{{ document.uploader }}</td>
+          <td class="handle">
+            <button
+              nz-button
+              nzType="link"
+              [routerLink]="['/dashboard/data/read', document.doc_id]"
+              [queryParams]="{ title: document.title }"
+            >
+              查看
+            </button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="deleteDocument(document)">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+  </nz-card>
+</div>

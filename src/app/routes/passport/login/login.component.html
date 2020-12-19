@@ -1,0 +1,56 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
+  <nz-tabset [nzAnimated]="false" class="tabs">
+    <nz-tab [nzTitle]="'手机号密码登录'">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="accountErrorTip">
+          <nz-input-group nzPrefixIcon="user">
+            <input nz-input id="phone" type="text" placeholder="请输入用户手机号" formControlName="phone" />
+          </nz-input-group>
+
+          <ng-template #accountErrorTip let-phone>
+            <ng-container *ngIf="phone.hasError('required')">
+              用户手机号是必填项！
+            </ng-container>
+            <ng-container *ngIf="phone.hasError('pattern')">
+              4-20位数字或字母!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordErrorTip">
+          <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="lock">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nz-input
+              id="password"
+              placeholder="请输入密码"
+              formControlName="password"
+            />
+          </nz-input-group>
+          <ng-template #suffixTemplate>
+            <i
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              nzTheme="outline"
+              (click)="passwordVisible = !passwordVisible"
+            ></i>
+          </ng-template>
+
+          <ng-template #passwordErrorTip let-password>
+            <ng-container *ngIf="password.hasError('required')">
+              密码是必填项！
+            </ng-container>
+            <ng-container *ngIf="password.hasError('pattern')">
+              6-16位，包含数字和字母！
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+  </nz-tabset>
+  <nz-form-item>
+    <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="http.loading" nzBlock>登录</button>
+  </nz-form-item>
+</form>

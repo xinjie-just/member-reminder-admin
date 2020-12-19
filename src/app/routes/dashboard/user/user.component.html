@@ -1,0 +1,88 @@
+<div>
+  <nz-card nzTitle="用户管理">
+    <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
+      <div nz-col>
+        <label for="username">用户昵称/用户账号：</label>
+        <nz-input-group [nzSuffix]="suffixTemplate">
+          <input
+            nz-input
+            class="width-lg"
+            [(ngModel)]="username"
+            (keyup.enter)="search()"
+            id="username"
+            name="username"
+            placeholder="请输入用户昵称或用户账号关键字"
+          />
+        </nz-input-group>
+        <ng-template #suffixTemplate
+          ><i
+            nz-icon
+            nz-tooltip
+            class="ant-input-clear-icon"
+            nzTheme="fill"
+            nzType="close-circle"
+            *ngIf="username"
+            (click)="username = ''"
+            title="删除"
+          ></i
+        ></ng-template>
+        <button (click)="search()" nz-button class="ml-sm">查询</button>
+      </div>
+      <div nz-col>
+        <button nzType="primary" (click)="addUser()" nz-button>新增用户</button>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <nz-table
+      #usersTable
+      [nzData]="users"
+      [nzSize]="'middle'"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzShowTotal]="totalTemplate"
+      [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true"
+      [nzLoading]="tableLoading"
+      [nzLoadingDelay]="2"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getUers()"
+      (nzPageSizeChange)="getUers()"
+    >
+      <thead>
+        <tr>
+          <th [nzWidth]="'70px'">序号</th>
+          <th>用户账号</th>
+          <th>用户昵称</th>
+          <th [nzWidth]="'140px'">角色</th>
+          <th [nzWidth]="'200px'">更新时间</th>
+          <th [nzWidth]="'200px'">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usersTable.data; let i = index">
+          <td>{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
+          <td>{{ user.account }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.role | userRole }}</td>
+          <td>{{ user.last_update_time }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="updateUser(user)">修改密码</button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button
+              [disabled]="user.disabled"
+              nz-button
+              nzType="link"
+              (click)="deleteUser(user)"
+              [title]="user.disabled ? '不能删除自己' : '删除用户' + user.name"
+            >
+              删除
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
+  </nz-card>
+</div>

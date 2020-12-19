@@ -1,0 +1,107 @@
+import { _HttpClient, SettingsService } from '@delon/theme';
+import { Component, Inject, Optional } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { SocialService, ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
+import { ReuseTabService } from '@delon/abc';
+import { StartupService } from '@core';
+import { Md5 } from 'ts-md5/dist/md5';
+import { UserService } from '@shared/service/user.service';
+import { ResponseParams } from '@shared/interface/response';
+import { LoginRequestParams } from '@shared/interface/user';
+
+@Component({
+  selector: 'passport-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.less'],
+  providers: [SocialService],
+})
+export class UserLoginComponent {
+  constructor(
+    fb: FormBuilder,
+    modalSrv: NzModalService,
+    private router: Router,
+    @Optional() @Inject(ReuseTabService) private reuseTabService: ReuseTabService,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private startupSrv: StartupService,
+    public http: _HttpClient,
+    public msg: NzMessageService,
+    private userService: UserService,
+    private settingService: SettingsService,
+  ) {
+    this.form = fb.group({
+      // phone: [null, [Validators.required, Validators.pattern(/^[0-9A-Za-z]{4,20}$/)]],
+      phone: [null, [Validators.required]],
+      // password: [null, [Validators.required, Validators.pattern(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/)]],
+      password: [null, [Validators.required]],
+    });
+    modalSrv.closeAll();
+  }
+
+  // #region fields
+
+  get phone() {
+    return this.form.controls.phone;
+  }
+  get password() {
+    return this.form.controls.password;
+  }
+
+  form: FormGroup;
+  error = '';
+  passwordVisible = false;
+
+  interval$: any;
+
+  submit() {
+    this.error = '';
+    this.phone.markAsDirty();
+    this.phone.updateValueAndValidity();
+    this.password.markAsDirty();
+    this.password.updateValueAndValidity();
+    if (this.phone.invalid || this.password.invalid) {
+      return;
+    }
+
+    const loginRequestParams: LoginRequestParams = {
+      phone: this.phone.value.trim(),
+      // password: Md5.hashStr(this.password.value.trim()).toString(),
+      password: this.password.value.trim().toString(),
+    };
+
+    this.userService.login(loginRequestParams).subscribe(
+      (value: ResponseParams) => {
+        if (value.code) {
+          this.msg.error(value.msg);
+          return;
+        }
+        // 清空路由复用信息
+        this.reuseTabService.clear();
+        const userInfo = value.data;
+        // 设置用户Token信息
+        this.tokenService.set({
+          token: userInfo.token,
+          id: userInfo.id,
+          name: userInfo.name,
+          phone: userInfo.phone,
+          role: userInfo.role,
+        });
+        this.userService.userName = userInfo.name;
+        this.userService.userRole = userInfo.role;
+        this.userService.userId = userInfo.id;
+        // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
+        this.startupSrv.load().then(() => {
+          let url = this.tokenService.referrer.url || '/';
+          if (url.includes('/passport')) {
+            url = '/';
+          }
+          this.router.navigateByUrl(url);
+        });
+      },
+      (error) => {
+        this.msg.error(error);
+      },
+    );
+  }
+}
