@@ -45,12 +45,20 @@ export class UserService {
     return userInfo;
   }
 
-  get userName(): string {
-    return localStorage.getItem('userName') || '';
+  get phone(): string {
+    return localStorage.getItem('phone') || '';
   }
 
-  set userName(userName: string) {
-    localStorage.setItem('userName', userName);
+  set phone(phone: string) {
+    localStorage.setItem('phone', phone);
+  }
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  set token(token: string) {
+    localStorage.setItem('token', token);
   }
 
   get userRole(): string {

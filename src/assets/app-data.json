@@ -74,30 +74,30 @@
           "children": [
             {
               "text": "文档库",
-              "link": "/dashboard/data/read"
+              "link": "/dashboard/data/role"
             },
             {
               "text": "问答对库",
-              "link": "/dashboard/data/faq"
+              "link": "/dashboard/data/stage"
             }
           ]
         },
         {
           "text": "模型管理",
           "icon": "anticon anticon-gold",
-          "link": "/dashboard/model",
+          "link": "/dashboard/remind",
           "children": [
             {
               "text": "阅读理解模型",
-              "link": "/dashboard/model/read"
+              "link": "/dashboard/remind/role"
             },
             {
               "text": "问题语义联想模型",
-              "link": "/dashboard/model/semantic"
+              "link": "/dashboard/remind/semantic"
             },
             {
               "text": "问题意图分类模型",
-              "link": "/dashboard/model/intentions"
+              "link": "/dashboard/remind/intentions"
             }
           ]
         },

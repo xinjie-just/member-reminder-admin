@@ -72,24 +72,25 @@ export class UserLoginComponent {
 
     this.userService.login(loginRequestParams).subscribe(
       (value: ResponseParams) => {
-        if (value.code) {
-          this.msg.error(value.msg);
+        if (value.code !== 200) {
+          this.msg.error(value.message);
           return;
         }
         // 清空路由复用信息
         this.reuseTabService.clear();
-        const userInfo = value.data;
+        const data = value.data;
+        const userInfo = data.user;
         // 设置用户Token信息
         this.tokenService.set({
-          token: userInfo.token,
-          id: userInfo.id,
-          name: userInfo.name,
-          phone: userInfo.phone,
-          role: userInfo.role,
+          token: data.token,
+          userId: userInfo.idUser,
+          roleId: userInfo.idRole,
+          userState: userInfo.dataState, // 0-锁定，1-正常，2-假删除
+          lastLoginTime: userInfo.lastLoginTime,
+          phone: userInfo.phoneNum,
+          realName: userInfo.realName,
+          startTime: userInfo.startTime,
         });
-        this.userService.userName = userInfo.name;
-        this.userService.userRole = userInfo.role;
-        this.userService.userId = userInfo.id;
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
           let url = this.tokenService.referrer.url || '/';

@@ -3,51 +3,48 @@ import { SharedModule } from '@shared';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-import { ReadComponent } from './read/read.component';
-import { ModelComponent } from './model/model.component';
-import { FaqComponent } from './faq/faq.component';
+import { RoleComponent } from './role/role.component';
+import { RemindComponent } from './remind/remind.component';
+import { StageComponent } from './stage/stage.component';
 import { UserComponent } from './user/user.component';
 import { AddComponent } from './user/add/add.component';
-import { AddOrUpdateComponent } from './faq/add-or-update/add-or-update.component';
-import { ImportComponent } from './faq/import/import.component';
-import { AddModelComponent } from './model/add/add.component';
-import { ImportReadComponent } from './read/import/import.component';
-import { ViewComponent } from './read/view/view.component';
-import { LabelAddComponent } from './read/label-add/label-add.component';
-import { LabelUpdateComponent } from './read/label-update/label-update.component';
-import { ThresholdComponent } from './threshold/threshold.component';
-import { AnswerComponent } from './answer/answer.component';
+import { AddOrUpdateComponent } from './stage/add-or-update/add-or-update.component';
+import { ImportComponent } from './stage/import/import.component';
+import { AddRemindComponent } from './remind/add/add.component';
+import { ImportReadComponent } from './role/import/import.component';
+import { ViewComponent } from './role/view/view.component';
+import { LabelAddComponent } from './role/label-add/label-add.component';
+import { LabelUpdateComponent } from './role/label-update/label-update.component';
+import { LogComponent } from './log/log.component';
 
 const COMPONENTS = [
-  ReadComponent,
-  ModelComponent,
-  FaqComponent,
+  RoleComponent,
+  RemindComponent,
+  StageComponent,
   UserComponent,
   AddComponent,
   AddOrUpdateComponent,
   ImportComponent,
-  AddModelComponent,
+  AddRemindComponent,
   ImportReadComponent,
   ViewComponent,
   LabelAddComponent,
   LabelUpdateComponent,
-  ThresholdComponent,
 ];
 const COMPONENTS_NOROUNT = [
   AddComponent,
   AddOrUpdateComponent,
   ImportComponent,
-  AddModelComponent,
+  AddRemindComponent,
   ImportReadComponent,
   ViewComponent,
   LabelAddComponent,
   LabelUpdateComponent,
-  ThresholdComponent,
 ];
 
 @NgModule({
   imports: [SharedModule, DashboardRoutingModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT, AnswerComponent],
+  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT, LogComponent],
   entryComponents: COMPONENTS_NOROUNT,
 })
 export class DashboardModule {}
