@@ -5,6 +5,8 @@ import {
   DeleteQuestionRequestParams,
   UpdateQuestionRequestParams,
   RecommendLogRequestParams,
+  StepSearchRequestParams,
+  StepDetailRequestParams,
 } from '@shared/interface/stage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -16,12 +18,31 @@ export class QuestionService {
   constructor(private http: HttpClient) {}
 
   /**
-   * 问题搜索
-   * @param params QuestionSearchRequestParams
+   * 查询所有阶段
    */
-  getQuestions(params: QuestionSearchRequestParams): Observable<any> {
-    return this.http.get(`api/console/faq_search_list?query=${params.query}&pos=${params.pos}&cnt=${params.cnt}`);
+  getStages(): Observable<any> {
+    return this.http.get(`api/stageNode/queryAllStage`);
   }
+
+  /**
+   * 根据阶段查询步骤
+   * @param params StepSearchRequestParams
+   */
+  getSteps(params: StepSearchRequestParams): Observable<any> {
+    return this.http.get(
+      `api/stageNode/getPage?idStageNode=${params.idStageNode}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
+    );
+  }
+
+  /**
+   * 根据步骤ID查询详细信息
+   * @param params StepDetailRequestParams
+   */
+  getStepDetail(params: StepDetailRequestParams): Observable<any> {
+    return this.http.get(`api/stageNode/getNodeById?id=${params.id}`);
+  }
+
+  /*==================================================*/
 
   /**
    * 创建问题

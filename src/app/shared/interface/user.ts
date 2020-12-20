@@ -78,3 +78,15 @@ export interface UserUpdateRoleRequestParams {
   idUser: number;
   idRole: number;
 }
+
+// 登录的用户信息
+export interface CurrentUserInfo {
+  lastLoginTime: string;
+  phone: string;
+  realName: string;
+  roleId: number;
+  startTime: string;
+  token: string;
+  userId: number;
+  userState: number;
+}

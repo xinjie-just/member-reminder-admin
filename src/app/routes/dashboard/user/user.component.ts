@@ -1,3 +1,4 @@
+import { CurrentUserInfo } from './../../../shared/interface/user';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '@shared/service/user.service';
 import { ResponseParams } from '@shared/interface/response';
@@ -36,6 +37,16 @@ export class UserComponent implements OnInit {
   pageSize = 10; // 每页显示数据量
   total = 0; // 总数据量
   tableLoading = true; // 表格数据加载中
+  currentUserInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    phone: null,
+    realName: null,
+    roleId: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
 
   users: UserSearchResponseRecordsParams[] = [];
   roles: RoleSearchResponseRecordsParams[] = [];
@@ -44,6 +55,7 @@ export class UserComponent implements OnInit {
   stages;
 
   ngOnInit(): void {
+    this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.getUers();
     this.getRoles();
   }
@@ -168,16 +180,16 @@ export class UserComponent implements OnInit {
    * 删除用户
    * @param user UserSearchResponseRecordsParams
    */
-  deleteUserModal(user: UserSearchResponseRecordsParams): void {
+  deleteUser(user: UserSearchResponseRecordsParams): void {
     this.modalService.confirm({
       nzTitle: `你确定要删除用户 <i>${user.realName}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
-      nzOnOk: () => this.deleteUser(user),
+      nzOnOk: () => this.delete(user),
       nzCancelText: '取消',
     });
   }
-  deleteUser(user: UserSearchResponseRecordsParams): void {
+  delete(user: UserSearchResponseRecordsParams): void {
     const params: DeleteUserRequestParams = {
       idUser: user.idUser,
     };
@@ -187,7 +199,7 @@ export class UserComponent implements OnInit {
           this.msg.success('用户删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {

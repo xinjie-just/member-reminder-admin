@@ -102,7 +102,7 @@ export class UserService {
    * @param params UserUpdateRealNameRequestParams
    */
   updateRealName(params: UserUpdateRealNameRequestParams): Observable<any> {
-    return this.http.get(`api/user/resetPassword?idUser=${params.idUser}&realName=${params.realName}`);
+    return this.http.get(`api/user/modifyUserRealName?idUser=${params.idUser}&realName=${params.realName}`);
   }
 
   /**

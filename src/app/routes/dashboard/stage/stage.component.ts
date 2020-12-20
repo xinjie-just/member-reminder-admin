@@ -26,7 +26,7 @@ export class StageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getQuestions();
+    // this.getQuestions();
   }
 
   /**
@@ -48,7 +48,7 @@ export class StageComponent implements OnInit {
       pos: (this.pageIndex - 1) * this.pageSize,
       cnt: this.pageSize,
     };
-    this.questionService.getQuestions(params).subscribe(
+    /* this.questionService.getQuestions(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
           const userInfo = value.data;
@@ -66,7 +66,7 @@ export class StageComponent implements OnInit {
       () => {
         this.tableLoading = false;
       },
-    );
+    ); */
   }
 
   /**

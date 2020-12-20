@@ -3,7 +3,7 @@
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
         <!--
-        <label for="stage">阶段：</label>
+        <label for="stage">步骤：</label>
         <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
           <ng-container *ngFor="let stage of stageOption">
             <nz-option [nzValue]="stage.value" [nzLabel]="stage.label"></nz-option>
@@ -65,7 +65,7 @@
           <th [nzWidth]="'180px'">手机号</th>
           <th [nzWidth]="'160px'">角色</th>
           <th [nzWidth]="'200px'">录入时间</th>
-          <th [nzWidth]="'260px'">当前所在阶段</th>
+          <th [nzWidth]="'260px'">当前所在步骤</th>
           <th [nzWidth]="'380px'">操作</th>
         </tr>
       </thead>
@@ -76,26 +76,24 @@
           <td>{{ user.phoneNum }}</td>
           <td>{{ user.idRole }}</td>
           <td>{{ user.startTime }}</td>
-          <td>{{ user.dataState }}</td>
+          <td>{{ user.nodeName }}</td>
           <td>
             <button nz-button nzType="link" (click)="viewProcess(user)">查看流程</button>
             <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="updateUser(user)">修改</button>
-            <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="link" (click)="resetPassword(user)">重置密码</button>
-            <nz-divider nzType="vertical"></nz-divider>
-            <!--
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
+            <button nz-button nzType="link" (click)="resetPassword(user)" *ngIf="currentUserInfo.roleId === 1">
+              重置密码
+            </button>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button
-              [disabled]="user.disabled"
               nz-button
               nzType="link"
+              [disabled]="currentUserInfo.userId === user.idUser"
+              *ngIf="currentUserInfo.roleId === 1"
               (click)="deleteUser(user)"
-              [title]="user.disabled ? '不能删除自己' : '删除用户' + user.name"
+              [title]="currentUserInfo.userId === user.idUser ? '不能够删除自己' : '删除用户'"
             >
-              删除
-            </button>
-            -->
-            <button nz-button nzType="link" (click)="deleteUser(user)" [title]="'删除用户'">
               删除
             </button>
           </td>
