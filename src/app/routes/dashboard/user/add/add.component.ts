@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AddUserRequestParams } from './../../../../shared/interface/user';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '@shared/service/user.service';
-import { CreateUserRequestParams } from '@shared/interface/user';
-import { Md5 } from 'ts-md5/dist/md5';
 import { ResponseParams } from '@shared/interface/response';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
+import { RoleSearchResponseRecordsParams } from '@shared/interface/role';
 
 @Component({
   selector: 'app-add',
@@ -12,7 +12,8 @@ import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
   styles: [],
 })
 export class AddComponent implements OnInit {
-  passwordVisible = false; // 密码或普通字符串转换
+  @Input() roles: RoleSearchResponseRecordsParams[] = [];
+
   form: FormGroup;
   uploading = false;
 
@@ -23,10 +24,9 @@ export class AddComponent implements OnInit {
     private modal: NzModalRef,
   ) {
     this.form = this.fb.group({
-      account: [null, [Validators.required, Validators.pattern(/^[0-9A-Za-z]{4,20}$/)]],
-      nickname: [null, [Validators.required, Validators.pattern(/^.{2,20}$/)]],
-      password: [null, [Validators.required, Validators.pattern(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/)]],
-      role: ['admin'],
+      role: [null, [Validators.required]],
+      name: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
     });
   }
 
@@ -37,24 +37,24 @@ export class AddComponent implements OnInit {
    */
   submit(): void {
     this.uploading = true;
-    const params: CreateUserRequestParams = {
-      role: 'user', // 角色默认为普通用户，管理员用户初始化有几个，不再另外新建
-      name: this.form.get('nickname').value,
-      account: this.form.get('account').value,
-      password: Md5.hashStr(this.form.get('password').value).toString(),
+    const params: AddUserRequestParams = {
+      idRole: this.form.get('role').value,
+      phoneNum: this.form.get('phone').value,
+      realName: this.form.get('name').value,
     };
     this.userService.createUser(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
-          this.msg.success('新增用户成功');
+        if (value.code === 200) {
+          this.msg.success('用户新增成功');
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
           this.modal.destroy({ data: 'error' });
         }
       },
-      error => {
+      (error) => {
         this.msg.error(error);
+        this.uploading = false;
       },
       () => {
         this.uploading = false;

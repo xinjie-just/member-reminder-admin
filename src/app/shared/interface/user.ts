@@ -1,23 +1,38 @@
-export interface UserRequestParams {
-  query: string;
-  pos: number;
-  cnt: number;
+// 获取用户信息请求参数
+export interface UserSearchRequestParams {
+  userName?: string;
+  pageSize: number;
+  pageNo: number;
 }
 
-export interface UserResponseDataParams {
+// 获取用户信息响应参数
+export interface UserSearchResponseDataParams {
+  page: UserSearchResponsePageParams;
+}
+
+export interface UserSearchResponsePageParams {
+  records: UserSearchResponseRecordsParams[];
   total: number;
-  pos: number;
-  cnt: number;
-  results: UserInfoParams[];
+  size: number;
+  current: number;
+  orders?: any[];
+  optimizeCountSql?: boolean;
+  hitCount?: boolean;
+  countId?: number;
+  maxLimit?: number;
+  searchCount?: boolean;
+  pages?: number;
 }
 
-export interface UserInfoParams {
-  id: number;
-  account: string;
-  name: string;
-  role: string;
-  last_update_time: string;
-  disabled?: boolean;
+export interface UserSearchResponseRecordsParams {
+  idUser: number;
+  idRole: number;
+  phoneNum: string;
+  openId: any;
+  realName: string;
+  startTime: string;
+  lastLoginTime: string;
+  dataState: number;
 }
 
 export interface LoginRequestParams {
@@ -25,18 +40,41 @@ export interface LoginRequestParams {
   password: string;
 }
 
-export interface CreateUserRequestParams {
-  role: string;
-  name: string;
-  account: string;
-  password: string;
+// 添加用户
+export interface AddUserRequestParams {
+  idRole: number;
+  idUser?: number;
+  phoneNum: string;
+  realName: string;
 }
 
+// 根据用户ID删除用户
 export interface DeleteUserRequestParams {
-  dst_id: number;
+  idUser: number;
 }
 
-export interface UpdateUserRequestParams {
-  dst_id?: number; // patch 方式，id 与 其它字段分开
-  password: string;
+// 根据用户ID重置密码为手机号后6位
+export interface ResetPasswordRequestParams {
+  idUser: number;
+}
+
+// 用户自己修改密码
+export interface UpdatePasswordRequestParams {
+  phone?: string;
+  idUser: number;
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+// 修改用户姓名
+export interface UserUpdateRealNameRequestParams {
+  idUser: number;
+  realName: string;
+}
+
+// 修改用户角色
+export interface UserUpdateRoleRequestParams {
+  idUser: number;
+  idRole: number;
 }

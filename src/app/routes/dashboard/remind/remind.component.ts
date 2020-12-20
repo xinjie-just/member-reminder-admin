@@ -72,7 +72,7 @@ export class RemindComponent implements OnInit {
     };
     this.remindService.getReminds(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           const userInfo = value.data;
           this.models = userInfo.results;
           this.total = userInfo.total;
@@ -128,7 +128,7 @@ export class RemindComponent implements OnInit {
     };
     this.remindService.deleteRemind(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.msg.success('删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
@@ -157,7 +157,7 @@ export class RemindComponent implements OnInit {
     const params: OnlineRemindRequestParams = {};
     this.remindService.onlineRemind(remind.model_id, params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.msg.success('模型上线成功');
           this.search(); // 上线成功后，重置页码
         } else {

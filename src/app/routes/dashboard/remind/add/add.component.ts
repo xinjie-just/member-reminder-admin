@@ -47,7 +47,7 @@ export class AddRemindComponent implements OnInit {
     };
     this.remindService.getReminds(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           const userInfo = value.data;
           this.completedReminds = userInfo.results;
         } else {
@@ -76,7 +76,7 @@ export class AddRemindComponent implements OnInit {
     };
     this.remindService.createRemind(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.msg.success('新增模型成功');
           this.modal.destroy({ data: 'success' });
         } else {

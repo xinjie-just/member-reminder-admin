@@ -2,11 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { HttpClient } from '@angular/common/http';
 import {
-  UserRequestParams,
-  CreateUserRequestParams,
   LoginRequestParams,
   DeleteUserRequestParams,
-  UpdateUserRequestParams,
+  UserSearchRequestParams,
+  AddUserRequestParams,
+  UpdatePasswordRequestParams,
+  ResetPasswordRequestParams,
+  UserUpdateRealNameRequestParams,
+  UserUpdateRoleRequestParams,
 } from '@shared/interface/user';
 import { Observable } from 'rxjs';
 import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
@@ -32,6 +35,13 @@ export class UserService {
   }
 
   /**
+   * 退出登录
+   */
+  logout(): Observable<any> {
+    return this.http.get(`api/user/logout`);
+  }
+
+  /**
    * 获取登录的用户信息
    */
   getUserInfo() {
@@ -45,52 +55,22 @@ export class UserService {
     return userInfo;
   }
 
-  get phone(): string {
-    return localStorage.getItem('phone') || '';
-  }
-
-  set phone(phone: string) {
-    localStorage.setItem('phone', phone);
-  }
-
-  get token(): string {
-    return localStorage.getItem('token') || '';
-  }
-
-  set token(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  get userRole(): string {
-    return localStorage.getItem('userRole') || '';
-  }
-
-  set userRole(userRole: string) {
-    localStorage.setItem('userRole', userRole);
-  }
-
-  get userId(): string {
-    return localStorage.getItem('userId') || '';
-  }
-
-  set userId(userId: string) {
-    localStorage.setItem('userId', userId);
-  }
-
   /**
    * 获取用户列表
-   * @param params UserRequestParams
+   * @param params UserSearchRequestParams
    */
-  getUers(params: UserRequestParams): Observable<any> {
-    return this.http.get(`api/console/get_user_list?query=${params.query}&pos=${params.pos}&cnt=${params.cnt}`);
+  getUers(params: UserSearchRequestParams): Observable<any> {
+    return this.http.get(
+      `api/user/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&userName=${params.userName}`,
+    );
   }
 
   /**
    * 创建新用户
-   * @param params CreateUserRequestParams
+   * @param params AddUserRequestParams
    */
-  createUser(params: CreateUserRequestParams): Observable<any> {
-    return this.http.post(`api/console/add_user`, params);
+  createUser(params: AddUserRequestParams): Observable<any> {
+    return this.http.post(`api/user/add`, params);
   }
 
   /**
@@ -98,14 +78,38 @@ export class UserService {
    * @param params DeleteUserRequestParams
    */
   deleteUser(params: DeleteUserRequestParams): Observable<any> {
-    return this.http.delete(`api/console/delete_user/${params.dst_id}`);
+    return this.http.get(`api/user/admin/deleteUser?idUser=${params.idUser}`);
   }
 
   /**
-   * 修改用户密码
-   * @param params UpdateUserRequestParams
+   * 修改用户密码，只能修改自己的密码
+   * @param params UpdatePasswordRequestParams
    */
-  updateUser(dst_id: number, params: UpdateUserRequestParams): Observable<any> {
-    return this.http.patch(`api/console/modify_user/${dst_id}`, params);
+  updatePassword(params: UpdatePasswordRequestParams): Observable<any> {
+    return this.http.post(`api/user/modifySelfPassword`, params);
+  }
+
+  /**
+   * 重置密码，只有管理员可以重置用户密码
+   * @param params ResetPasswordRequestParams
+   */
+  resetPassword(params: ResetPasswordRequestParams): Observable<any> {
+    return this.http.get(`api/user/admin/resetPassword?idUser=${params.idUser}`);
+  }
+
+  /**
+   * 修改用户姓名
+   * @param params UserUpdateRealNameRequestParams
+   */
+  updateRealName(params: UserUpdateRealNameRequestParams): Observable<any> {
+    return this.http.get(`api/user/resetPassword?idUser=${params.idUser}&realName=${params.realName}`);
+  }
+
+  /**
+   * 修改用户角色
+   * @param params UserUpdateRoleRequestParams
+   */
+  updateRole(params: UserUpdateRoleRequestParams): Observable<any> {
+    return this.http.get(`api/user/setUserRole?idUser=${params.idUser}&idRole=${params.idRole}`);
   }
 }

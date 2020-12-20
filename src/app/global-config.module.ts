@@ -18,7 +18,7 @@ const alainConfig: AlainConfig = {
   },
   auth: {
     login_url: '/passport/login',
-    ignores: [/\/login/, /user\/phoneLogin\//, /assets/, /http:\/\/yapi.datagrand.cn\/mock/, /api*/, /.\/api*/, /v1*/],
+    ignores: [/\/login/, /user\/phoneLogin\//, /assets/, /api*/, /.\/api*/],
   },
 };
 

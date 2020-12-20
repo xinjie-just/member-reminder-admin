@@ -1,64 +1,37 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()">
   <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'password'" nzRequired>密码</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="passwordErrorTpl">
-      <nz-input-group [nzSuffix]="passwordSuffixTemplate">
-        <input
-          [type]="passwordVisible ? 'text' : 'password'"
-          nz-input
-          id="password"
-          placeholder="请输入密码"
-          formControlName="password"
-          (ngModelChange)="updateConfirmValidator()"
-        />
-      </nz-input-group>
-      <ng-template #passwordSuffixTemplate>
-        <i
-          nz-icon
-          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-          nzTheme="outline"
-          (click)="passwordVisible = !passwordVisible"
-        ></i>
-      </ng-template>
-      <ng-template #passwordErrorTpl let-password>
-        <ng-container *ngIf="password.hasError('required')">
-          密码是必填项!
-        </ng-container>
-        <ng-container *ngIf="password.hasError('pattern')">
-          6-16位，包含数字和字母!
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'phone'" nzRequired>电话</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="phoneErrorTpl">
+      <input formControlName="phone" name="phone" id="phone" nz-input [disabled]="true" placeholder="请输入电话" />
+      <ng-template #phoneErrorTpl let-phone>
+        <ng-container *ngIf="phone.hasError('required')">
+          电话是必填项!
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'verifyPassword'" nzRequired>重复密码</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="verifyPasswordErrorTpl">
-      <nz-input-group [nzSuffix]="verifyPasswordSuffixTemplate">
-        <input
-          [type]="verifyPasswordVisible ? 'text' : 'password'"
-          nz-input
-          id="verifyPassword"
-          placeholder="请再次输入密码"
-          formControlName="verifyPassword"
-        />
-      </nz-input-group>
-      <ng-template #verifyPasswordSuffixTemplate>
-        <i
-          nz-icon
-          [nzType]="verifyPasswordVisible ? 'eye-invisible' : 'eye'"
-          nzTheme="outline"
-          (click)="verifyPasswordVisible = !verifyPasswordVisible"
-        ></i>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>角色</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
+        <ng-container *ngFor="let role of roles">
+          <nz-option [nzValue]="role.idRole" [nzLabel]="role.roleName"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #roleErrorTpl let-role>
+        <ng-container *ngIf="role.hasError('required')">
+          角色是必选项!
+        </ng-container>
       </ng-template>
-      <ng-template #verifyPasswordErrorTpl let-verifyPassword>
-        <ng-container *ngIf="verifyPassword.hasError('required')">
-          重复密码是必填项!
-        </ng-container>
-        <ng-container *ngIf="verifyPassword.hasError('pattern')">
-          6-16位，包含数字和字母!
-        </ng-container>
-        <ng-container *ngIf="verifyPassword.hasError('confirm')">
-          两次输入的密码不一致!
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'name'" nzRequired>姓名</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" required id="name" placeholder="请输入姓名" />
+      <ng-template #nameErrorTpl let-name>
+        <ng-container *ngIf="name.hasError('required')">
+          姓名是必填项!
         </ng-container>
       </ng-template>
     </nz-form-control>

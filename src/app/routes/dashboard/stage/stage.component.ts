@@ -3,7 +3,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { QuestionService } from '@shared/service/stage.service';
 import { QuestionInfoParams, QuestionSearchRequestParams, DeleteQuestionRequestParams } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
-import { AddOrUpdateComponent } from './add-or-update/add-or-update.component';
+import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
 import { ImportComponent } from './import/import.component';
 @Component({
   selector: 'app-stage',
@@ -50,7 +50,7 @@ export class StageComponent implements OnInit {
     };
     this.questionService.getQuestions(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           const userInfo = value.data;
           this.questions = userInfo.results;
           this.total = userInfo.total;
@@ -75,7 +75,7 @@ export class StageComponent implements OnInit {
   addOrUpdateQuestion(question = {}): void {
     const addOrUpdateModal = this.modalService.create({
       nzTitle: Object.keys(question).length ? '修改问题' : '新增问题',
-      nzContent: AddOrUpdateComponent,
+      nzContent: AddOrUpdateStageComponent,
       nzFooter: null,
       nzComponentParams: {
         question: Object.keys(question).length ? question : {},
@@ -108,7 +108,7 @@ export class StageComponent implements OnInit {
     };
     this.questionService.deleteQuestion(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.msg.success('删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {

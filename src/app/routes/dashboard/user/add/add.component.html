@@ -1,72 +1,46 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()">
   <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'account'" nzRequired>账户名</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="accountErrorTpl">
-      <input nz-input formControlName="account" required id="account" placeholder="请输入账户名" />
-      <ng-template #accountErrorTpl let-account>
-        <ng-container *ngIf="account.hasError('required')">
-          账户名是必填项!
-        </ng-container>
-        <ng-container *ngIf="account.hasError('pattern')">
-          4-20位数字或字母!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'nickname'" nzRequired>用户昵称</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nicknameErrorTpl">
-      <input formControlName="nickname" name="nickname" id="nickname" nz-input placeholder="请输入用户昵称" />
-      <ng-template #nicknameErrorTpl let-nickname>
-        <ng-container *ngIf="nickname.hasError('required')">
-          用户昵称是必填项!
-        </ng-container>
-        <ng-container *ngIf="nickname.hasError('pattern')">
-          2-20位!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'password'" nzRequired>密码</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="passwordErrorTpl">
-      <nz-input-group [nzSuffix]="suffixTemplate">
-        <input
-          [type]="passwordVisible ? 'text' : 'password'"
-          nz-input
-          id="password"
-          placeholder="请输入密码"
-          formControlName="password"
-        />
-      </nz-input-group>
-      <ng-template #suffixTemplate>
-        <i
-          nz-icon
-          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-          nzTheme="outline"
-          (click)="passwordVisible = !passwordVisible"
-        ></i>
-      </ng-template>
-      <ng-template #passwordErrorTpl let-password>
-        <ng-container *ngIf="password.hasError('required')">
-          密码是必填项!
-        </ng-container>
-        <ng-container *ngIf="password.hasError('pattern')">
-          6-16位，包含数字和字母!
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-  <!-- 默认为普通用户 -->
-  <!-- <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>角色</nz-form-label>
-    <nz-form-control [nzSm]="20" [nzXs]="16">
-      <nz-radio-group formControlName="role">
-        <label nz-radio nzValue="admin">管理员</label>
-        <label nz-radio nzValue="user">普通用户</label>
-      </nz-radio-group>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
+        <ng-container *ngFor="let role of roles">
+          <nz-option
+            [nzValue]="role.idRole"
+            [nzDisabled]="role.idRole === 1"
+            [title]="role.idRole === 1 ? '不能选择管理员' : ''"
+            [nzLabel]="role.roleName"
+          ></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #roleErrorTpl let-role>
+        <ng-container *ngIf="role.hasError('required')">
+          角色是必选项!
+        </ng-container>
+      </ng-template>
     </nz-form-control>
-  </nz-form-item> -->
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'name'" nzRequired>姓名</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" required id="name" placeholder="请输入姓名" />
+      <ng-template #nameErrorTpl let-name>
+        <ng-container *ngIf="name.hasError('required')">
+          姓名是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'phone'" nzRequired>电话</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="phoneErrorTpl">
+      <input formControlName="phone" name="phone" id="phone" nz-input placeholder="请输入电话" />
+      <ng-template #phoneErrorTpl let-phone>
+        <ng-container *ngIf="phone.hasError('required')">
+          电话是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
   <div class="text-right">
     <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
       取消

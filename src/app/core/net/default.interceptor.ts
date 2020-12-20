@@ -39,8 +39,8 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  // constructor(private injector: Injector, @Inject(DA_SERVICE_TOKEN) private service: ITokenService) {}
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector, @Inject(DA_SERVICE_TOKEN) private service: ITokenService) {}
+  // constructor(private injector: Injector) {}
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -124,7 +124,7 @@ export class DefaultInterceptor implements HttpInterceptor {
 
     const newReq = req.clone({
       url,
-      // headers: req.headers.set('Authorization', !url.includes('login') ? this.service.get().token : ''),
+      headers: req.headers.set('Authorization', !url.includes('login') ? this.service.get().token : ''),
     });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {

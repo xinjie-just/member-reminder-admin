@@ -14,7 +14,7 @@ import { ResponseParams } from '@shared/interface/response';
   templateUrl: './add-or-update.component.html',
   styles: [],
 })
-export class AddOrUpdateComponent implements OnInit {
+export class AddOrUpdateStageComponent implements OnInit {
   @Input() question: { faq_id?: number; question?: string; answer?: string } = {};
   form: FormGroup;
   uploading = false;
@@ -50,7 +50,7 @@ export class AddOrUpdateComponent implements OnInit {
     };
     this.questionService.recommendLog(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.form.patchValue({
             answer: value.data.answer,
           });
@@ -77,7 +77,7 @@ export class AddOrUpdateComponent implements OnInit {
       };
       this.questionService.updateQuestion(this.question.faq_id, params).subscribe(
         (value: ResponseParams) => {
-          if (!value.code) {
+          if (value.code === 200) {
             this.msg.success('修改问题成功');
             this.modal.destroy({ data: 'success' });
           } else {
@@ -100,7 +100,7 @@ export class AddOrUpdateComponent implements OnInit {
       };
       this.questionService.createQuestion(params).subscribe(
         (value: ResponseParams) => {
-          if (!value.code) {
+          if (value.code === 200) {
             this.msg.success('新增问题成功');
             this.modal.destroy({ data: 'success' });
           } else {

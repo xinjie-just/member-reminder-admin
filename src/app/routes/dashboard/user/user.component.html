@@ -2,7 +2,15 @@
   <nz-card nzTitle="用户管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
-        <label for="username">用户昵称/用户账号：</label>
+        <!--
+        <label for="stage">阶段：</label>
+        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
+          <ng-container *ngFor="let stage of stageOption">
+            <nz-option [nzValue]="stage.value" [nzLabel]="stage.label"></nz-option>
+          </ng-container>
+        </nz-select>
+        -->
+        <label for="username">姓名/手机号：</label>
         <nz-input-group [nzSuffix]="suffixTemplate">
           <input
             nz-input
@@ -11,7 +19,7 @@
             (keyup.enter)="search()"
             id="username"
             name="username"
-            placeholder="请输入用户昵称或用户账号关键字"
+            placeholder="请输入姓名或手机号关键字"
           />
         </nz-input-group>
         <ng-template #suffixTemplate
@@ -53,23 +61,30 @@
       <thead>
         <tr>
           <th [nzWidth]="'70px'">序号</th>
-          <th>用户账号</th>
-          <th>用户昵称</th>
-          <th [nzWidth]="'140px'">角色</th>
-          <th [nzWidth]="'200px'">更新时间</th>
-          <th [nzWidth]="'200px'">操作</th>
+          <th [nzWidth]="'100px'">用户姓名</th>
+          <th [nzWidth]="'180px'">手机号</th>
+          <th [nzWidth]="'160px'">角色</th>
+          <th [nzWidth]="'200px'">录入时间</th>
+          <th [nzWidth]="'260px'">当前所在阶段</th>
+          <th [nzWidth]="'380px'">操作</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of usersTable.data; let i = index">
           <td>{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td>{{ user.account }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.role | userRole }}</td>
-          <td>{{ user.last_update_time }}</td>
+          <td>{{ user.realName }}</td>
+          <td>{{ user.phoneNum }}</td>
+          <td>{{ user.idRole }}</td>
+          <td>{{ user.startTime }}</td>
+          <td>{{ user.dataState }}</td>
           <td>
-            <button nz-button nzType="link" (click)="updateUser(user)">修改密码</button>
+            <button nz-button nzType="link" (click)="viewProcess(user)">查看流程</button>
             <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="updateUser(user)">修改</button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="resetPassword(user)">重置密码</button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <!--
             <button
               [disabled]="user.disabled"
               nz-button
@@ -77,6 +92,10 @@
               (click)="deleteUser(user)"
               [title]="user.disabled ? '不能删除自己' : '删除用户' + user.name"
             >
+              删除
+            </button>
+            -->
+            <button nz-button nzType="link" (click)="deleteUser(user)" [title]="'删除用户'">
               删除
             </button>
           </td>

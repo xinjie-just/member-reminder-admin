@@ -1,65 +1,12 @@
 {
   "app": {
-    "name": "智能问答管理平台",
-    "description": "党员发展工作提醒管理平台",
-    "questionTypeOptions": [
-      {
-        "value": 0,
-        "label": "事实型问题",
-        "children": [
-          {
-            "value": 0,
-            "label": "⼈物",
-            "isLeaf": true
-          },
-          {
-            "value": 1,
-            "label": "地点",
-            "isLeaf": true
-          },
-          {
-            "value": 2,
-            "label": "组织机构",
-            "isLeaf": true
-          },
-          {
-            "value": 3,
-            "label": "数量",
-            "isLeaf": true
-          },
-          {
-            "value": 4,
-            "label": "时间",
-            "isLeaf": true
-          },
-          {
-            "value": 5,
-            "label": "国家地区",
-            "isLeaf": true
-          }
-        ]
-      },
-      {
-        "value": 1,
-        "label": "列表型问题",
-        "isLeaf": true
-      },
-      {
-        "value": 2,
-        "label": "定义型问题",
-        "isLeaf": true
-      },
-      {
-        "value": 3,
-        "label": "是否型问题",
-        "isLeaf": true
-      }
-    ]
+    "name": "党员发展工作提醒管理平台",
+    "description": "党员发展工作提醒管理平台"
   },
   "user": {
     "name": "Admin",
     "avatar": "/assets/img/avatar.jpg",
-    "email": "cipchk@qq.com",
+    "email": "327260773@qq.com",
     "token": "123456789"
   },
   "menu": [
@@ -68,53 +15,24 @@
       "group": true,
       "children": [
         {
-          "text": "数据管理",
-          "icon": "anticon anticon-stock",
-          "link": "/dashboard/data",
-          "children": [
-            {
-              "text": "文档库",
-              "link": "/dashboard/data/role"
-            },
-            {
-              "text": "问答对库",
-              "link": "/dashboard/data/stage"
-            }
-          ]
-        },
-        {
-          "text": "模型管理",
-          "icon": "anticon anticon-gold",
-          "link": "/dashboard/remind",
-          "children": [
-            {
-              "text": "阅读理解模型",
-              "link": "/dashboard/remind/role"
-            },
-            {
-              "text": "问题语义联想模型",
-              "link": "/dashboard/remind/semantic"
-            },
-            {
-              "text": "问题意图分类模型",
-              "link": "/dashboard/remind/intentions"
-            }
-          ]
-        },
-        {
-          "text": "问答阈值管理",
-          "icon": "anticon anticon-question",
-          "link": "/dashboard/threshold"
-        },
-        {
-          "text": "答案生成管理",
-          "icon": "anticon anticon-message",
-          "link": "/dashboard/answer"
+          "text": "角色管理",
+          "link": "/dashboard/role"
         },
         {
           "text": "用户管理",
-          "icon": "anticon anticon-user",
           "link": "/dashboard/user"
+        },
+        {
+          "text": "阶段步骤管理",
+          "link": "/dashboard/stage"
+        },
+        {
+          "text": "提醒配置管理",
+          "link": "/dashboard/remind"
+        },
+        {
+          "text": "日志管理",
+          "link": "/dashboard/log"
         }
       ]
     }

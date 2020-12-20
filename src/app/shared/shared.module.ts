@@ -15,9 +15,10 @@ import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 // #region third libs
 import { CountdownModule } from 'ngx-countdown';
 import { UserRolePipe } from './pipe/user.pipe';
-import { SliceLogPipe } from './pipe/stage.pipe';
 import { RemindPipe } from './pipe/remind.pipe';
 import { RemindStatusDirective, RemindOnlineHandleDirective } from './directive/remind.directive';
+import { SliceLogPipe } from './pipe/stage.pipe';
+import { RoleStatusPipe } from './pipe/role.pipe';
 
 const THIRDMODULES = [CountdownModule];
 // #endregion
@@ -25,7 +26,7 @@ const THIRDMODULES = [CountdownModule];
 // #region your componets & directives & pipes
 const COMPONENTS = [];
 const DIRECTIVES = [RemindStatusDirective, RemindOnlineHandleDirective];
-const PIPES = [UserRolePipe, SliceLogPipe, RemindPipe];
+const PIPES = [UserRolePipe, SliceLogPipe, RemindPipe, RoleStatusPipe];
 // #endregion
 
 const SERVICES = [];

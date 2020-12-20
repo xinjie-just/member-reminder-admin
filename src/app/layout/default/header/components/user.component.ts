@@ -1,3 +1,5 @@
+import { ResponseParams } from './../../../../shared/interface/response';
+import { UserService } from '@shared/service/user.service';
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
@@ -53,6 +55,7 @@ export class HeaderUserComponent {
     public settings: SettingsService,
     private modalService: NzModalService,
     private router: Router,
+    private userService: UserService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
     this.userId = Number(localStorage.getItem('userId'));
@@ -61,6 +64,10 @@ export class HeaderUserComponent {
   }
 
   logout() {
+    this.userService.logout().subscribe((value: ResponseParams) => {
+      if (value.code === 2000) {
+      }
+    });
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url);
   }
@@ -69,7 +76,7 @@ export class HeaderUserComponent {
    * 修改用户密码
    */
   updateUser(): void {
-    this.modalService.create({
+    /* this.modalService.create({
       nzTitle: '修改密码',
       nzContent: UpdateComponent,
       nzFooter: null,
@@ -77,6 +84,7 @@ export class HeaderUserComponent {
         userId: this.userId,
         userName: this.userName,
       },
-    });
+    }); */
+    console.log('功能开发中...');
   }
 }

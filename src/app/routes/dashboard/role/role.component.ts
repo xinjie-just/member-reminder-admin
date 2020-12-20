@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { ReadService } from '@shared/service/role.service';
+import { RoleService } from '@shared/service/role.service';
 import {
-  DocumentInfoParams,
-  DocumentSearchRequestParams,
-  DeleteDocumentRequestParams,
-  KeywordResponseParams,
+  DeleteRoleRequestParams,
+  RoleSearchRequestParams,
+  RoleSearchResponsePageParams,
+  RoleSearchResponseRecordsParams,
 } from '@shared/interface/role';
 import { ResponseParams } from '@shared/interface/response';
-import { ImportReadComponent } from './import/import.component';
-import { Router } from '@angular/router';
+import { AddOrUpdateRoleComponent } from './add-or-update/add-or-update.component';
 
 @Component({
   selector: 'app-role',
@@ -22,50 +21,44 @@ export class RoleComponent implements OnInit {
   pageSize = 10; // 每页显示数据量
   total = 0; // 总数据量
   tableLoading = true; // 表格数据加载中
-  refreshKeyword = false;
 
-  documents: DocumentInfoParams[] = [];
+  roles: RoleSearchResponseRecordsParams[] = [];
 
-  constructor(
-    private roleService: ReadService,
-    private router: Router,
-    private msg: NzMessageService,
-    private modalService: NzModalService,
-  ) {}
+  constructor(private roleService: RoleService, private msg: NzMessageService, private modalService: NzModalService) {}
 
   ngOnInit(): void {
-    this.getDocuments();
+    this.getRoles();
   }
 
   /**
-   * 查询文档
+   * 查询角色
    */
   search(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.getDocuments();
+    this.getRoles();
   }
 
   /**
-   * 搜索文档
+   * 搜索角色
    */
-  getDocuments(): void {
+  getRoles(): void {
     this.tableLoading = true;
-    const params: DocumentSearchRequestParams = {
-      query: this.name.trim(),
-      pos: (this.pageIndex - 1) * this.pageSize,
-      cnt: this.pageSize,
+    const params: RoleSearchRequestParams = {
+      roleName: this.name.trim(),
+      pageNo: this.pageIndex,
+      pageSize: this.pageSize,
     };
-    this.roleService.getDocuments(params).subscribe(
+    this.roleService.getRoles(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
-          const userInfo = value.data;
-          this.documents = userInfo.results;
-          this.total = userInfo.total;
+        if (value.code === 200) {
+          const info: RoleSearchResponsePageParams = value.data.page;
+          this.roles = info.records;
+          this.total = info.total;
         } else {
-          this.documents = [];
+          this.roles = [];
           this.total = 0;
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       () => {
@@ -78,43 +71,46 @@ export class RoleComponent implements OnInit {
   }
 
   /**
-   * 添加文档
+   * 添加或删除角色
    */
-  upload(): void {
-    const addOrUpdateModal = this.modalService.create({
-      nzTitle: '上传文档',
-      nzContent: ImportReadComponent,
+  addOrUpdate(role?: RoleSearchResponseRecordsParams): void {
+    const addOrUpdateRoleModal = this.modalService.create({
+      nzTitle: role ? '修改角色' : '新增角色',
+      nzContent: AddOrUpdateRoleComponent,
+      nzComponentParams: {
+        role: role ? role : null,
+      },
       nzFooter: null,
     });
 
-    addOrUpdateModal.afterClose.subscribe((result) => {
+    addOrUpdateRoleModal.afterClose.subscribe((result) => {
       if (result && result.data === 'success') {
-        this.search(); // 上传成功后，重置页码
+        this.search(); // 新增或修改成功后，重置页码
       }
     });
   }
 
   /**
-   * 删除文档
-   * @param user UserInfoParams
+   * 删除角色
+   * @param user RoleSearchResponseRecordsParams
    */
-  deleteDocument(document: DocumentInfoParams): void {
+  deleteRole(role: RoleSearchResponseRecordsParams): void {
     this.modalService.confirm({
-      nzTitle: `你确定要删除文档 <i>${document.title}</i> 吗?`,
+      nzTitle: `你确定要删除角色 <i>${role.roleName}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
-      nzOnOk: () => this.delete(document),
+      nzOnOk: () => this.delete(role),
       nzCancelText: '取消',
     });
   }
-  delete(document: DocumentInfoParams): void {
-    const params: DeleteDocumentRequestParams = {
-      doc_id: document.doc_id,
+  delete(role: RoleSearchResponseRecordsParams): void {
+    const params: DeleteRoleRequestParams = {
+      idRole: role.idRole,
     };
-    this.roleService.deleteDocument(params).subscribe(
+    this.roleService.deleteRole(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
-          this.msg.success('删除成功');
+        if (value.code === 200) {
+          this.msg.success('角色 <i>${role.roleName}</i> 删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
           this.msg.error(value.msg);
@@ -122,33 +118,6 @@ export class RoleComponent implements OnInit {
       },
       (error) => {
         this.msg.error(error);
-      },
-    );
-  }
-
-  /**
-   * 重新计算关键词
-   */
-  refresh() {
-    this.refreshKeyword = true;
-    this.roleService.refreshKeyword().subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 0) {
-          const data: KeywordResponseParams = value.data;
-          if (data.is_success) {
-            this.msg.success('阅读理解关键词重新刷新成功！', { nzDuration: 4000 });
-          } else {
-            this.msg.warning('关键词正在计算中，请稍后再试。', { nzDuration: 4000 });
-          }
-        } else {
-          this.msg.error('阅读理解关键词重新刷新失败！', { nzDuration: 4000 });
-        }
-      },
-      (err) => {
-        this.msg.error(`阅读理解关键词重新刷新失败！${err}`, { nzDuration: 4000 });
-      },
-      () => {
-        this.refreshKeyword = false;
       },
     );
   }
