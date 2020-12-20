@@ -18,7 +18,7 @@ const alainConfig: AlainConfig = {
   },
   auth: {
     login_url: '/passport/login',
-    ignores: [/\/login/, /user\/phoneLogin\//, /assets/, /api*/, /.\/api*/],
+    ignores: [/\/login/, /api\/user\/phoneLogin\//, /\/assets/, /assets\//, /api*/, /.\/api*/],
   },
 };
 

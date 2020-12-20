@@ -69,6 +69,7 @@ export class HeaderUserComponent {
       }
     });
     this.tokenService.clear();
+    localStorage.clear();
     this.router.navigateByUrl(this.tokenService.login_url);
   }
 

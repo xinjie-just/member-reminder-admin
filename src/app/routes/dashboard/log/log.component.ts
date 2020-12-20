@@ -1,8 +1,9 @@
+import { LogSearchResponsePageParams } from './../../../shared/interface/log';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Component, OnInit } from '@angular/core';
 import { LogService } from '@shared/service/log.service';
 import { ResponseParams } from '@shared/interface/response';
-import { LogTransform } from '@shared/interface/log';
+import { LogSearchRequestParams, LogSearchResponseRecordsParams } from '@shared/interface/log';
 
 @Component({
   selector: 'app-log',
@@ -10,47 +11,43 @@ import { LogTransform } from '@shared/interface/log';
   styleUrls: ['./log.component.less'],
 })
 export class LogComponent implements OnInit {
-  loading = false;
-  switchValue = false;
-  statusId: number;
+  tableLoading = false;
+  pageIndex = 1;
+  pageSize = 10;
+  total = 0;
+
+  logs: LogSearchResponseRecordsParams[] = [];
+
   constructor(private logService: LogService, private msg: NzMessageService) {}
 
   ngOnInit(): void {
-    this.logService.getLogTransform().subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 0) {
-          const data: LogTransform = value.data;
-          this.statusId = data.status_id; // 本状态的数据id
-          this.switchValue = Boolean(data.answer_change_value);
-        } else {
-          this.msg.error(value.msg);
-        }
-      },
-      () => {
-        this.msg.error(`"获取是否启用答案转换"失败！`);
-      },
-    );
+    this.getLogs();
   }
 
-  onChange(status: boolean) {
-    this.loading = true;
-    const params: LogTransform = {
-      answer_change_value: Number(status),
-      status_id: this.statusId,
+  getLogs() {
+    this.tableLoading = true;
+    const params: LogSearchRequestParams = {
+      pageNo: this.pageIndex,
+      pageSize: this.pageSize,
     };
-    this.logService.updateLogTransform(params).subscribe(
+    this.logService.getLogs(params).subscribe(
       (value: ResponseParams) => {
-        if (value.code === 0) {
-          this.msg.success(status ? '启用答案转换成功！' : '停用答案转换成功！');
+        if (value.code === 200) {
+          const info: LogSearchResponsePageParams = value.data.page;
+          this.logs = info.records;
+          this.total = info.total;
         } else {
-          this.msg.error(value.msg);
+          this.total = 0;
+          this.logs = [];
+          this.msg.error(value.message);
         }
       },
       () => {
-        this.msg.error(`"修改答案生成转换"失败！`);
+        this.msg.error('业务日志查询成功！');
+        this.tableLoading = false;
       },
       () => {
-        this.loading = false;
+        this.tableLoading = false;
       },
     );
   }

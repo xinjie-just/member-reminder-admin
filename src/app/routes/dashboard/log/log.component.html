@@ -1,19 +1,43 @@
 <div>
   <nz-card>
-    <div class="card-head">答案生成管理</div>
+    <div class="card-head">日志管理</div>
   </nz-card>
   <nz-card>
-    <nz-form-item>
-      <nz-form-label [nzSm]="4" [nzMd]="3" nzFor="answer">启用答案转换</nz-form-label>
-      <nz-form-control [nzSm]="4" [nzMd]="3">
-        <nz-switch
-          [ngModel]="switchValue"
-          [nzLoading]="loading"
-          [nzCheckedChildren]="'启用'"
-          [nzUnCheckedChildren]="'停用'"
-          (ngModelChange)="onChange($event)"
-        ></nz-switch>
-      </nz-form-control>
-    </nz-form-item>
+    <nz-table
+      #logsTable
+      [nzData]="logs"
+      [nzSize]="'middle'"
+      [nzFrontPagination]="false"
+      [nzTotal]="total"
+      [nzShowTotal]="totalTemplate"
+      [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true"
+      [nzLoading]="tableLoading"
+      [nzLoadingDelay]="2"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="getLogs()"
+      (nzPageSizeChange)="getLogs()"
+    >
+      <thead>
+        <tr>
+          <th class="index" [nzWidth]="'70px'">序号</th>
+          <th class="id" [nzWidth]="'70px'">日志ID</th>
+          <th class="name" [nzWidth]="'110px'">姓名</th>
+          <th class="content" [nzWidth]="'370px'">日志内容</th>
+          <th class="time" [nzWidth]="'170px'">操作时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of logsTable.data; let i = index">
+          <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
+          <td class="id">{{ log.idLog }}</td>
+          <td class="name">{{ log.realName }}</td>
+          <td class="content">{{ log.content }}</td>
+          <td class="time">{{ log.logTime }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>
   </nz-card>
 </div>

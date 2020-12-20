@@ -122,10 +122,19 @@ export class DefaultInterceptor implements HttpInterceptor {
       url = environment.SERVER_URL + url;
     }
 
-    const newReq = req.clone({
-      url,
-      headers: req.headers.set('Authorization', !url.includes('login') ? this.service.get().token : ''),
-    });
+    let newReq;
+
+    const token = this.service.get().token;
+    if (!url.includes('phoneLogin') && !url.includes('assets')) {
+      newReq = req.clone({
+        url,
+        headers: req.headers.set('Authorization', token),
+      });
+    } else {
+      newReq = req.clone({
+        url,
+      });
+    }
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理
