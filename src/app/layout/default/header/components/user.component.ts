@@ -1,3 +1,4 @@
+import { UpdatePasswordComponent } from './../../../../routes/dashboard/user/update-password/update-password.component';
 import { ResponseParams } from './../../../../shared/interface/response';
 import { UserService } from '@shared/service/user.service';
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
@@ -5,7 +6,6 @@ import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { NzModalService } from 'ng-zorro-antd';
-import { UpdateComponent } from 'src/app/routes/dashboard/user/update/update.component';
 
 @Component({
   selector: 'header-user',
@@ -49,8 +49,6 @@ import { UpdateComponent } from 'src/app/routes/dashboard/user/update/update.com
 })
 export class HeaderUserComponent {
   userName = '';
-  userRole = '';
-  userId: number;
   constructor(
     public settings: SettingsService,
     private modalService: NzModalService,
@@ -58,9 +56,7 @@ export class HeaderUserComponent {
     private userService: UserService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
-    this.userId = Number(localStorage.getItem('userId'));
-    this.userName = localStorage.getItem('userName');
-    this.userRole = localStorage.getItem('userRole');
+    this.userName = JSON.parse(localStorage.getItem('_token'))['realName'];
   }
 
   logout() {
@@ -77,15 +73,10 @@ export class HeaderUserComponent {
    * 修改用户密码
    */
   updateUser(): void {
-    /* this.modalService.create({
+    this.modalService.create({
       nzTitle: '修改密码',
-      nzContent: UpdateComponent,
+      nzContent: UpdatePasswordComponent,
       nzFooter: null,
-      nzComponentParams: {
-        userId: this.userId,
-        userName: this.userName,
-      },
-    }); */
-    console.log('功能开发中...');
+    });
   }
 }
