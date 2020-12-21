@@ -8,7 +8,7 @@ export interface StageSearchResponseDataParams {
 
 // 根据阶段查询步骤
 export interface StepSearchRequestParams {
-  idStageNode: number;
+  idStageNode?: number;
   pageNo: number;
   pageSize: number;
 }
@@ -61,6 +61,11 @@ export interface StepDetailResponseDataParams {
   isBeginPreNode: number;
   sort: number;
   dataState: number;
+}
+
+// 删除步骤
+export interface StepDeleteRequestParams {
+  idNode: number;
 }
 
 /*=================================*/

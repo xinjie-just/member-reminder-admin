@@ -1,32 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { QuestionService } from '@shared/service/stage.service';
-import { QuestionInfoParams, QuestionSearchRequestParams, DeleteQuestionRequestParams } from '@shared/interface/stage';
+import { StageService } from '@shared/service/stage.service';
+import {
+  StepSearchResponseRecordsParams,
+  StepSearchRequestParams,
+  StepSearchResponsePageParams,
+} from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
-import { ImportComponent } from './import/import.component';
 @Component({
   selector: 'app-stage',
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.less'],
 })
 export class StageComponent implements OnInit {
-  question = '';
   pageIndex = 1; // 当前页码
   pageSize = 10; // 每页显示数据量
   total = 0; // 总数据量
   tableLoading = true; // 表格数据加载中
 
-  questions: QuestionInfoParams[] = [];
+  steps: StepSearchResponseRecordsParams[] = [];
 
   constructor(
-    private questionService: QuestionService,
+    private stageService: StageService,
     private msg: NzMessageService,
     private modalService: NzModalService,
   ) {}
 
   ngOnInit(): void {
-    // this.getQuestions();
+    this.getSteps();
   }
 
   /**
@@ -35,27 +37,28 @@ export class StageComponent implements OnInit {
   search(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.getQuestions();
+    this.getSteps();
   }
 
   /**
    * 搜索问题
    */
-  getQuestions(): void {
+  /*
+  getStages(): void {
     this.tableLoading = true;
-    const params: QuestionSearchRequestParams = {
+    const params: StageSearchRequestParams = {
       query: this.question.trim(),
       pos: (this.pageIndex - 1) * this.pageSize,
       cnt: this.pageSize,
     };
-    /* this.questionService.getQuestions(params).subscribe(
+    this.stageService.getStages(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
           const userInfo = value.data;
-          this.questions = userInfo.results;
+          this.steps = userInfo.results;
           this.total = userInfo.total;
         } else {
-          this.questions = [];
+          this.steps = [];
           this.total = 0;
           this.msg.error(value.msg);
         }
@@ -66,13 +69,45 @@ export class StageComponent implements OnInit {
       () => {
         this.tableLoading = false;
       },
-    ); */
+    );
+  }
+ */
+  /**
+   * 获取步骤
+   * 获取所有步骤，idStageNode 不传
+   */
+  getSteps() {
+    this.tableLoading = true;
+    const params: StepSearchRequestParams = {
+      pageNo: this.pageIndex,
+      pageSize: this.pageSize,
+    };
+    this.stageService.getSteps(params).subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          const info: StepSearchResponsePageParams = value.data.page;
+          this.steps = info.records;
+          this.total = info.total;
+        } else {
+          this.steps = [];
+          this.total = 0;
+          this.msg.error(value.message);
+        }
+      },
+      (error) => {
+        this.msg.error(error);
+        this.tableLoading = false;
+      },
+      () => {
+        this.tableLoading = false;
+      },
+    );
   }
 
   /**
    * 添加或修改问题
    */
-  addOrUpdateQuestion(question = {}): void {
+  addOrUpdateStage(question = {}): void {
     const addOrUpdateModal = this.modalService.create({
       nzTitle: Object.keys(question).length ? '修改问题' : '新增问题',
       nzContent: AddOrUpdateStageComponent,
@@ -93,7 +128,7 @@ export class StageComponent implements OnInit {
    * 删除问题
    * @param user UserInfoParams
    */
-  deleteQuestion(question: QuestionInfoParams): void {
+  deleteStep(question: StageInfoParams): void {
     this.modalService.confirm({
       nzTitle: `你确定要删除问题 <i>${question.question}</i> 吗?`,
       nzOkText: '确定',
@@ -102,11 +137,11 @@ export class StageComponent implements OnInit {
       nzCancelText: '取消',
     });
   }
-  delete(question: QuestionInfoParams): void {
-    const params: DeleteQuestionRequestParams = {
+  delete(question: StageInfoParams): void {
+    const params: DeleteStageRequestParams = {
       faq_id: question.faq_id,
     };
-    this.questionService.deleteQuestion(params).subscribe(
+    this.stageService.deleteStep(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
           this.msg.success('删除成功');
@@ -119,22 +154,5 @@ export class StageComponent implements OnInit {
         this.msg.error(error);
       },
     );
-  }
-
-  /**
-   * 导入
-   */
-  importQuestions(): void {
-    const importModal = this.modalService.create({
-      nzTitle: '导入文档',
-      nzContent: ImportComponent,
-      nzFooter: null,
-    });
-
-    importModal.afterClose.subscribe((result) => {
-      if (result && result.data === 'success') {
-        this.search(); // 新增或修改成功后，重置页码
-      }
-    });
   }
 }

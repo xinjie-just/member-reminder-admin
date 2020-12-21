@@ -7,6 +7,7 @@ import {
   RecommendLogRequestParams,
   StepSearchRequestParams,
   StepDetailRequestParams,
+  StepDeleteRequestParams,
 } from '@shared/interface/stage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,7 +15,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class QuestionService {
+export class StageService {
   constructor(private http: HttpClient) {}
 
   /**
@@ -40,6 +41,14 @@ export class QuestionService {
    */
   getStepDetail(params: StepDetailRequestParams): Observable<any> {
     return this.http.get(`api/stageNode/getNodeById?id=${params.id}`);
+  }
+
+  /**
+   * 删除步骤
+   * @param params StepDeleteRequestParams
+   */
+  deleteStep(params: StepDeleteRequestParams): Observable<any> {
+    return this.http.get(`api/stageNode/admin/deleteNode?idNode=${params.idNode}`);
   }
 
   /*==================================================*/
