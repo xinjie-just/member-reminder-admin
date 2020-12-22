@@ -1,63 +1,81 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()">
   <nz-form-item>
-    <nz-form-label [nzSm]="3" [nzXs]="7" [nzFor]="'modelQuestion'" nzRequired>问题</nz-form-label>
-    <nz-form-control [nzSm]="21" [nzXs]="17" [nzErrorTip]="questionErrorTpl">
-      <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="18">
-          <textarea
-            formControlName="question"
-            name="modelQuestion"
-            id="modelQuestion"
-            nz-input
-            [nzAutosize]="{ minRows: 1, maxRows: 5 }"
-            placeholder="请输入问题"
-            required
-          ></textarea>
-        </div>
-        <div nz-col [nzSpan]="6">
-          <button
-            nz-button
-            type="button"
-            nzType="link"
-            [disabled]="!form.get('question').value"
-            (click)="recommendLog(form.get('question').value)"
-            [title]="form.get('question').value ? '根据输入的问题推荐答案' : '请先输入问题'"
-          >
-            推荐答案
-          </button>
-        </div>
-      </div>
-      <ng-template #questionErrorTpl let-question>
-        <ng-container *ngIf="question.hasError('required')">
-          问题是必填项!
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'stage'" nzRequired>所在阶段</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
+      <nz-select
+        id="stage"
+        formControlName="stage"
+        nzPlaceHolder="请选择一个阶段"
+        (ngModelChange)="onChangeStage($event)"
+      >
+        <ng-container *ngFor="let stage of stages">
+          <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
         </ng-container>
-        <ng-container *ngIf="question.hasError('pattern')">
-          问题至多输入 100 字!
+      </nz-select>
+      <ng-template #stageErrorTpl let-stage>
+        <ng-container *ngIf="stage.hasError('required')">
+          所在阶段是必选项!
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="3" [nzXs]="7" [nzFor]="'answer'" nzRequired>答案</nz-form-label>
-    <nz-form-control [nzSm]="21" [nzXs]="17" [nzErrorTip]="answerErrorTpl">
-      <textarea
-        formControlName="answer"
-        name="answer"
-        id="answer"
-        nz-input
-        [nzAutosize]="{ minRows: 3, maxRows: 10 }"
-        placeholder="请输入答案"
-      ></textarea>
-      <ng-template #answerErrorTpl let-answer>
-        <ng-container *ngIf="answer.hasError('required')">
-          答案是必填项!
-        </ng-container>
-        <ng-container *ngIf="answer.hasError('pattern')">
-          答案至多输入 10000 字!
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'stepName'" nzRequired>步骤名称</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stepNameErrorTpl">
+      <input nz-input formControlName="stepName" required id="stepName" placeholder="请输入步骤名称" />
+      <ng-template #stepNameErrorTpl let-stepName>
+        <ng-container *ngIf="stepName.hasError('required')">
+          步骤名称是必填项!
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'step'" nzRequired>上一步骤</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
+      <nz-select id="step" formControlName="step" nzPlaceHolder="请选择一个步骤">
+        <ng-container *ngFor="let step of steps">
+          <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #stepErrorTpl let-step>
+        <ng-container *ngIf="step.hasError('required')">
+          上一步骤是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'duration'" nzRequired>活动时长(天)</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16">
+      <nz-select id="duration" formControlName="duration" nzPlaceHolder="请选择活动时长">
+        <ng-container *ngFor="let duration of durations">
+          <nz-option [nzValue]="duration.value" [nzLabel]="duration.label"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'samePreStep'" nzRequired>与上一步并行</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16">
+      <nz-select id="samePreStep" formControlName="samePreStep" nzPlaceHolder="请选择是否与上一步并行">
+        <ng-container *ngFor="let samePreStep of samePreSteps">
+          <nz-option [nzValue]="samePreStep.value" [nzLabel]="samePreStep.label"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'sort'" nzRequired>排序</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16">
+      <nz-select id="sort" formControlName="sort" nzPlaceHolder="请选择该步骤的顺序">
+        <ng-container *ngFor="let sort of sorts">
+          <nz-option [nzValue]="sort.value" [nzLabel]="sort.label"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
   <div class="text-right">
     <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
       取消

@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
-  QuestionSearchRequestParams,
-  CreateQuestionRequestParams,
-  DeleteQuestionRequestParams,
-  UpdateQuestionRequestParams,
-  RecommendLogRequestParams,
   StepSearchRequestParams,
   StepDetailRequestParams,
   StepDeleteRequestParams,
+  StepAddOrUpdateRequestParams,
 } from '@shared/interface/stage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -51,37 +47,11 @@ export class StageService {
     return this.http.get(`api/stageNode/admin/deleteNode?idNode=${params.idNode}`);
   }
 
-  /*==================================================*/
-
   /**
-   * 创建问题
-   * @param params CreateQuestionRequestParams
+   * 新增或修改步骤
+   * @param params StepAddOrUpdateRequestParams
    */
-  createQuestion(params: CreateQuestionRequestParams): Observable<any> {
-    return this.http.post(`api/console/faq_add`, params);
-  }
-
-  /**
-   * 删除问题
-   * @param params DeleteQuestionRequestParams
-   */
-  deleteQuestion(params: DeleteQuestionRequestParams): Observable<any> {
-    return this.http.delete(`api/console/faq_delete/${params.faq_id}`);
-  }
-
-  /**
-   * 修改问题
-   * @param params UpdateQuestionRequestParams
-   */
-  updateQuestion(id: number, params: UpdateQuestionRequestParams): Observable<any> {
-    return this.http.patch(`api/console/faq_modify/${id}`, params);
-  }
-
-  /**
-   * 推荐答案
-   * @param params RecommendLogRequestParams
-   */
-  recommendLog(params: RecommendLogRequestParams): Observable<any> {
-    return this.http.get(`api/console/faq_recommend?question=${params.question}`);
+  addOrUpdateStep(params: StepAddOrUpdateRequestParams): Observable<any> {
+    return this.http.post(`api/stageNode/saveNode`, params);
   }
 }

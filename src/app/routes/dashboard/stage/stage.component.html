@@ -1,11 +1,11 @@
 <div>
-  <nz-card nzTitle="问答对库">
+  <nz-card nzTitle="阶段步骤管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
-        <label for="step">阶段：</label>
-        <nz-select id="step" [(ngModel)]="step" nzPlaceHolder="全部" class="step-select">
-          <ng-container *ngFor="let step of stepOption">
-            <nz-option [nzValue]="step.value" [nzLabel]="step.label"></nz-option>
+        <label for="stage">阶段：</label>
+        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
+          <ng-container *ngFor="let stage of stages">
+            <nz-option [nzValue]="stage?.idStage" [nzLabel]="stage?.stageName"></nz-option>
           </ng-container>
         </nz-select>
         <button (click)="search()" nz-button class="ml-sm">查询</button>
@@ -18,7 +18,7 @@
   <nz-card>
     <nz-table
       #stepTable
-      [nzData]="step"
+      [nzData]="steps"
       [nzSize]="'middle'"
       [nzFrontPagination]="false"
       [nzTotal]="total"

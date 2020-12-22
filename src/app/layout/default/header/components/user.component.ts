@@ -33,11 +33,11 @@ import { NzModalService } from 'ng-zorro-antd';
           <i nz-icon nzType="close-circle" class="mr-sm"></i>
           {{ 'menu.account.trigger' | translate }}
         </div>-->
-        <div nz-menu-item (click)="updateUser()" *ngIf="userRole !== 'user'">
+        <div nz-menu-item (click)="updateUser()">
           <i nz-icon nzType="lock" nzTheme="outline" class="mr-sm"></i>
           修改密码
         </div>
-        <li nz-menu-divider *ngIf="userRole !== 'user'"></li>
+        <li nz-menu-divider></li>
         <div nz-menu-item (click)="logout()">
           <i nz-icon nzType="logout" class="mr-sm"></i>
           {{ 'menu.account.logout' | translate }}

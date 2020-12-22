@@ -1,61 +1,101 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QuestionService } from '@shared/service/stage.service';
+import { StageService } from '@shared/service/stage.service';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import {
-  CreateQuestionRequestParams,
-  UpdateQuestionRequestParams,
-  RecommendLogRequestParams,
+  StageSearchResponseDataParams,
+  StepSearchRequestParams,
+  StepSearchResponsePageParams,
+  StepSearchResponseRecordsParams,
 } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
-
 @Component({
   selector: 'app-add-or-update',
   templateUrl: './add-or-update.component.html',
   styles: [],
 })
 export class AddOrUpdateStageComponent implements OnInit {
-  @Input() question: { faq_id?: number; question?: string; answer?: string } = {};
+  @Input() stepInfo: StepSearchResponseRecordsParams = {
+    idNode: null,
+    type: null, // 类型：1阶段2步骤，默认步骤
+    parentId: null,
+    previous: null,
+    name: null,
+    nodeBizType: null,
+    duration: null,
+    isBeginPreNode: null,
+    sort: null,
+    dataState: null,
+  };
+  @Input() stages: StageSearchResponseDataParams[] = [];
   form: FormGroup;
   uploading = false;
+  steps: StepSearchResponseRecordsParams[] = [];
+
+  durations: { value: number; label: string }[] = [];
+
+  samePreSteps: { value: number; label: string }[] = [
+    { value: 1, label: '是' },
+    { value: 0, label: '否' },
+  ];
+
+  sorts: { value: number; label: string }[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private questionService: QuestionService,
+    private stageService: StageService,
     private msg: NzMessageService,
     private modal: NzModalRef,
   ) {
     this.form = this.fb.group({
-      question: [null, [Validators.required, Validators.pattern(/^.{1,100}$/)]],
-      answer: [null, [Validators.required, Validators.pattern(/^.{1,10000}$/)]],
+      stage: [null, [Validators.required]],
+      stepName: [null, [Validators.required]],
+      step: [null, [Validators.required]],
+      duration: [1, [Validators.required]],
+      samePreStep: [1, [Validators.required]],
+      sort: [1, [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    if (Object.keys(this.question).length) {
+    for (let i = 1; i < 31; i++) {
+      this.durations.push({ value: i, label: String(i) });
+    }
+    for (let i = 1; i < 11; i++) {
+      this.sorts.push({ value: i, label: String(i) });
+    }
+
+    if (this.stepInfo) {
       this.form.patchValue({
-        question: this.question.question,
-        answer: this.question.answer,
+        stage: this.stepInfo.parentId,
+        stepName: this.stepInfo.name,
+        step: this.stepInfo.previous,
+        duration: this.stepInfo.duration,
+        samePreStep: this.stepInfo.isBeginPreNode,
+        sort: this.stepInfo.sort,
       });
     }
   }
 
   /**
-   * 推荐答案
-   * @param question string
+   * 改变阶段，获取步骤
+   * @param stageId number
    */
-  recommendLog(question: string): void {
-    const params: RecommendLogRequestParams = {
-      question,
+  onChangeStage(stageId: number) {
+    console.log('改变阶段', stageId);
+    const params: StepSearchRequestParams = {
+      idStageNode: stageId,
+      pageNo: 1,
+      pageSize: 999,
     };
-    this.questionService.recommendLog(params).subscribe(
+    this.stageService.getSteps(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.form.patchValue({
-            answer: value.data.answer,
-          });
+          const info: StepSearchResponsePageParams = value.data.page;
+          this.steps = info.records;
         } else {
-          this.msg.error(value.msg);
+          this.steps = [];
+          this.msg.error(value.message);
         }
       },
       (error) => {
@@ -65,20 +105,27 @@ export class AddOrUpdateStageComponent implements OnInit {
   }
 
   /**
-   * 新建或修改问题
+   * 新建或修改步骤
    */
   submit(): void {
     this.uploading = true;
-    if (Object.keys(this.question).length) {
+    let addParams = {
+      type: 2, // 类型：1阶段2步骤，默认步骤
+      parentId: this.form.get('stage').value,
+      previous: this.form.get('step').value,
+      name: this.form.get('stepName').value,
+      nodeBizType: this.stepInfo.nodeBizType,
+      duration: this.form.get('duration').value,
+      isBeginPreNode: this.form.get('samePreStep').value,
+      sort: this.form.get('sort').value,
+    };
+    if (this.stepInfo) {
       // 修改
-      const params: UpdateQuestionRequestParams = {
-        question: this.form.get('question').value,
-        answer: this.form.get('answer').value,
-      };
-      this.questionService.updateQuestion(this.question.faq_id, params).subscribe(
+      const updateParams = { ...addParams, idNode: this.stepInfo.idNode };
+      this.stageService.addOrUpdateStep(updateParams).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('修改问题成功');
+            this.msg.success('步骤修改成功');
             this.modal.destroy({ data: 'success' });
           } else {
             this.msg.error(value.msg);
@@ -94,14 +141,10 @@ export class AddOrUpdateStageComponent implements OnInit {
       );
     } else {
       // 新建
-      const params: CreateQuestionRequestParams = {
-        question: this.form.get('question').value,
-        answer: this.form.get('answer').value,
-      };
-      this.questionService.createQuestion(params).subscribe(
+      this.stageService.addOrUpdateStep(addParams).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('新增问题成功');
+            this.msg.success('步骤新增成功');
             this.modal.destroy({ data: 'success' });
           } else {
             this.msg.error(value.msg);

@@ -5,6 +5,8 @@ import {
   StepSearchResponseRecordsParams,
   StepSearchRequestParams,
   StepSearchResponsePageParams,
+  StepDeleteRequestParams,
+  StageSearchResponseDataParams,
 } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
@@ -20,6 +22,8 @@ export class StageComponent implements OnInit {
   tableLoading = true; // 表格数据加载中
 
   steps: StepSearchResponseRecordsParams[] = [];
+  stages: StageSearchResponseDataParams[] = [];
+  stage = null;
 
   constructor(
     private stageService: StageService,
@@ -32,46 +36,34 @@ export class StageComponent implements OnInit {
   }
 
   /**
-   * 查询问题
+   * 查询步骤
    */
   search(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
+    this.getStages();
     this.getSteps();
   }
 
   /**
-   * 搜索问题
+   * 搜索阶段
    */
-  /*
   getStages(): void {
-    this.tableLoading = true;
-    const params: StageSearchRequestParams = {
-      query: this.question.trim(),
-      pos: (this.pageIndex - 1) * this.pageSize,
-      cnt: this.pageSize,
-    };
-    this.stageService.getStages(params).subscribe(
+    this.stageService.getStages().subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          const userInfo = value.data;
-          this.steps = userInfo.results;
-          this.total = userInfo.total;
+          this.stages = value.data;
         } else {
-          this.steps = [];
-          this.total = 0;
-          this.msg.error(value.msg);
+          this.stages = [];
+          this.msg.error(value.message);
         }
       },
       (error) => {
         this.msg.error(error);
       },
-      () => {
-        this.tableLoading = false;
-      },
     );
   }
- */
+
   /**
    * 获取步骤
    * 获取所有步骤，idStageNode 不传
@@ -105,15 +97,16 @@ export class StageComponent implements OnInit {
   }
 
   /**
-   * 添加或修改问题
+   * 添加或修改步骤
    */
-  addOrUpdateStage(question = {}): void {
+  addOrUpdateStage(step?: StepSearchResponseRecordsParams): void {
     const addOrUpdateModal = this.modalService.create({
-      nzTitle: Object.keys(question).length ? '修改问题' : '新增问题',
+      nzTitle: step ? '修改步骤' : '新增步骤',
       nzContent: AddOrUpdateStageComponent,
       nzFooter: null,
       nzComponentParams: {
-        question: Object.keys(question).length ? question : {},
+        stepInfo: step ? step : null,
+        stages: this.stages,
       },
     });
 
@@ -125,29 +118,29 @@ export class StageComponent implements OnInit {
   }
 
   /**
-   * 删除问题
-   * @param user UserInfoParams
+   * 删除步骤
+   * @param step StepSearchResponseRecordsParams
    */
-  deleteStep(question: StageInfoParams): void {
+  deleteStep(step: StepSearchResponseRecordsParams): void {
     this.modalService.confirm({
-      nzTitle: `你确定要删除问题 <i>${question.question}</i> 吗?`,
+      nzTitle: `你确定要删除步骤 <i>${step.name}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
-      nzOnOk: () => this.delete(question),
+      nzOnOk: () => this.delete(step),
       nzCancelText: '取消',
     });
   }
-  delete(question: StageInfoParams): void {
-    const params: DeleteStageRequestParams = {
-      faq_id: question.faq_id,
+  delete(step: StepSearchResponseRecordsParams): void {
+    const params: StepDeleteRequestParams = {
+      idNode: step.idNode,
     };
     this.stageService.deleteStep(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('删除成功');
+          this.msg.success('步骤删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
