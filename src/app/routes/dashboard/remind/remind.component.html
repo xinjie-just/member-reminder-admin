@@ -1,48 +1,32 @@
 <div>
-  <nz-card nzTitle="{{ title }}">
+  <nz-card nzTitle="提醒配置管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
-        <label for="status">状态：</label>
-        <nz-select id="status" [(ngModel)]="status" nzPlaceHolder="全部" class="status-select">
-          <ng-container *ngFor="let status of statusOption">
-            <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+        <label for="stage">阶段：</label>
+        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
+          <ng-container *ngFor="let stage of satges">
+            <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
           </ng-container>
         </nz-select>
-        <label for="name" class="ml-md">模型名称：</label>
-        <nz-input-group [nzSuffix]="suffixTemplate">
-          <input
-            nz-input
-            class="width-md"
-            [(ngModel)]="name"
-            (keyup.enter)="search()"
-            id="name"
-            name="name"
-            placeholder="请输入模型名称关键字"
-          />
-        </nz-input-group>
-        <ng-template #suffixTemplate
-          ><i
-            nz-icon
-            nz-tooltip
-            class="ant-input-clear-icon"
-            nzTheme="fill"
-            nzType="close-circle"
-            *ngIf="name"
-            (click)="name = ''"
-            title="删除"
-          ></i
-        ></ng-template>
-        <button (click)="search()" nz-button class="ml-sm">查询</button>
+
+        <label for="step" class="ml-md">步骤：</label>
+        <nz-select id="step" [(ngModel)]="step" nzPlaceHolder="全部" class="step-select">
+          <ng-container *ngFor="let step of steps">
+            <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
+          </ng-container>
+        </nz-select>
+
+        <button (click)="search()" nz-button class="ml-md">查询</button>
       </div>
-      <div nz-col *ngIf="showAddBtn">
-        <button nzType="primary" (click)="add()" nz-button>新增模型</button>
+      <div nz-col>
+        <button nzType="primary" (click)="addOrUpdateRemind()" nz-button>新增提醒配置</button>
       </div>
     </div>
   </nz-card>
   <nz-card>
     <nz-table
-      #modelsTable
-      [nzData]="models"
+      #remindsTable
+      [nzData]="reminds"
       [nzSize]="'middle'"
       [nzFrontPagination]="false"
       [nzTotal]="total"
@@ -59,32 +43,40 @@
       <thead>
         <tr>
           <th class="index">序号</th>
-          <th class="name">模型名称</th>
-          <th class="create-time">生成时间</th>
-          <th class="function">损失函数</th>
-          <th class="status">状态</th>
+          <th class="stage">阶段</th>
+          <th class="step">步骤</th>
+          <th class="reminder">提醒事项</th>
+          <th class="role">需提醒角色</th>
+          <th class="remind-type">提醒类型</th>
+          <th class="content">提醒内容</th>
+          <th class="remind-lead-day">提前提醒天数</th>
+          <th class="remind-batch-num">提醒批次</th>
+          <th class="interval-duration">每批间隔天数</th>
+          <th class="remind-times">每次次数</th>
+          <th class="status">数据状态</th>
           <th class="handle">操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let remind of modelsTable.data; let i = index">
+        <tr *ngFor="let remind of remindsTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="name">{{ remind.title }}</td>
-          <td class="create-time">{{ remind.create_time }}</td>
-          <td class="function">{{ remind.abstract }}</td>
-          <td class="status" appRemindStatus [status]="remind.state">{{ remind.state | modelPipe }}</td>
+          <td class="stage">{{ remind.stageName }}</td>
+          <td class="step">{{ remind.nodeName }}</td>
+          <td class="reminder">{{ remind.reminder }}</td>
+          <td class="role">{{ remind.roleName }}</td>
+          <td class="remind-type">{{ remind.remindType }}</td>
+          <td class="content">{{ remind.content }}</td>
+          <td class="remind-lead-day">{{ remind.remindLeadDay }}</td>
+          <td class="remind-batch-num">{{ remind.remindBatchNum }}</td>
+          <td class="interval-duration">{{ remind.intervalDuration }}</td>
+          <td class="remind-times">{{ remind.remindTimes }}</td>
+          <td class="status">{{ remind.dataState }}</td>
           <td class="handle">
-            <button
-              nz-button
-              nzType="link"
-              (click)="onlineRemind(remind)"
-              [disabled]="remind.state === 1 || remind.state === 3 || remind.inuse === 1"
-              appRemindOnlineHandle
-              [status]="remind.state"
-              [inuse]="remind.inuse"
-            >
-              {{ remind.inuse === 0 ? '上线' : '已上线' }}
+            <button nz-button nzType="link" (click)="addOrUpdateRemind(remind)">
+              修改
             </button>
+            <nz-divider nzType="vertical"></nz-divider>
+            <button nz-button nzType="link" (click)="lockRemind(remind)">锁定</button>
             <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="deleteRemind(remind)" [disabled]="remind.inuse === 1">删除</button>
           </td>

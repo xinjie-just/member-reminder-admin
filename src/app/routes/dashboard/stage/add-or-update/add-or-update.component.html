@@ -2,12 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'stage'" nzRequired>所在阶段</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
-      <nz-select
-        id="stage"
-        formControlName="stage"
-        nzPlaceHolder="请选择一个阶段"
-        (ngModelChange)="onChangeStage($event)"
-      >
+      <nz-select id="stage" formControlName="stage" nzPlaceHolder="请选择一个阶段">
         <ng-container *ngFor="let stage of stages">
           <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
         </ng-container>

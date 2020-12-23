@@ -4,6 +4,7 @@ import {
   StepDetailRequestParams,
   StepDeleteRequestParams,
   StepAddOrUpdateRequestParams,
+  QueryReminderByNodeRequestParams,
 } from '@shared/interface/stage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -57,5 +58,13 @@ export class StageService {
    */
   addOrUpdateStep(params: StepAddOrUpdateRequestParams): Observable<any> {
     return this.http.post(`api/stageNode/saveNode`, params);
+  }
+
+  /**
+   * 根据步骤ID查询该步骤所有提醒事项，用于添加提醒配置时，选择了一个步骤联动出来所有该步骤的提醒事项
+   * @param params QueryReminderByNodeRequestParams
+   */
+  queryReminderByStep(params: QueryReminderByNodeRequestParams): Observable<any> {
+    return this.http.get(`api/stageNode/queryReminderByNode?idNode=${params.idNode}`);
   }
 }

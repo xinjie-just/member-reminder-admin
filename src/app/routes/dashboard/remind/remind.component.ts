@@ -1,15 +1,15 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
-  RemindInfoParams,
   DeleteRemindRequestParams,
   RemindSearchRequestParams,
-  OnlineRemindRequestParams,
+  RemindSearchResponsePageParams,
+  RemindSearchResponseRecordsParams,
 } from '@shared/interface/remind';
 import { ResponseParams } from '@shared/interface/response';
 import { RemindService } from '@shared/service/remind.service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { AddRemindComponent } from './add/add.component';
+import { AddOrUpdateRemindComponent } from './add-or-update/add-or-update.component';
 
 @Component({
   selector: 'app-remind',
@@ -24,30 +24,16 @@ export class RemindComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
-  name = '';
   pageIndex = 1; // 当前页码
   pageSize = 10; // 每页显示数据量
   total = 0; // 总数据量
   tableLoading = true; // 表格数据加载中
 
-  models: RemindInfoParams[] = [];
-  status = 0;
-  title = '';
-  showAddBtn = true;
-
-  statusOption = [
-    { value: 0, label: '全部' },
-    { value: 1, label: '训练中' },
-    { value: 2, label: '训练完成' },
-    { value: 3, label: '训练失败' },
-  ];
+  step: number = null;
+  reminds: RemindSearchResponseRecordsParams[] = [];
 
   ngOnInit(): void {
     this.getReminds();
-    this.route.data.subscribe((data: { title: string; showAddBtn: boolean }) => {
-      this.title = data.title;
-      this.showAddBtn = data.showAddBtn;
-    });
   }
 
   /**
@@ -60,30 +46,32 @@ export class RemindComponent implements OnInit {
   }
 
   /**
-   * 模型搜索
+   * 提醒配置搜索
    */
   getReminds(): void {
     this.tableLoading = true;
-    const params: RemindSearchRequestParams = {
-      title: this.name.trim(),
-      state: this.status,
-      pos: (this.pageIndex - 1) * this.pageSize,
-      cnt: this.pageSize,
+    let params: RemindSearchRequestParams = {
+      pageNo: this.pageIndex,
+      pageSize: this.pageSize,
     };
+    if (this.step) {
+      params = { ...params, idNode: this.step };
+    }
     this.remindService.getReminds(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          const userInfo = value.data;
-          this.models = userInfo.results;
-          this.total = userInfo.total;
+          const info: RemindSearchResponsePageParams = value.data.page;
+          this.reminds = info.records;
+          this.total = info.total;
         } else {
-          this.models = [];
+          this.reminds = [];
           this.total = 0;
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
         this.msg.error(error);
+        this.tableLoading = false;
       },
       () => {
         this.tableLoading = false;
@@ -92,13 +80,16 @@ export class RemindComponent implements OnInit {
   }
 
   /**
-   * 新建模型
+   * 新建或修改提醒配置
    */
-  add(): void {
+  addOrUpdateRemind(remind?: RemindSearchResponseRecordsParams): void {
     const addOrUpdateModal = this.nzModalService.create({
-      nzTitle: '新增模型',
-      nzContent: AddRemindComponent,
-      nzWidth: 570,
+      nzTitle: remind ? '修改提醒配置' : '新增提醒配置',
+      nzContent: AddOrUpdateRemindComponent,
+      nzWidth: 600,
+      nzComponentParams: {
+        remindInfo: remind ? remind : null,
+      },
       nzFooter: null,
     });
 
@@ -110,21 +101,21 @@ export class RemindComponent implements OnInit {
   }
 
   /**
-   * 删除模型
-   * @param user RemindInfoParams
+   * 删除提醒配置
+   * @param user RemindSearchResponseRecordsParams
    */
-  deleteRemind(remind: RemindInfoParams): void {
+  deleteRemind(remind: RemindSearchResponseRecordsParams): void {
     this.nzModalService.confirm({
-      nzTitle: `你确定要删除模型 <i>${remind.title}</i> 吗?`,
+      nzTitle: `你确定要删除提醒配置 <i>${remind.content}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.delete(remind),
       nzCancelText: '取消',
     });
   }
-  delete(remind: RemindInfoParams): void {
+  delete(remind: RemindSearchResponseRecordsParams): void {
     const params: DeleteRemindRequestParams = {
-      model_id: remind.model_id,
+      idConfig: remind.id,
     };
     this.remindService.deleteRemind(params).subscribe(
       (value: ResponseParams) => {
@@ -132,7 +123,7 @@ export class RemindComponent implements OnInit {
           this.msg.success('删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
@@ -141,32 +132,8 @@ export class RemindComponent implements OnInit {
     );
   }
 
-  /**
-   * 上线
-   */
-  onlineRemind(remind: RemindInfoParams): void {
-    this.nzModalService.confirm({
-      nzTitle: `你确定要上线模型 <i>${remind.title}</i> 吗?`,
-      nzOkText: '确定',
-      nzOkType: 'danger',
-      nzOnOk: () => this.online(remind),
-      nzCancelText: '取消',
-    });
-  }
-  online(remind: RemindInfoParams) {
-    const params: OnlineRemindRequestParams = {};
-    this.remindService.onlineRemind(remind.model_id, params).subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 200) {
-          this.msg.success('模型上线成功');
-          this.search(); // 上线成功后，重置页码
-        } else {
-          this.msg.error(value.msg);
-        }
-      },
-      (error) => {
-        this.msg.error(error);
-      },
-    );
+  lockRemind(remind: RemindSearchResponseRecordsParams): void {
+    console.log('提醒配置锁定开发中');
+    this.msg.warning('提醒配置锁定开发中');
   }
 }

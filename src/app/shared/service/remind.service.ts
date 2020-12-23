@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  addOrUpdateRemindRequestParams,
   DeleteRemindRequestParams,
+  RemindDetailSearchRequestParams,
   RemindSearchRequestParams,
-  OnlineRemindRequestParams,
-  CreateRemindRequestParams,
 } from '@shared/interface/remind';
 import { HttpClient } from '@angular/common/http';
 
@@ -15,36 +15,40 @@ export class RemindService {
   constructor(private http: HttpClient) {}
 
   /**
-   * 模型搜索
-   * @param params RemindSearchRequestParams
-   */
-  getReminds(params: RemindSearchRequestParams): Observable<any> {
-    return this.http.get(
-      `api/console/model_list?state=${params.state}&title=${params.title}&pos=${params.pos}&cnt=${params.cnt}`,
-    );
-  }
-
-  /**
-   * 删除模型
+   * 删除提醒配置
    * @param params DeleteRemindRequestParams
    */
   deleteRemind(params: DeleteRemindRequestParams): Observable<any> {
-    return this.http.delete(`api/console/model_delete/${params.model_id}`);
+    return this.http.get(`api/remindConfig/admin/deleteConfig?idConfig=${params.idConfig}`);
   }
 
   /**
-   * 模型上线
-   * @param params OnlineRemindRequestParams
+   *  根据步骤ID分页查询提醒配置
+   * @param params RemindSearchRequestParams
    */
-  onlineRemind(model_id: number, params: OnlineRemindRequestParams): Observable<any> {
-    return this.http.patch(`api/console/model_online/${model_id}`, params);
+  getReminds(params: RemindSearchRequestParams): Observable<any> {
+    if (params.idNode) {
+      return this.http.get(
+        `api/remindConfig/getPage?idNode=${params.idNode}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
+      );
+    } else {
+      return this.http.get(`api/remindConfig/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}`);
+    }
   }
 
   /**
-   * 新增模型(模型训练)
-   * @param params CreateRemindRequestParams
+   *  根据ID查询提醒配置
+   * @param params RemindDetailSearchRequestParams
    */
-  createRemind(params: CreateRemindRequestParams): Observable<any> {
-    return this.http.post(`api/console/model_add`, params);
+  getRemind(params: RemindDetailSearchRequestParams): Observable<any> {
+    return this.http.get(`api/remindConfig/getById?id=${params.id}`);
+  }
+
+  /**
+   *  新增或修改提醒配置
+   * @param params addOrUpdateRemindRequestParams
+   */
+  addOrUpdateRemind(params: addOrUpdateRemindRequestParams): Observable<any> {
+    return this.http.post(`api/remindConfig/saveNodeRemindConfig`, params);
   }
 }

@@ -83,13 +83,11 @@ export class AddOrUpdateStageComponent implements OnInit {
   }
 
   /**
-   * 改变阶段，获取步骤
-   * @param stageId number
+   * 获取步骤
+   * 获取所有步骤，idStageNode 不传
    */
-  onChangeStage(stageId: number) {
-    console.log('改变阶段', stageId);
-    const params: StepSearchRequestParams = {
-      // idStageNode: stageId,
+  getSteps() {
+    let params: StepSearchRequestParams = {
       pageNo: 1,
       pageSize: 999,
     };

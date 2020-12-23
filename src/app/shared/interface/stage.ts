@@ -81,3 +81,14 @@ export interface StepAddOrUpdateRequestParams {
   sort: number;
   dataState?: number;
 }
+
+export interface QueryReminderByNodeRequestParams {
+  idNode: number;
+}
+
+export interface QueryReminderByNodeResposeDataParams {
+  idReminder: number;
+  idNode: number;
+  content: string;
+  dataState: number;
+}

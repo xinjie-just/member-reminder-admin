@@ -13,6 +13,6 @@ export class LogService {
    * 获取业务日志
    */
   getLogs(params: LogSearchRequestParams): Observable<any> {
-    return this.http.get(`api/system/bizLogPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}`);
+    return this.http.get(`api/system/admin/bizLogPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}`);
   }
 }

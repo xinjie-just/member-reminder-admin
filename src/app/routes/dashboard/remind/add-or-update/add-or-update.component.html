@@ -1,0 +1,155 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'stage'" nzRequired>阶段</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
+      <nz-select
+        id="stage"
+        formControlName="stage"
+        nzPlaceHolder="请选择一个阶段"
+        (ngModelChange)="onChangeStage($event)"
+      >
+        <ng-container *ngFor="let stage of stages">
+          <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #stageErrorTpl let-stage>
+        <ng-container *ngIf="stage.hasError('required')">
+          阶段是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'step'" nzRequired>步骤</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
+      <nz-select id="step" formControlName="step" nzPlaceHolder="请选择一个步骤" (ngModelChange)="onChangeStep($event)">
+        <ng-container *ngFor="let step of steps">
+          <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #stepErrorTpl let-step>
+        <ng-container *ngIf="step.hasError('required')">
+          步骤是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'reminder'" nzRequired>提醒事项</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="reminderErrorTpl">
+      <nz-select id="reminder" formControlName="reminder" nzPlaceHolder="请选择提醒事项">
+        <ng-container *ngFor="let reminder of reminders">
+          <nz-option [nzValue]="reminder.idReminder" [nzLabel]="reminder.content"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #reminderErrorTpl let-reminder>
+        <ng-container *ngIf="reminder.hasError('required')">
+          提醒事项是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择提醒角色">
+        <ng-container *ngFor="let role of roles">
+          <nz-option [nzValue]="role.idRole" [nzLabel]="role.roleName"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #roleErrorTpl let-role>
+        <ng-container *ngIf="role.hasError('required')">
+          需提醒角色是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'remindType'" nzRequired>提醒类型</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="remindTypeErrorTpl">
+      <nz-select id="remindType" formControlName="remindType" nzPlaceHolder="请选择提醒类型">
+        <ng-container *ngFor="let remindType of remindTypes">
+          <nz-option [nzValue]="remindType.value" [nzLabel]="remindType.label"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #remindTypeErrorTpl let-remindType>
+        <ng-container *ngIf="remindType.hasError('required')">
+          提醒类型是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
+      <input nz-input formControlName="content" required id="content" placeholder="请输入提醒内容" />
+      <ng-template #contentErrorTpl let-content>
+        <ng-container *ngIf="content.hasError('required')">
+          提醒内容是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'remindLeadDay'" nzRequired>提前提醒天数</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="remindLeadDayErrorTpl">
+      <nz-input-number formControlName="remindLeadDay" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
+      <ng-template #remindLeadDayErrorTpl let-remindLeadDay>
+        <ng-container *ngIf="remindLeadDay.hasError('required')">
+          提前提醒天数是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'remindBatchNum'" nzRequired>提前批次</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="remindBatchNumErrorTpl">
+      <nz-input-number formControlName="remindBatchNum" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      <ng-template #remindBatchNumErrorTpl let-remindBatchNum>
+        <ng-container *ngIf="remindBatchNum.hasError('required')">
+          提前批次是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'intervalDuration'" nzRequired>批次间隔天数</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="intervalDurationErrorTpl">
+      <nz-input-number formControlName="intervalDuration" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
+      <ng-template #intervalDurationErrorTpl let-intervalDuration>
+        <ng-container *ngIf="intervalDuration.hasError('required')">
+          批次间隔天数是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'remindTimes'" nzRequired>每批次提醒次数</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="remindTimesErrorTpl">
+      <nz-input-number formControlName="remindTimes" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
+      <ng-template #remindTimesErrorTpl let-remindTimes>
+        <ng-container *ngIf="remindTimes.hasError('required')">
+          每批次提醒次数是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="text-right">
+    <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
+      取消
+    </button>
+    <button nz-button [nzType]="'primary'" [disabled]="!form.valid" type="submit" [nzLoading]="uploading">
+      确认
+    </button>
+  </div>
+</form>
