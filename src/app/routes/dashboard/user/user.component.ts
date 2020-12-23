@@ -18,11 +18,13 @@ import {
   RoleSearchResponseRecordsParams,
 } from '@shared/interface/role';
 import { RoleService } from '@shared/service/role.service';
+import { StageService } from '@shared/service/stage.service';
+import { StageSearchResponseDataParams } from '@shared/interface/stage';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styles: [],
+  styleUrls: ['./user.component.less'],
 })
 export class UserComponent implements OnInit {
   constructor(
@@ -30,6 +32,7 @@ export class UserComponent implements OnInit {
     private roleService: RoleService,
     private msg: NzMessageService,
     private modalService: NzModalService,
+    private stageService: StageService,
   ) {}
 
   username = '';
@@ -51,13 +54,42 @@ export class UserComponent implements OnInit {
   users: UserSearchResponseRecordsParams[] = [];
   roles: RoleSearchResponseRecordsParams[] = [];
 
-  stage;
-  stages;
+  stage: number = null;
+  stages: StageSearchResponseDataParams[] = [];
 
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
+    this.getStages();
     this.getUers();
     this.getRoles();
+  }
+
+  /**
+   * 搜索阶段
+   */
+  getStages(): void {
+    this.stageService.getStages().subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          this.stages = value.data;
+        } else {
+          this.stages = [];
+          this.msg.error(value.message);
+        }
+      },
+      (error) => {
+        this.msg.error(error);
+      },
+    );
+  }
+
+  /**
+   * 改变阶段，获取步骤
+   * @param stageId number
+   */
+  onChangeStage(stageId: number) {
+    this.stage = stageId;
+    this.getUers(stageId);
   }
 
   /**
@@ -66,19 +98,22 @@ export class UserComponent implements OnInit {
   search(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.getUers();
+    this.getUers(this.stage);
   }
 
   /**
    * 获取用户列表
    */
-  getUers(): void {
+  getUers(stage?: number): void {
     this.tableLoading = true;
-    const params: UserSearchRequestParams = {
-      userName: this.username.trim(),
+    let params: UserSearchRequestParams = {
+      keyword: this.username.trim(),
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };
+    if (this.stage) {
+      params = { ...params, idNode: stage };
+    }
     this.userService.getUers(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {

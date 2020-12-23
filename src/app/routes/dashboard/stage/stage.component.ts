@@ -32,6 +32,7 @@ export class StageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getStages();
     this.getSteps();
   }
 
@@ -42,7 +43,7 @@ export class StageComponent implements OnInit {
     this.pageIndex = 1;
     this.pageSize = 10;
     this.getStages();
-    this.getSteps();
+    this.getSteps(this.stage);
   }
 
   /**
@@ -68,12 +69,15 @@ export class StageComponent implements OnInit {
    * 获取步骤
    * 获取所有步骤，idStageNode 不传
    */
-  getSteps() {
+  getSteps(stage?: number) {
     this.tableLoading = true;
-    const params: StepSearchRequestParams = {
+    let params: StepSearchRequestParams = {
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };
+    if (stage) {
+      params = { ...params, idStageNode: this.stage };
+    }
     this.stageService.getSteps(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {

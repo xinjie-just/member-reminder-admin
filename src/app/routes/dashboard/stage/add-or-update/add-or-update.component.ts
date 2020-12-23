@@ -40,6 +40,10 @@ export class AddOrUpdateStageComponent implements OnInit {
   ];
 
   sorts: { value: number; label: string }[] = [];
+  nodeBizTypes: { value: number; label: string }[] = [
+    { value: 1, label: '提醒办理' },
+    { value: 2, label: '等待批复' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -50,6 +54,7 @@ export class AddOrUpdateStageComponent implements OnInit {
     this.form = this.fb.group({
       stage: [null, [Validators.required]],
       stepName: [null, [Validators.required]],
+      nodeBizType: [1, [Validators.required]],
       step: [null, [Validators.required]],
       duration: [1, [Validators.required]],
       samePreStep: [1, [Validators.required]],
@@ -58,7 +63,7 @@ export class AddOrUpdateStageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (let i = 1; i < 31; i++) {
+    for (let i = 1; i < 32; i++) {
       this.durations.push({ value: i, label: String(i) });
     }
     for (let i = 1; i < 11; i++) {
@@ -84,7 +89,7 @@ export class AddOrUpdateStageComponent implements OnInit {
   onChangeStage(stageId: number) {
     console.log('改变阶段', stageId);
     const params: StepSearchRequestParams = {
-      idStageNode: stageId,
+      // idStageNode: stageId,
       pageNo: 1,
       pageSize: 999,
     };
@@ -114,7 +119,7 @@ export class AddOrUpdateStageComponent implements OnInit {
       parentId: this.form.get('stage').value,
       previous: this.form.get('step').value,
       name: this.form.get('stepName').value,
-      nodeBizType: this.stepInfo.nodeBizType,
+      nodeBizType: this.form.get('nodeBizType').value,
       duration: this.form.get('duration').value,
       isBeginPreNode: this.form.get('samePreStep').value,
       sort: this.form.get('sort').value,

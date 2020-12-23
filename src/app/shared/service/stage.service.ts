@@ -26,9 +26,13 @@ export class StageService {
    * @param params StepSearchRequestParams
    */
   getSteps(params: StepSearchRequestParams): Observable<any> {
-    return this.http.get(
-      `api/stageNode/getPage?idStageNode=${params.idStageNode}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
-    );
+    if (params.idStageNode) {
+      return this.http.get(
+        `api/stageNode/getPage?idStageNode=${params.idStageNode}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
+      );
+    } else {
+      return this.http.get(`api/stageNode/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}`);
+    }
   }
 
   /**

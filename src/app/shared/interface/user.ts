@@ -1,6 +1,7 @@
 // 获取用户信息请求参数
 export interface UserSearchRequestParams {
-  userName?: string;
+  idNode?: number;
+  keyword: string;
   pageSize: number;
   pageNo: number;
 }

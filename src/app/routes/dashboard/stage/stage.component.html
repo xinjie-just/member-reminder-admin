@@ -3,7 +3,7 @@
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
         <label for="stage">阶段：</label>
-        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
+        <nz-select id="stage" [(ngModel)]="stage" [nzAllowClear]="true" nzPlaceHolder="全部" class="stage-select">
           <ng-container *ngFor="let stage of stages">
             <nz-option [nzValue]="stage?.idStage" [nzLabel]="stage?.stageName"></nz-option>
           </ng-container>

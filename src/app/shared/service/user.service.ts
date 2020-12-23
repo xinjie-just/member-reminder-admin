@@ -60,9 +60,15 @@ export class UserService {
    * @param params UserSearchRequestParams
    */
   getUers(params: UserSearchRequestParams): Observable<any> {
-    return this.http.get(
-      `api/user/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&userName=${params.userName}`,
-    );
+    if (params.idNode) {
+      return this.http.get(
+        `api/user/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&keyword=${params.keyword}&idNode=${params.idNode}`,
+      );
+    } else {
+      return this.http.get(
+        `api/user/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+      );
+    }
   }
 
   /**

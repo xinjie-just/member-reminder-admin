@@ -31,6 +31,21 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'nodeBizType'" nzRequired>业务类型</nz-form-label>
+    <nz-form-control [nzSm]="18" [nzXs]="16">
+      <nz-select
+        id="nodeBizType"
+        formControlName="nodeBizType"
+        nzPlaceHolder="请选择一个步骤业务类型"
+        (ngModelChange)="onChangeStage($event)"
+      >
+        <ng-container *ngFor="let nodeBizType of nodeBizTypes">
+          <nz-option [nzValue]="nodeBizType.value" [nzLabel]="nodeBizType.label"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'step'" nzRequired>上一步骤</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
       <nz-select id="step" formControlName="step" nzPlaceHolder="请选择一个步骤">

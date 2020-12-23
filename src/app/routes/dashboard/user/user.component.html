@@ -2,19 +2,24 @@
   <nz-card nzTitle="用户管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
-        <!--
-        <label for="stage">步骤：</label>
-        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
-          <ng-container *ngFor="let stage of stageOption">
-            <nz-option [nzValue]="stage.value" [nzLabel]="stage.label"></nz-option>
+        <label for="stage">阶段：</label>
+        <nz-select
+          id="stage"
+          [(ngModel)]="stage"
+          (ngModelChange)="onChangeStage($event)"
+          [nzAllowClear]="true"
+          nzPlaceHolder="全部"
+          class="stage-select"
+        >
+          <ng-container *ngFor="let stage of stages">
+            <nz-option [nzValue]="stage?.idStage" [nzLabel]="stage?.stageName"></nz-option>
           </ng-container>
         </nz-select>
-        -->
-        <label for="username">姓名/手机号：</label>
+        <label for="username" class="ml-lg">姓名/手机号：</label>
         <nz-input-group [nzSuffix]="suffixTemplate">
           <input
             nz-input
-            class="width-lg"
+            class="width-md"
             [(ngModel)]="username"
             (keyup.enter)="search()"
             id="username"
