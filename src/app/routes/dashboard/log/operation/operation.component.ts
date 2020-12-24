@@ -1,4 +1,4 @@
-import { LogSearchResponsePageParams } from './../../../shared/interface/log';
+import { LogSearchResponsePageParams } from '../../../../shared/interface/log';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Component, OnInit } from '@angular/core';
 import { LogService } from '@shared/service/log.service';
@@ -6,11 +6,11 @@ import { ResponseParams } from '@shared/interface/response';
 import { LogSearchRequestParams, LogSearchResponseRecordsParams } from '@shared/interface/log';
 
 @Component({
-  selector: 'app-log',
-  templateUrl: './log.component.html',
-  styleUrls: ['./log.component.less'],
+  selector: 'app-operation',
+  templateUrl: './operation.component.html',
+  styleUrls: ['./operation.component.less'],
 })
-export class LogComponent implements OnInit {
+export class OperationLogComponent implements OnInit {
   tableLoading = false;
   pageIndex = 1;
   pageSize = 10;

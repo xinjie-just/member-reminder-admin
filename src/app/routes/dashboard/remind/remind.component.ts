@@ -3,11 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
   DeleteRemindRequestParams,
-  lockRemindRequestParams,
+  lockOrUnlockRemindRequestParams,
   RemindSearchRequestParams,
   RemindSearchResponsePageParams,
   RemindSearchResponseRecordsParams,
-  unlockRemindRequestParams,
 } from '@shared/interface/remind';
 import { ResponseParams } from '@shared/interface/response';
 import { RemindService } from '@shared/service/remind.service';
@@ -238,16 +237,17 @@ export class RemindComponent implements OnInit {
     });
   }
   lockOrUnlock(remind: RemindSearchResponseRecordsParams): void {
+    const params: lockOrUnlockRemindRequestParams = {
+      idConfig: remind.id,
+    };
     if (remind.dataState !== 0) {
-      let params: lockRemindRequestParams = {
-        idConfig: remind.id,
-      };
       this.remindService.lockRemind(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
             this.msg.success('锁定成功！');
+            this.search(); // 锁定成功后，重置页码
           } else {
-            this.msg.error('锁定失败！');
+            this.msg.error(value.message);
           }
         },
         (error) => {
@@ -255,15 +255,13 @@ export class RemindComponent implements OnInit {
         },
       );
     } else {
-      let params: unlockRemindRequestParams = {
-        idConfig: remind.id,
-      };
       this.remindService.unlockRemind(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
             this.msg.success('解锁成功！');
+            this.search(); // 解锁成功后，重置页码
           } else {
-            this.msg.error('解锁失败！');
+            this.msg.error(value.message);
           }
         },
         (error) => {

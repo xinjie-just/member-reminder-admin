@@ -3,10 +3,9 @@ import { Observable } from 'rxjs';
 import {
   addOrUpdateRemindRequestParams,
   DeleteRemindRequestParams,
-  lockRemindRequestParams,
+  lockOrUnlockRemindRequestParams,
   RemindDetailSearchRequestParams,
   RemindSearchRequestParams,
-  unlockRemindRequestParams,
 } from '@shared/interface/remind';
 import { HttpClient } from '@angular/common/http';
 
@@ -56,17 +55,17 @@ export class RemindService {
 
   /**
    *  提醒配置锁定
-   * @param params lockRemindRequestParams
+   * @param params lockOrUnlockRemindRequestParams
    */
-  lockRemind(params: lockRemindRequestParams): Observable<any> {
+  lockRemind(params: lockOrUnlockRemindRequestParams): Observable<any> {
     return this.http.get(`api/remindConfig/admin/lockConfig?idConfig=${params.idConfig}`);
   }
 
   /**
    *  提醒配置解锁
-   * @param params unlockRemindRequestParams
+   * @param params lockOrUnlockRemindRequestParams
    */
-  unlockRemind(params: unlockRemindRequestParams): Observable<any> {
+  unlockRemind(params: lockOrUnlockRemindRequestParams): Observable<any> {
     return this.http.get(`api/remindConfig/admin/unlockConfig?idConfig=${params.idConfig}`);
   }
 }

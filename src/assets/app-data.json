@@ -16,28 +16,42 @@
       "children": [
         {
           "text": "角色管理",
-          "icon": { "type": "img", "value": "assets/menuIcon/role.svg" },
+          "icon": { "type": "img", "value": "assets/menu-icon/role.svg" },
           "link": "/dashboard/role"
         },
         {
-          "text": "用户管理",
-          "icon": { "type": "img", "value": "assets/menuIcon/user.svg" },
+          "text": "人员管理",
+          "icon": { "type": "img", "value": "assets/menu-icon/user.svg" },
           "link": "/dashboard/user"
         },
         {
           "text": "阶段步骤管理",
-          "icon": { "type": "img", "value": "assets/menuIcon/step.svg" },
+          "icon": { "type": "img", "value": "assets/menu-icon/step.svg" },
           "link": "/dashboard/stage"
         },
         {
           "text": "提醒配置管理",
-          "icon": { "type": "img", "value": "assets/menuIcon/remind.svg" },
+          "icon": { "type": "img", "value": "assets/menu-icon/remind.svg" },
           "link": "/dashboard/remind"
         },
         {
           "text": "日志管理",
-          "icon": { "type": "img", "value": "assets/menuIcon/log.svg" },
-          "link": "/dashboard/log"
+          "icon": { "type": "img", "value": "assets/menu-icon/log.svg" },
+          "link": "/dashboard/log",
+          "children": [
+            {
+              "text": "业务操作日志",
+              "link": "/dashboard/log/operation"
+            },
+            {
+              "text": "提醒任务日志",
+              "link": "/dashboard/log/remind"
+            },
+            {
+              "text": "定时发送日志",
+              "link": "/dashboard/log/send"
+            }
+          ]
         }
       ]
     }
