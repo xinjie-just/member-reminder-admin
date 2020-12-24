@@ -120,13 +120,6 @@ export class UserComponent implements OnInit {
         if (value.code === 200) {
           const info: UserSearchResponsePageParams = value.data.page;
           this.users = info.records;
-          // const userInfo = info.records;
-          // this.users = userInfo.map((item: UserSearchResponseRecordsParams) => {
-          //   return {
-          //     disabled: item.id === Number(localStorage.getItem('userId')),
-          //     ...item,
-          //   };
-          // });
           this.total = info.total;
         } else {
           this.users = [];
@@ -252,6 +245,7 @@ export class UserComponent implements OnInit {
       nzTitle: '用户入党流程查看',
       nzContent: ViewProcessComponent,
       nzFooter: null,
+      nzWidth: 900,
       nzComponentParams: {
         userInfo: user,
       },
