@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
   DeleteRemindRequestParams,
+  lockRemindRequestParams,
   RemindSearchRequestParams,
   RemindSearchResponsePageParams,
   RemindSearchResponseRecordsParams,
+  unlockRemindRequestParams,
 } from '@shared/interface/remind';
 import { ResponseParams } from '@shared/interface/response';
 import { RemindService } from '@shared/service/remind.service';
@@ -17,6 +19,7 @@ import {
   StepSearchResponsePageParams,
   StepSearchResponseRecordsParams,
 } from '@shared/interface/stage';
+import { CurrentUserInfo } from '@shared/interface/user';
 
 @Component({
   selector: 'app-remind',
@@ -43,7 +46,19 @@ export class RemindComponent implements OnInit {
   step: number = null;
   reminds: RemindSearchResponseRecordsParams[] = [];
 
+  currentUserInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    phone: null,
+    realName: null,
+    roleId: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
+
   ngOnInit(): void {
+    this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.getStages();
     this.getReminds();
   }
@@ -208,8 +223,53 @@ export class RemindComponent implements OnInit {
     );
   }
 
-  lockRemind(remind: RemindSearchResponseRecordsParams): void {
-    console.log('提醒配置锁定开发中');
-    this.msg.warning('提醒配置锁定开发中');
+  /**
+   * 锁定或解锁提醒配置
+   * @param remind RemindSearchResponseRecordsParams
+   */
+  lockOrUnlockRemind(remind: RemindSearchResponseRecordsParams): void {
+    const type = remind.dataState === 0 ? '解锁' : '锁定';
+    this.nzModalService.confirm({
+      nzTitle: `你确定要${type}提醒配置 <i>${remind.content}</i> 吗?`,
+      nzOkText: '确定',
+      nzOkType: 'danger',
+      nzOnOk: () => this.lockOrUnlock(remind),
+      nzCancelText: '取消',
+    });
+  }
+  lockOrUnlock(remind: RemindSearchResponseRecordsParams): void {
+    if (remind.dataState !== 0) {
+      let params: lockRemindRequestParams = {
+        idConfig: remind.id,
+      };
+      this.remindService.lockRemind(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('锁定成功！');
+          } else {
+            this.msg.error('锁定失败！');
+          }
+        },
+        (error) => {
+          this.msg.error('锁定失败！', error);
+        },
+      );
+    } else {
+      let params: unlockRemindRequestParams = {
+        idConfig: remind.id,
+      };
+      this.remindService.unlockRemind(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('解锁成功！');
+          } else {
+            this.msg.error('解锁失败！');
+          }
+        },
+        (error) => {
+          this.msg.error('解锁失败！', error);
+        },
+      );
+    }
   }
 }

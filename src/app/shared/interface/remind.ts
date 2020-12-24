@@ -64,3 +64,14 @@ export interface addOrUpdateRemindRequestParams {
   remindTimes: number;
   remindType: number;
 }
+
+// 锁定请求参数
+export interface lockRemindRequestParams {
+  idConfig: number;
+}
+
+// 解锁请求参数
+
+export interface unlockRemindRequestParams {
+  idConfig: number;
+}

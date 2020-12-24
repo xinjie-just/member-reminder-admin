@@ -54,19 +54,19 @@
     >
       <thead>
         <tr>
-          <th class="index">序号</th>
-          <th class="stage">阶段</th>
-          <th class="step">步骤</th>
-          <th class="reminder">提醒事项</th>
-          <th class="role">需提醒角色</th>
-          <th class="remind-type">提醒类型</th>
-          <th class="content">提醒内容</th>
-          <th class="remind-lead-day">提前提醒天数</th>
-          <th class="remind-batch-num">提醒批次</th>
-          <th class="interval-duration">每批间隔天数</th>
-          <th class="remind-times">每次次数</th>
-          <th class="status">数据状态</th>
-          <th class="handle">操作</th>
+          <th class="index" [nzWidth]="'60px'">序号</th>
+          <th class="stage" [nzWidth]="'170px'">阶段</th>
+          <th class="step" [nzWidth]="'120px'">步骤</th>
+          <th class="reminder" [nzWidth]="'100px'">提醒事项</th>
+          <th class="role" [nzWidth]="'110px'">需提醒角色</th>
+          <th class="remind-type" [nzWidth]="'120px'">提醒类型</th>
+          <th class="content" [nzWidth]="'150px'">提醒内容</th>
+          <th class="remind-lead-day" [nzWidth]="'80px'">提前提醒天数</th>
+          <th class="remind-batch-num" [nzWidth]="'60px'">提醒批次</th>
+          <th class="interval-duration" [nzWidth]="'80px'">每批间隔天数</th>
+          <th class="remind-times" [nzWidth]="'60px'">每次次数</th>
+          <th class="status" [nzWidth]="'80px'">数据状态</th>
+          <th class="handle" [nzWidth]="'180px'">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -87,8 +87,10 @@
             <button nz-button nzType="link" (click)="addOrUpdateRemind(remind)">
               修改
             </button>
-            <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="link" (click)="lockRemind(remind)">锁定</button>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
+            <button nz-button nzType="link" (click)="lockOrUnlockRemind(remind)" *ngIf="currentUserInfo.roleId === 1">
+              {{ remind.dataState === 0 ? '解锁' : '锁定' }}
+            </button>
             <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="deleteRemind(remind)" [disabled]="remind.inuse === 1">删除</button>
           </td>
