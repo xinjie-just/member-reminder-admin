@@ -65,11 +65,13 @@
           <td class="id">{{ role.idRole }}</td>
           <td class="name">{{ role.roleName }}</td>
           <td class="status" [ngSwitch]="role.dataState">
-            <nz-tag [nzColor]="'#f50'" *ngSwitchCase="role.dataState === 2">{{ role.dataState | roleStatus }}</nz-tag>
-            <nz-tag [nzColor]="'#ffe58f'" *ngSwitchCase="role.dataState === 0">{{
+            <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="role.dataState === 2">{{
               role.dataState | roleStatus
             }}</nz-tag>
-            <nz-tag [nzColor]="'#91d5ff'" *ngSwitchDefault>{{ role.dataState | roleStatus }}</nz-tag>
+            <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="role.dataState === 0">{{
+              role.dataState | roleStatus
+            }}</nz-tag>
+            <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ role.dataState | roleStatus }}</nz-tag>
           </td>
           <td class="handle">
             <button nz-button nzType="link" (click)="addOrUpdate(role)">修改</button>

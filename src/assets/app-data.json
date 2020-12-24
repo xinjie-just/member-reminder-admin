@@ -16,22 +16,27 @@
       "children": [
         {
           "text": "角色管理",
+          "icon": { "type": "img", "value": "assets/menuIcon/role.svg" },
           "link": "/dashboard/role"
         },
         {
           "text": "用户管理",
+          "icon": { "type": "img", "value": "assets/menuIcon/user.svg" },
           "link": "/dashboard/user"
         },
         {
           "text": "阶段步骤管理",
+          "icon": { "type": "img", "value": "assets/menuIcon/step.svg" },
           "link": "/dashboard/stage"
         },
         {
           "text": "提醒配置管理",
+          "icon": { "type": "img", "value": "assets/menuIcon/remind.svg" },
           "link": "/dashboard/remind"
         },
         {
           "text": "日志管理",
+          "icon": { "type": "img", "value": "assets/menuIcon/log.svg" },
           "link": "/dashboard/log"
         }
       ]
