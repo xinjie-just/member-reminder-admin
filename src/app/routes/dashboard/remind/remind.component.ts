@@ -1,3 +1,4 @@
+import { StageService } from './../../../shared/service/stage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -10,6 +11,12 @@ import { ResponseParams } from '@shared/interface/response';
 import { RemindService } from '@shared/service/remind.service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { AddOrUpdateRemindComponent } from './add-or-update/add-or-update.component';
+import {
+  StageSearchResponseDataParams,
+  StepSearchRequestParams,
+  StepSearchResponsePageParams,
+  StepSearchResponseRecordsParams,
+} from '@shared/interface/stage';
 
 @Component({
   selector: 'app-remind',
@@ -22,6 +29,7 @@ export class RemindComponent implements OnInit {
     private msg: NzMessageService,
     private nzModalService: NzModalService,
     private route: ActivatedRoute,
+    private stageService: StageService,
   ) {}
 
   pageIndex = 1; // 当前页码
@@ -29,11 +37,79 @@ export class RemindComponent implements OnInit {
   total = 0; // 总数据量
   tableLoading = true; // 表格数据加载中
 
+  stages: StageSearchResponseDataParams[] = [];
+  steps: StepSearchResponseRecordsParams[] = [];
+  stage: number = null;
   step: number = null;
   reminds: RemindSearchResponseRecordsParams[] = [];
 
   ngOnInit(): void {
+    this.getStages();
     this.getReminds();
+  }
+
+  /**
+   * 获取阶段
+   */
+  getStages(): void {
+    this.stageService.getStages().subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          this.stages = value.data;
+        } else {
+          this.stages = [];
+          this.msg.error(value.message);
+        }
+      },
+      (error) => {
+        this.msg.error(error);
+      },
+    );
+  }
+
+  /**
+   * 改变阶段获取步骤
+   * @param stage: number
+   */
+  onChangeStage(stage: number) {
+    this.getSteps(stage);
+  }
+
+  /**
+   * 获取步骤
+   * 获取所有步骤，idStageNode 不传
+   */
+  getSteps(stage?: number): void {
+    let params: StepSearchRequestParams = {
+      pageNo: 1,
+      pageSize: 10,
+    };
+    if (stage) {
+      params = { ...params, idStageNode: stage };
+    }
+    this.stageService.getSteps(params).subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          const info: StepSearchResponsePageParams = value.data.page;
+          this.steps = info.records;
+        } else {
+          this.steps = [];
+          this.msg.error(value.message);
+        }
+      },
+      (error) => {
+        this.msg.error(error);
+      },
+    );
+  }
+
+  /**
+   * 改变步骤
+   * @param step number
+   */
+  onChangeStep(step: number) {
+    this.step = step;
+    this.getReminds(step);
   }
 
   /**
@@ -48,14 +124,14 @@ export class RemindComponent implements OnInit {
   /**
    * 提醒配置搜索
    */
-  getReminds(): void {
+  getReminds(step?: number): void {
     this.tableLoading = true;
     let params: RemindSearchRequestParams = {
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };
-    if (this.step) {
-      params = { ...params, idNode: this.step };
+    if (step) {
+      params = { ...params, idNode: step };
     }
     this.remindService.getReminds(params).subscribe(
       (value: ResponseParams) => {

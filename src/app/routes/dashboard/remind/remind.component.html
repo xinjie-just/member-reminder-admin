@@ -3,14 +3,26 @@
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
         <label for="stage">阶段：</label>
-        <nz-select id="stage" [(ngModel)]="stage" nzPlaceHolder="全部" class="stage-select">
-          <ng-container *ngFor="let stage of satges">
+        <nz-select
+          id="stage"
+          [(ngModel)]="stage"
+          nzPlaceHolder="全部"
+          class="stage-select"
+          (ngModelChange)="onChangeStage($event)"
+        >
+          <ng-container *ngFor="let stage of stages">
             <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
           </ng-container>
         </nz-select>
 
         <label for="step" class="ml-md">步骤：</label>
-        <nz-select id="step" [(ngModel)]="step" nzPlaceHolder="全部" class="step-select">
+        <nz-select
+          id="step"
+          [(ngModel)]="step"
+          nzPlaceHolder="全部"
+          class="step-select"
+          (ngModelChange)="onChangeStep($event)"
+        >
           <ng-container *ngFor="let step of steps">
             <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
           </ng-container>
