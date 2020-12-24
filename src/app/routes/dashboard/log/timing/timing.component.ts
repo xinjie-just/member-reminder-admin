@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-send',
-  templateUrl: './send.component.html',
+  selector: 'app-timing',
+  templateUrl: './timing.component.html',
   styles: [],
 })
-export class SendLogComponent implements OnInit {
+export class TimingLogComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

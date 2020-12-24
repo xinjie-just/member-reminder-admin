@@ -3,7 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Component, OnInit } from '@angular/core';
 import { LogService } from '@shared/service/log.service';
 import { ResponseParams } from '@shared/interface/response';
-import { LogSearchRequestParams, LogSearchResponseRecordsParams } from '@shared/interface/log';
+import { OperationLogSearchRequestParams, LogSearchResponseRecordsParams } from '@shared/interface/log';
 
 @Component({
   selector: 'app-operation',
@@ -21,12 +21,12 @@ export class OperationLogComponent implements OnInit {
   constructor(private logService: LogService, private msg: NzMessageService) {}
 
   ngOnInit(): void {
-    this.getLogs();
+    this.getOperationLogs();
   }
 
-  getLogs() {
+  getOperationLogs() {
     this.tableLoading = true;
-    const params: LogSearchRequestParams = {
+    const params: OperationLogSearchRequestParams = {
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };

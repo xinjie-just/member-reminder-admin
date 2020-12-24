@@ -49,7 +49,7 @@
             },
             {
               "text": "定时发送日志",
-              "link": "/dashboard/log/send"
+              "link": "/dashboard/log/timing"
             }
           ]
         }
