@@ -1,0 +1,22 @@
+<nz-table #processesTable [nzData]="processes" [nzSize]="'middle'" [nzLoading]="tableLoading" [nzLoadingDelay]="2">
+  <thead>
+    <tr>
+      <th [nzWidth]="'70px'">序号</th>
+      <th [nzWidth]="'100px'">阶段</th>
+      <th [nzWidth]="'180px'">步骤</th>
+      <th [nzWidth]="'160px'">结果</th>
+      <th [nzWidth]="'200px'">完成状态</th>
+      <th [nzWidth]="'260px'">更新时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let process of processesTable.data; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ process.stageName }}</td>
+      <td>{{ process.nodeName }}</td>
+      <td>{{ process.result }}</td>
+      <td>{{ process.nodeState }}</td>
+      <td>{{ process.endTime }}</td>
+    </tr>
+  </tbody>
+</nz-table>

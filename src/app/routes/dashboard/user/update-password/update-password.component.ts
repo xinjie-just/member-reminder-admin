@@ -88,7 +88,7 @@ export class UpdatePasswordComponent implements OnInit {
           this.router.navigateByUrl(this.tokenService.login_url);
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
           this.modal.destroy({ data: 'error' });
         }
       },

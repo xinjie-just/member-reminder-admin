@@ -211,7 +211,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
           this.msg.success('提醒配置新增成功');
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
           this.modal.destroy({ data: 'error' });
         }
       },
@@ -231,7 +231,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
           this.msg.success('提醒配置修改成功');
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
           this.modal.destroy({ data: 'error' });
         }
       },

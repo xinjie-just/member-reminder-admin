@@ -1,7 +1,6 @@
 export interface ResponseParams {
   code?: number;
   message?: string;
-  msg?: string;
   data?: any;
 }
 

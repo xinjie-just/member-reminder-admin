@@ -12,6 +12,7 @@ import { AddOrUpdateStageComponent } from './stage/add-or-update/add-or-update.c
 import { AddOrUpdateRoleComponent } from './role/add-or-update/add-or-update.component';
 import { UpdatePasswordComponent } from './user/update-password/update-password.component';
 import { AddOrUpdateRemindComponent } from './remind/add-or-update/add-or-update.component';
+import { ViewProcessComponent } from './user/view-process/view-process.component';
 
 const COMPONENTS = [
   RoleComponent,
@@ -32,7 +33,7 @@ const COMPONENTS_NOROUNT = [
 
 @NgModule({
   imports: [SharedModule, DashboardRoutingModule],
-  declarations: [...COMPONENTS, UpdatePasswordComponent],
+  declarations: [...COMPONENTS, UpdatePasswordComponent, ViewProcessComponent],
   entryComponents: [...COMPONENTS_NOROUNT],
 })
 export class DashboardModule {}

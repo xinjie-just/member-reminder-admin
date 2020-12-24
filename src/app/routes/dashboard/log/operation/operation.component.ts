@@ -30,7 +30,7 @@ export class OperationLogComponent implements OnInit {
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };
-    this.logService.getLogs(params).subscribe(
+    this.logService.getOperationLogs(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
           const info: LogSearchResponsePageParams = value.data.page;

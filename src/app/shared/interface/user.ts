@@ -91,3 +91,27 @@ export interface CurrentUserInfo {
   userId: number;
   userState: number;
 }
+
+// 根据用户ID锁定或解锁用户
+export interface LockOrUnlockUserRequestParams {
+  idUser: number;
+}
+
+// 查询所有节点状态
+export interface QueryAllNodeStatusRequestParams {
+  idUser?: number;
+  phoneNum?: string;
+}
+
+export interface QueryAllNodeStatusResponseParams {
+  id: number;
+  idUser: number;
+  stageName?: string;
+  idNode: number;
+  nodeName: string;
+  idHandlerUser: number;
+  result: number; // 步骤结果
+  nodeState: 0; //步骤状态
+  endTime: string;
+  dataState: number;
+}

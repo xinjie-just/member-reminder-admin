@@ -1,4 +1,4 @@
-import { CurrentUserInfo } from './../../../shared/interface/user';
+import { CurrentUserInfo, LockOrUnlockUserRequestParams } from './../../../shared/interface/user';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '@shared/service/user.service';
 import { ResponseParams } from '@shared/interface/response';
@@ -20,6 +20,7 @@ import {
 import { RoleService } from '@shared/service/role.service';
 import { StageService } from '@shared/service/stage.service';
 import { StageSearchResponseDataParams } from '@shared/interface/stage';
+import { ViewProcessComponent } from './view-process/view-process.component';
 
 @Component({
   selector: 'app-user',
@@ -130,7 +131,7 @@ export class UserComponent implements OnInit {
         } else {
           this.users = [];
           this.total = 0;
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
@@ -246,7 +247,16 @@ export class UserComponent implements OnInit {
   /**
    * 查看流程
    */
-  viewProcess(user: UserSearchResponseRecordsParams) {}
+  viewProcess(user: UserSearchResponseRecordsParams) {
+    this.modalService.create({
+      nzTitle: '用户入党流程查看',
+      nzContent: ViewProcessComponent,
+      nzFooter: null,
+      nzComponentParams: {
+        userInfo: user,
+      },
+    });
+  }
 
   /**
    * 重置密码
@@ -268,7 +278,7 @@ export class UserComponent implements OnInit {
           this.msg.success('用户密码重置成功');
           this.search(); // 用户密码成功后，重置页码，回到第一页
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
@@ -278,23 +288,51 @@ export class UserComponent implements OnInit {
   }
 
   /**
-   * 修改用户密码
+   * 锁定或解锁用户
+   * @param remind UserSearchResponseRecordsParams
    */
-  /* updateUser(user: UserInfoParams): void {
-    const updateModel = this.modalService.create({
-      nzTitle: '修改密码',
-      nzContent: UpdateComponent,
-      nzFooter: null,
-      nzComponentParams: {
-        userId: user.id,
-        userName: user.name,
-      },
+  lockOrUnlockUser(user: UserSearchResponseRecordsParams): void {
+    const type = user.dataState === 0 ? '解锁' : '锁定';
+    this.modalService.confirm({
+      nzTitle: `你确定要${type}用户 <i>${user.realName}</i> 吗?`,
+      nzOkText: '确定',
+      nzOkType: 'danger',
+      nzOnOk: () => this.lockOrUnlock(user),
+      nzCancelText: '取消',
     });
-
-    updateModel.afterClose.subscribe((result) => {
-      if (result && result.data === 'success') {
-        this.search(); // 修改成功后，重置页码
-      }
-    });
-  } */
+  }
+  lockOrUnlock(user: UserSearchResponseRecordsParams): void {
+    const params: LockOrUnlockUserRequestParams = {
+      idUser: user.idUser,
+    };
+    if (user.dataState !== 0) {
+      this.userService.lockUser(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('锁定成功！');
+            this.search(); // 锁定成功后，重置页码
+          } else {
+            this.msg.error(value.message);
+          }
+        },
+        (error) => {
+          this.msg.error('锁定失败！', error);
+        },
+      );
+    } else {
+      this.userService.unlockUser(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('解锁成功！');
+            this.search(); // 解锁成功后，重置页码
+          } else {
+            this.msg.error(value.message);
+          }
+        },
+        (error) => {
+          this.msg.error('解锁失败！', error);
+        },
+      );
+    }
+  }
 }

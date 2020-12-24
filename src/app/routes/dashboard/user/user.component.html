@@ -1,5 +1,5 @@
 <div>
-  <nz-card nzTitle="人员管理">
+  <nz-card nzTitle="用户管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
         <label for="stage">阶段：</label>
@@ -84,6 +84,10 @@
           <td>{{ user.nodeName }}</td>
           <td>
             <button nz-button nzType="link" (click)="viewProcess(user)">查看流程</button>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
+            <button nz-button nzType="link" (click)="lockOrUnlockUser(user)" *ngIf="currentUserInfo.roleId === 1">
+              {{ user.dataState === 0 ? '解锁' : '锁定' }}
+            </button>
             <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="updateUser(user)">修改</button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>

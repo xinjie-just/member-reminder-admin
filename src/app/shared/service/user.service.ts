@@ -10,6 +10,8 @@ import {
   ResetPasswordRequestParams,
   UserUpdateRealNameRequestParams,
   UserUpdateRoleRequestParams,
+  LockOrUnlockUserRequestParams,
+  QueryAllNodeStatusRequestParams,
 } from '@shared/interface/user';
 import { Observable } from 'rxjs';
 import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
@@ -117,5 +119,33 @@ export class UserService {
    */
   updateRole(params: UserUpdateRoleRequestParams): Observable<any> {
     return this.http.get(`api/user/setUserRole?idUser=${params.idUser}&idRole=${params.idRole}`);
+  }
+
+  /**
+   * 锁定用户
+   * @param params LockOrUnlockUserRequestParams
+   */
+  lockUser(params: LockOrUnlockUserRequestParams): Observable<any> {
+    return this.http.get(`api/user/admin/lockUser?idUser=${params.idUser}`);
+  }
+
+  /**
+   * 解锁用户
+   * @param params LockOrUnlockUserRequestParams
+   */
+  unlockUser(params: LockOrUnlockUserRequestParams): Observable<any> {
+    return this.http.get(`api/user/admin/unlockUser?idUser=${params.idUser}`);
+  }
+
+  /**
+   * 查询所有节点状态
+   * @param params QueryAllNodeStatusRequestParams
+   */
+  queryAllNodeStatus(params: QueryAllNodeStatusRequestParams): Observable<any> {
+    if (params.idUser) {
+      return this.http.get(`api/miniProgram/queryPersonAllNodeState?idUser=${params.idUser}`);
+    } else {
+      return this.http.get(`api/miniProgram/queryPersonAllNodeState?idUser=${params.phoneNum}`);
+    }
   }
 }

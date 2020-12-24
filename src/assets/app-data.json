@@ -20,7 +20,7 @@
           "link": "/dashboard/role"
         },
         {
-          "text": "人员管理",
+          "text": "用户管理",
           "icon": { "type": "img", "value": "assets/menu-icon/user.svg" },
           "link": "/dashboard/user"
         },

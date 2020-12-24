@@ -131,7 +131,7 @@ export class AddOrUpdateStageComponent implements OnInit {
             this.msg.success('步骤修改成功');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.msg);
+            this.msg.error(value.message);
             this.modal.destroy({ data: 'error' });
           }
         },
@@ -150,7 +150,7 @@ export class AddOrUpdateStageComponent implements OnInit {
             this.msg.success('步骤新增成功');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.msg);
+            this.msg.error(value.message);
             this.modal.destroy({ data: 'error' });
           }
         },

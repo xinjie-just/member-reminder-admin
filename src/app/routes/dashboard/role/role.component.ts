@@ -113,7 +113,7 @@ export class RoleComponent implements OnInit {
           this.msg.success('角色 <i>${role.roleName}</i> 删除成功');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.msg);
+          this.msg.error(value.message);
         }
       },
       (error) => {
