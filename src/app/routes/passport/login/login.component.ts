@@ -18,6 +18,7 @@ import { LoginRequestParams } from '@shared/interface/user';
   providers: [SocialService],
 })
 export class UserLoginComponent {
+  loading = false;
   constructor(
     fb: FormBuilder,
     modalSrv: NzModalService,
@@ -55,6 +56,7 @@ export class UserLoginComponent {
   interval$: any;
 
   submit() {
+    this.loading = true;
     this.error = '';
     this.phone.markAsDirty();
     this.phone.updateValueAndValidity();
@@ -102,6 +104,10 @@ export class UserLoginComponent {
       },
       (error) => {
         this.msg.error(error);
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
       },
     );
   }

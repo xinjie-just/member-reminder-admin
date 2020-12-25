@@ -1,0 +1,52 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
+        <ng-container *ngFor="let role of roles">
+          <nz-option
+            [nzValue]="role.idRole"
+            [nzDisabled]="role.idRole === 1"
+            [title]="role.idRole === 1 ? '不能选择管理员' : ''"
+            [nzLabel]="role.roleName"
+          ></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #roleErrorTpl let-role>
+        <ng-container *ngIf="role.hasError('required')">
+          角色是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'date'" nzRequired>计划提醒日期</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="dateErrorTpl">
+      <nz-date-picker formControlName="date" (ngModelChange)="onChangeDate($event)"></nz-date-picker>
+      <ng-template #dateErrorTpl let-date>
+        <ng-container *ngIf="date.hasError('required')">
+          计划提醒日期是必选项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容</nz-form-label>
+    <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
+      <input formControlName="content" name="content" id="content" nz-input placeholder="请输入提醒内容" />
+      <ng-template #contentErrorTpl let-content>
+        <ng-container *ngIf="content.hasError('required')">
+          提醒内容是必填项!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="text-right">
+    <button nz-button type="button" (click)="cancel()" [nzLoading]="uploading">
+      取消
+    </button>
+    <button nz-button [nzType]="'primary'" [disabled]="!form.valid" type="submit" [nzLoading]="uploading">
+      确认
+    </button>
+  </div>
+</form>

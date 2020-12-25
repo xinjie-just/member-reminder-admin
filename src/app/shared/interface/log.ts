@@ -69,3 +69,11 @@ export interface RemindTaskSearchRecordsParams {
   result: any;
   dataState: number;
 }
+
+// 添加临时提醒请求参数
+export interface AddTempTaskRequestParams {
+  content: string;
+  idRole?: number;
+  idUser?: number;
+  remindDate: string;
+}

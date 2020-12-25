@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
+  AddTempTaskRequestParams,
   OperationLogSearchRequestParams,
   RemindTaskSearchRequestParams,
   TimingTaskSearchRequestParams,
@@ -33,6 +34,16 @@ export class LogService {
   getRemindLogs(params: RemindTaskSearchRequestParams): Observable<any> {
     return this.http.get(
       `api/system/admin/remindTaskPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&idNode=${params.idNode}&executed=${params.executed}`,
+    );
+  }
+
+  /**
+   * 新增临时提醒任务
+   * @param params AddTempTaskRequestParams
+   */
+  addTempTask(params: AddTempTaskRequestParams): Observable<any> {
+    return this.http.get(
+      `api/system/addTempTask?idRole=${params.idRole}&content=${params.content}&remindDate=${params.remindDate}`,
     );
   }
 }
