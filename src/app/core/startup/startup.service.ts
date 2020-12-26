@@ -63,7 +63,10 @@ export class StartupService {
           this.menuService.add(res.menu);
 
           // 如果是普通用户，用户管理菜单禁止
-          if (localStorage.getItem('userRole') === 'user') {
+          if (
+            JSON.parse(localStorage.getItem('_token')).roleId &&
+            JSON.parse(localStorage.getItem('_token')).roleId !== 1
+          ) {
             this.disabledMenu(res.menu);
             this.menuService.resume();
           }
@@ -81,7 +84,7 @@ export class StartupService {
   disabledMenu(menu: MenuObj[]) {
     menu.forEach((item) => {
       if (item.link) {
-        item.disabled = item.link.includes('user');
+        item.disabled = item.link.includes('log');
       } else {
         this.disabledMenu(item.children);
       }

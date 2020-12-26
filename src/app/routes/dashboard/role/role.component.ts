@@ -9,6 +9,7 @@ import {
 } from '@shared/interface/role';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateRoleComponent } from './add-or-update/add-or-update.component';
+import { CurrentUserInfo } from '@shared/interface/user';
 
 @Component({
   selector: 'app-role',
@@ -24,9 +25,20 @@ export class RoleComponent implements OnInit {
 
   roles: RoleSearchResponseRecordsParams[] = [];
 
+  currentUserInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    phone: null,
+    realName: null,
+    roleId: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
   constructor(private roleService: RoleService, private msg: NzMessageService, private modalService: NzModalService) {}
 
   ngOnInit(): void {
+    this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.getRoles();
   }
 

@@ -60,8 +60,10 @@
           </td>
           <td class="handle">
             <button nz-button nzType="link" (click)="addOrUpdateStage(step)">修改</button>
-            <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="link" (click)="deleteStep(step)">删除</button>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
+            <button nz-button nzType="link" *ngIf="currentUserInfo.roleId === 1" (click)="deleteStep(step)">
+              删除
+            </button>
           </td>
         </tr>
       </tbody>

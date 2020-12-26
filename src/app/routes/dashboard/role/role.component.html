@@ -71,8 +71,9 @@
           </td>
           <td class="handle">
             <button nz-button nzType="link" (click)="addOrUpdate(role)">修改</button>
-            <nz-divider nzType="vertical"></nz-divider>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button
+              *ngIf="currentUserInfo.roleId === 1"
               nz-button
               nzType="link"
               [disabled]="role?.idRole === 1"

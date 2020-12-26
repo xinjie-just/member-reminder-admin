@@ -10,6 +10,7 @@ import {
 } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
+import { CurrentUserInfo } from '@shared/interface/user';
 @Component({
   selector: 'app-stage',
   templateUrl: './stage.component.html',
@@ -24,6 +25,16 @@ export class StageComponent implements OnInit {
   steps: StepSearchResponseRecordsParams[] = [];
   stages: StageSearchResponseDataParams[] = [];
   stage = null;
+  currentUserInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    phone: null,
+    realName: null,
+    roleId: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
 
   constructor(
     private stageService: StageService,
@@ -32,6 +43,7 @@ export class StageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.getStages();
     this.getSteps();
   }
