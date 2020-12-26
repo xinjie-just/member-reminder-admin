@@ -22,7 +22,19 @@
       <td>{{ process?.stageName }}</td>
       <td>{{ process?.nodeName }}</td>
       <td>{{ process?.result }}</td>
-      <td>{{ process?.nodeState }}</td>
+      <td>{{ process?.nodeState | nodeStatus }}</td>
+      <!-- 待开始：#E41E35 -1
+        进行中：#25B5BC 0
+        已完成：#37464D 1 -->
+      <td [ngSwitch]="process?.dataState">
+        <nz-tag [nzColor]="'#e41e35'" *ngSwitchCase="process?.dataState === -1">{{
+          process?.dataState | nodeStatus
+        }}</nz-tag>
+        <nz-tag [nzColor]="'#25b5bc'" *ngSwitchCase="process?.dataState === 0">{{
+          process?.dataState | nodeStatus
+        }}</nz-tag>
+        <nz-tag [nzColor]="'#37464d'" *ngSwitchDefault>{{ process?.dataState | nodeStatus }}</nz-tag>
+      </td>
       <td>{{ process?.endTime }}</td>
     </tr>
   </tbody>

@@ -47,12 +47,12 @@
       <tbody>
         <tr *ngFor="let step of stepTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="stage">{{ step?.parentId }}</td>
+          <td class="stage">{{ step?.stageName }}</td>
           <td class="step">{{ step?.name }}</td>
-          <td class="type">{{ step?.nodeBizType }}</td>
+          <td class="type">{{ step?.nodeBizType | type }}</td>
           <!-- 提醒办理1,等待批复2 -->
           <td class="duration">{{ step?.duration }}</td>
-          <td class="same-pre-step">{{ step?.isBeginPreNode }}</td>
+          <td class="same-pre-step">{{ step?.isBeginPreNode | is }}</td>
           <td class="status" [ngSwitch]="step?.dataState">
             <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="step?.dataState === 2">{{ step?.dataState | status }}</nz-tag>
             <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="step?.dataState === 0">{{ step?.dataState | status }}</nz-tag>

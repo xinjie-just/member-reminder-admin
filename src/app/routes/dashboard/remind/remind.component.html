@@ -76,7 +76,8 @@
           <td class="step">{{ remind?.nodeName }}</td>
           <td class="reminder">{{ remind?.reminder }}</td>
           <td class="role">{{ remind?.roleName }}</td>
-          <td class="remind-type">{{ remind?.remindType }}</td>
+          <td class="remind-type">{{ remind?.remindType | remindType }}</td>
+          <!-- 提醒类型:日常提醒1/办理提醒2/手动添加提醒3 -->
           <td class="content">{{ remind?.content }}</td>
           <td class="remind-lead-day">{{ remind?.remindLeadDay }}</td>
           <td class="remind-batch-num">{{ remind?.remindBatchNum }}</td>

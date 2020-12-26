@@ -23,3 +23,12 @@ export class StatusPipe implements PipeTransform {
     return statusStr;
   }
 }
+
+@Pipe({
+  name: 'is',
+})
+export class IsPipe implements PipeTransform {
+  transform(value: number): string {
+    return value === 0 ? '否' : '是';
+  }
+}

@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'sliceLog',
+  name: 'type',
 })
-export class SliceLogPipe implements PipeTransform {
-  transform(answer: string): string {
-    return answer.length > 40 ? answer.slice(0, 40) + '...' : answer;
+export class NodeBizTypePipe implements PipeTransform {
+  transform(type: number): string {
+    //提醒办理1,等待批复2
+    return type === 1 ? '提醒办理' : '等待批复';
   }
 }

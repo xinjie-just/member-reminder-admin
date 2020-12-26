@@ -91,7 +91,7 @@
           <td class="stage">{{ log?.stageName }}</td>
           <td class="step">{{ log?.nodeName }}</td>
           <td class="realname">{{ log?.manageUserRealName || log?.realName }}</td>
-          <td class="type">{{ log?.remindType }}</td>
+          <td class="type">{{ log?.remindType | remindType }}</td>
           <td class="content">{{ log?.content }}</td>
           <td class="plan-date">{{ log?.planDate }}</td>
           <ng-container *ngIf="status === 0">

@@ -28,6 +28,7 @@ export interface UserSearchResponsePageParams {
 export interface UserSearchResponseRecordsParams {
   idUser: number;
   idRole: number;
+  roleName?: string;
   phoneNum: string;
   openId: any;
   realName: string;

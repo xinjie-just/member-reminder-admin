@@ -1,19 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'modelPipe',
+  name: 'remindType',
 })
-export class RemindPipe implements PipeTransform {
+export class RemindTypePipe implements PipeTransform {
   transform(value: number): string {
-    switch (
-      value // 1-训练中 2-训练完成 3-训练失败
-    ) {
+    // 提醒类型:日常提醒1/办理提醒2/手动添加提醒3
+    switch (value) {
       case 1:
-        return '训练中';
+        return '日常提醒';
       case 2:
-        return '训练完成';
+        return '办理提醒';
       case 3:
-        return '训练失败';
+        return '手动添加提醒';
     }
   }
 }
