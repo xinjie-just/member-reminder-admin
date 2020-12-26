@@ -67,7 +67,7 @@ export class StartupService {
             JSON.parse(localStorage.getItem('_token')).roleId &&
             JSON.parse(localStorage.getItem('_token')).roleId !== 1
           ) {
-            this.disabledMenu(res.menu);
+            res.menu[0].children.pop(); // 去掉最后的日志管理，把日志管理放到最后
             this.menuService.resume();
           }
 
