@@ -68,15 +68,21 @@
       <thead>
         <tr>
           <th class="index" [nzWidth]="'70px'">序号</th>
-          <th class="stage" [nzWidth]="'70px'">阶段</th>
+          <th class="stage" [nzWidth]="'140px'">阶段</th>
           <th class="step" [nzWidth]="'110px'">步骤</th>
-          <th class="reminder" [nzWidth]="'370px'">提醒事项</th>
-          <th class="role" [nzWidth]="'170px'">被提醒角色</th>
-          <th class="type" [nzWidth]="'170px'">提醒类型</th>
+          <th class="role" [nzWidth]="'110px'">被提醒角色</th>
+          <th class="type" [nzWidth]="'110px'">提醒类型</th>
           <th class="content" [nzWidth]="'170px'">提醒内容</th>
           <th class="plan-date" [nzWidth]="'170px'">计划提醒日期</th>
-          <th class="status" [nzWidth]="'170px'">数据状态</th>
-          <th class="handle" [nzWidth]="'170px'">操作</th>
+          <ng-container *ngIf="status === 0">
+            <th class="status" [nzWidth]="'120px'">数据状态</th>
+            <th class="handle" [nzWidth]="'170px'">操作</th>
+          </ng-container>
+          <ng-container *ngIf="status === 1">
+            <th class="content" [nzWidth]="'170px'">实际提醒时间</th>
+            <th class="plan-date" [nzWidth]="'170px'">消息阅读时间</th>
+            <th class="status" [nzWidth]="'170px'">完成时间</th>
+          </ng-container>
         </tr>
       </thead>
       <tbody>
@@ -84,19 +90,27 @@
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
           <td class="stage">{{ log?.stageName }}</td>
           <td class="step">{{ log?.nodeName }}</td>
-          <td class="reminder">{{ log?.reminder }}</td>
-          <td class="role">{{ log?.idManageUser }}</td>
+          <td class="realname">{{ log?.manageUserRealName || log?.realName }}</td>
           <td class="type">{{ log?.remindType }}</td>
           <td class="content">{{ log?.content }}</td>
           <td class="plan-date">{{ log?.planDate }}</td>
-          <td class="status">{{ log?.dataState }}</td>
-          <td class="handle">
-            <!-- <button nz-button nzType="link" (click)="lockOrUnlockRemind(remind)" *ngIf="currentUserInfo.roleId === 1">
-              {{ remind.dataState === 0 ? '解锁' : '锁定' }}
-            </button> -->
-            <!-- <nz-divider nzType="vertical"></nz-divider> -->
-            <!-- <button nz-button nzType="link" (click)="deleteRemind(remind)" [disabled]="remind.inuse === 1">删除</button> -->
-          </td>
+          <ng-container *ngIf="status === 0">
+            <td class="status" [ngSwitch]="log?.dataState">
+              <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="log?.dataState === 2">{{ log?.dataState | status }}</nz-tag>
+              <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="log?.dataState === 0">{{ log?.dataState | status }}</nz-tag>
+              <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ log?.dataState | status }}</nz-tag>
+            </td>
+            <td class="handle">
+              <button nz-button nzType="link" (click)="lockOrUnlockRemind(log)" *ngIf="currentUserInfo.roleId === 1">
+                {{ log.dataState === 0 ? '解锁' : '锁定' }}
+              </button>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="status === 1">
+            <td class="content">{{ log?.actualTime }}</td>
+            <td class="plan-date">{{ log?.readTime }}</td>
+            <td class="status">{{ log.completionTime }}</td>
+          </ng-container>
         </tr>
       </tbody>
     </nz-table>

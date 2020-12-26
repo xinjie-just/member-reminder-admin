@@ -4,7 +4,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
       <nz-select id="stage" formControlName="stage" nzPlaceHolder="请选择一个阶段">
         <ng-container *ngFor="let stage of stages">
-          <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
+          <nz-option [nzValue]="stage?.idStage" [nzLabel]="stage?.stageName"></nz-option>
         </ng-container>
       </nz-select>
       <ng-template #stageErrorTpl let-stage>
@@ -30,7 +30,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16">
       <nz-select id="nodeBizType" formControlName="nodeBizType" nzPlaceHolder="请选择一个步骤业务类型">
         <ng-container *ngFor="let nodeBizType of nodeBizTypes">
-          <nz-option [nzValue]="nodeBizType.value" [nzLabel]="nodeBizType.label"></nz-option>
+          <nz-option [nzValue]="nodeBizType?.value" [nzLabel]="nodeBizType?.label"></nz-option>
         </ng-container>
       </nz-select>
     </nz-form-control>
@@ -40,7 +40,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
       <nz-select id="step" formControlName="step" nzPlaceHolder="请选择一个步骤">
         <ng-container *ngFor="let step of steps">
-          <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
+          <nz-option [nzValue]="step?.idNode" [nzLabel]="step?.name"></nz-option>
         </ng-container>
       </nz-select>
       <ng-template #stepErrorTpl let-step>
@@ -55,7 +55,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16">
       <nz-select id="duration" formControlName="duration" nzPlaceHolder="请选择活动时长">
         <ng-container *ngFor="let duration of durations">
-          <nz-option [nzValue]="duration.value" [nzLabel]="duration.label"></nz-option>
+          <nz-option [nzValue]="duration?.value" [nzLabel]="duration?.label"></nz-option>
         </ng-container>
       </nz-select>
     </nz-form-control>
@@ -65,7 +65,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16">
       <nz-select id="samePreStep" formControlName="samePreStep" nzPlaceHolder="请选择是否与上一步并行">
         <ng-container *ngFor="let samePreStep of samePreSteps">
-          <nz-option [nzValue]="samePreStep.value" [nzLabel]="samePreStep.label"></nz-option>
+          <nz-option [nzValue]="samePreStep?.value" [nzLabel]="samePreStep?.label"></nz-option>
         </ng-container>
       </nz-select>
     </nz-form-control>
@@ -75,7 +75,7 @@
     <nz-form-control [nzSm]="18" [nzXs]="16">
       <nz-select id="sort" formControlName="sort" nzPlaceHolder="请选择该步骤的顺序">
         <ng-container *ngFor="let sort of sorts">
-          <nz-option [nzValue]="sort.value" [nzLabel]="sort.label"></nz-option>
+          <nz-option [nzValue]="sort?.value" [nzLabel]="sort?.label"></nz-option>
         </ng-container>
       </nz-select>
     </nz-form-control>

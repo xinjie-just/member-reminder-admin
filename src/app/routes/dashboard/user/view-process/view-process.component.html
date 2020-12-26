@@ -19,11 +19,11 @@
   <tbody>
     <tr *ngFor="let process of processesTable.data; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ process.stageName }}</td>
-      <td>{{ process.nodeName }}</td>
-      <td>{{ process.result }}</td>
-      <td>{{ process.nodeState }}</td>
-      <td>{{ process.endTime }}</td>
+      <td>{{ process?.stageName }}</td>
+      <td>{{ process?.nodeName }}</td>
+      <td>{{ process?.result }}</td>
+      <td>{{ process?.nodeState }}</td>
+      <td>{{ process?.endTime }}</td>
     </tr>
   </tbody>
 </nz-table>

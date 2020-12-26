@@ -5,10 +5,10 @@
       <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
         <ng-container *ngFor="let role of roles">
           <nz-option
-            [nzValue]="role.idRole"
-            [nzDisabled]="role.idRole === 1"
-            [title]="role.idRole === 1 ? '不能选择管理员' : ''"
-            [nzLabel]="role.roleName"
+            [nzValue]="role?.idRole"
+            [nzDisabled]="role?.idRole === 1"
+            [title]="role?.idRole === 1 ? '不能选择管理员' : ''"
+            [nzLabel]="role?.roleName"
           ></nz-option>
         </ng-container>
       </nz-select>

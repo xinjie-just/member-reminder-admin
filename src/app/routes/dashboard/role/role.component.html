@@ -62,16 +62,12 @@
       <tbody>
         <tr *ngFor="let role of rolesTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="id">{{ role.idRole }}</td>
-          <td class="name">{{ role.roleName }}</td>
-          <td class="status" [ngSwitch]="role.dataState">
-            <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="role.dataState === 2">{{
-              role.dataState | roleStatus
-            }}</nz-tag>
-            <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="role.dataState === 0">{{
-              role.dataState | roleStatus
-            }}</nz-tag>
-            <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ role.dataState | roleStatus }}</nz-tag>
+          <td class="id">{{ role?.idRole }}</td>
+          <td class="name">{{ role?.roleName }}</td>
+          <td class="status" [ngSwitch]="role?.dataState">
+            <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="role?.dataState === 2">{{ role?.dataState | status }}</nz-tag>
+            <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="role?.dataState === 0">{{ role?.dataState | status }}</nz-tag>
+            <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ role?.dataState | status }}</nz-tag>
           </td>
           <td class="handle">
             <button nz-button nzType="link" (click)="addOrUpdate(role)">修改</button>
@@ -79,8 +75,8 @@
             <button
               nz-button
               nzType="link"
-              [disabled]="role.idRole === 1"
-              [title]="role.idRole === 1 ? '不能删除管理员角色' : '删除角色'"
+              [disabled]="role?.idRole === 1"
+              [title]="role?.idRole === 1 ? '不能删除管理员角色' : '删除角色'"
               (click)="deleteRole(role)"
             >
               删除

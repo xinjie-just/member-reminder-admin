@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   AddTempTaskRequestParams,
+  lockOrUnlockRequestParams,
   OperationLogSearchRequestParams,
   RemindTaskSearchRequestParams,
   TimingTaskSearchRequestParams,
@@ -51,5 +52,21 @@ export class LogService {
     return this.http.get(
       `api/system/addTempTask?idRole=${params.idRole}&content=${params.content}&remindDate=${params.remindDate}`,
     );
+  }
+
+  /**
+   * 锁定提醒任务
+   * @param params lockOrUnlockRequestParams
+   */
+  lockTempTask(params: lockOrUnlockRequestParams): Observable<any> {
+    return this.http.get(`api/system/lockTask?idTask=${params.idTask}`);
+  }
+
+  /**
+   * 解锁提醒任务
+   * @param params lockOrUnlockRequestParams
+   */
+  unlockTempTask(params: lockOrUnlockRequestParams): Observable<any> {
+    return this.http.get(`api/system/unlockTask?idTask=${params.idTask}`);
   }
 }

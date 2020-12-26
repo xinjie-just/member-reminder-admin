@@ -15,7 +15,7 @@
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
       <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
         <ng-container *ngFor="let role of roles">
-          <nz-option [nzValue]="role.idRole" [nzLabel]="role.roleName"></nz-option>
+          <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
         </ng-container>
       </nz-select>
       <ng-template #roleErrorTpl let-role>

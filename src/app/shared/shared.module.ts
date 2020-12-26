@@ -19,6 +19,7 @@ import { RemindPipe } from './pipe/remind.pipe';
 import { RemindStatusDirective, RemindOnlineHandleDirective } from './directive/remind.directive';
 import { SliceLogPipe } from './pipe/stage.pipe';
 import { RoleStatusPipe } from './pipe/role.pipe';
+import { StatusPipe } from './pipe/common.pipe';
 
 const THIRDMODULES = [CountdownModule];
 // #endregion
@@ -26,7 +27,7 @@ const THIRDMODULES = [CountdownModule];
 // #region your componets & directives & pipes
 const COMPONENTS = [];
 const DIRECTIVES = [RemindStatusDirective, RemindOnlineHandleDirective];
-const PIPES = [UserRolePipe, SliceLogPipe, RemindPipe, RoleStatusPipe];
+const PIPES = [UserRolePipe, SliceLogPipe, RemindPipe, RoleStatusPipe, StatusPipe];
 // #endregion
 
 const SERVICES = [];

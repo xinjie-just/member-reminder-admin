@@ -31,10 +31,10 @@
       <tbody>
         <tr *ngFor="let log of logsTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="id">{{ log.idLog }}</td>
-          <td class="name">{{ log.realName }}</td>
-          <td class="content">{{ log.content }}</td>
-          <td class="time">{{ log.logTime }}</td>
+          <td class="id">{{ log?.idLog }}</td>
+          <td class="name">{{ log?.realName }}</td>
+          <td class="content">{{ log?.content }}</td>
+          <td class="time">{{ log?.logTime }}</td>
         </tr>
       </tbody>
     </nz-table>

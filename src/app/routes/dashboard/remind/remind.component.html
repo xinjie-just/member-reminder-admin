@@ -72,27 +72,37 @@
       <tbody>
         <tr *ngFor="let remind of remindsTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="stage">{{ remind.stageName }}</td>
-          <td class="step">{{ remind.nodeName }}</td>
-          <td class="reminder">{{ remind.reminder }}</td>
-          <td class="role">{{ remind.roleName }}</td>
-          <td class="remind-type">{{ remind.remindType }}</td>
-          <td class="content">{{ remind.content }}</td>
-          <td class="remind-lead-day">{{ remind.remindLeadDay }}</td>
-          <td class="remind-batch-num">{{ remind.remindBatchNum }}</td>
-          <td class="interval-duration">{{ remind.intervalDuration }}</td>
-          <td class="remind-times">{{ remind.remindTimes }}</td>
-          <td class="status">{{ remind.dataState }}</td>
+          <td class="stage">{{ remind?.stageName }}</td>
+          <td class="step">{{ remind?.nodeName }}</td>
+          <td class="reminder">{{ remind?.reminder }}</td>
+          <td class="role">{{ remind?.roleName }}</td>
+          <td class="remind-type">{{ remind?.remindType }}</td>
+          <td class="content">{{ remind?.content }}</td>
+          <td class="remind-lead-day">{{ remind?.remindLeadDay }}</td>
+          <td class="remind-batch-num">{{ remind?.remindBatchNum }}</td>
+          <td class="interval-duration">{{ remind?.intervalDuration }}</td>
+          <td class="remind-times">{{ remind?.remindTimes }}</td>
+          <td class="status" [ngSwitch]="remind?.dataState">
+            <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="remind?.dataState === 2">{{
+              remind?.dataState | status
+            }}</nz-tag>
+            <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="remind?.dataState === 0">{{
+              remind?.dataState | status
+            }}</nz-tag>
+            <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ remind?.dataState | status }}</nz-tag>
+          </td>
           <td class="handle">
             <button nz-button nzType="link" (click)="addOrUpdateRemind(remind)">
               修改
             </button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button nz-button nzType="link" (click)="lockOrUnlockRemind(remind)" *ngIf="currentUserInfo.roleId === 1">
-              {{ remind.dataState === 0 ? '解锁' : '锁定' }}
+              {{ remind?.dataState === 0 ? '解锁' : '锁定' }}
             </button>
-            <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="link" (click)="deleteRemind(remind)" [disabled]="remind.inuse === 1">删除</button>
+            <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
+            <button nz-button nzType="link" (click)="deleteRemind(remind)" *ngIf="currentUserInfo.roleId === 1">
+              删除
+            </button>
           </td>
         </tr>
       </tbody>

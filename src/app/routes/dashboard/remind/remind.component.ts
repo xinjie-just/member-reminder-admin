@@ -127,7 +127,7 @@ export class RemindComponent implements OnInit {
   }
 
   /**
-   * 查询问题
+   * 查询提醒配置
    */
   search(): void {
     this.pageIndex = 1;

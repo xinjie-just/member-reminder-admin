@@ -10,11 +10,13 @@ import {
 import { StageService } from '@shared/service/stage.service';
 import { ResponseParams } from '@shared/interface/response';
 import {
+  lockOrUnlockRequestParams,
   LogSearchResponsePageParams,
   RemindTaskSearchRecordsParams,
   RemindTaskSearchRequestParams,
 } from '@shared/interface/log';
 import { LogService } from '@shared/service/log.service';
+import { CurrentUserInfo } from '@shared/interface/user';
 
 @Component({
   selector: 'app-remind',
@@ -36,6 +38,17 @@ export class RemindLogComponent implements OnInit {
   statusOptions: { value: number; label: string }[] = [];
   remindLogs: RemindTaskSearchRecordsParams[] = [];
 
+  currentUserInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    phone: null,
+    realName: null,
+    roleId: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
+
   constructor(
     private modalService: NzModalService,
     private msg: NzMessageService,
@@ -44,6 +57,8 @@ export class RemindLogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
+
     this.getStages();
   }
 
@@ -165,5 +180,55 @@ export class RemindLogComponent implements OnInit {
         this.search(); // 新增成功后，重置页码
       }
     });
+  }
+
+  /**
+   * 锁定或解锁用户
+   * @param remind RemindTaskSearchRecordsParams
+   */
+  lockOrUnlockRemind(remind: RemindTaskSearchRecordsParams): void {
+    const type = remind.dataState === 0 ? '解锁' : '锁定';
+    const contentStr = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
+    this.modalService.confirm({
+      nzTitle: `你确定要${type}提醒配置 <i>${contentStr}</i> 吗?`,
+      nzOkText: '确定',
+      nzOkType: 'danger',
+      nzOnOk: () => this.lockOrUnlock(remind),
+      nzCancelText: '取消',
+    });
+  }
+  lockOrUnlock(remind: RemindTaskSearchRecordsParams): void {
+    const params: lockOrUnlockRequestParams = {
+      idTask: remind.id,
+    };
+    if (remind.dataState !== 0) {
+      this.logService.lockTempTask(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('锁定成功！');
+            this.search(); // 锁定成功后，重置页码
+          } else {
+            this.msg.error(value.message);
+          }
+        },
+        (error) => {
+          this.msg.error('锁定失败！', error);
+        },
+      );
+    } else {
+      this.logService.unlockTempTask(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('解锁成功！');
+            this.search(); // 解锁成功后，重置页码
+          } else {
+            this.msg.error(value.message);
+          }
+        },
+        (error) => {
+          this.msg.error('解锁失败！', error);
+        },
+      );
+    }
   }
 }

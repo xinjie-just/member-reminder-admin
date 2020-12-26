@@ -77,16 +77,16 @@
       <tbody>
         <tr *ngFor="let user of usersTable.data; let i = index">
           <td>{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td>{{ user.realName }}</td>
-          <td>{{ user.phoneNum }}</td>
-          <td>{{ user.idRole }}</td>
-          <td>{{ user.startTime }}</td>
-          <td>{{ user.nodeName }}</td>
+          <td>{{ user?.realName }}</td>
+          <td>{{ user?.phoneNum }}</td>
+          <td>{{ user?.idRole }}</td>
+          <td>{{ user?.startTime }}</td>
+          <td>{{ user?.nodeName }}</td>
           <td>
             <button nz-button nzType="link" (click)="viewProcess(user)">查看流程</button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button nz-button nzType="link" (click)="lockOrUnlockUser(user)" *ngIf="currentUserInfo.roleId === 1">
-              {{ user.dataState === 0 ? '解锁' : '锁定' }}
+              {{ user?.dataState === 0 ? '解锁' : '锁定' }}
             </button>
             <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="updateUser(user)">修改</button>

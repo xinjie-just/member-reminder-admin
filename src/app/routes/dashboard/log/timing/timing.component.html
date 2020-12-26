@@ -32,11 +32,15 @@
       <tbody>
         <tr *ngFor="let log of logsTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="task">{{ log.taskDesc }}</td>
-          <td class="start-time">{{ log.startTime }}</td>
-          <td class="end-time">{{ log.endTime }}</td>
-          <td class="exception">{{ log.exception }}</td>
-          <td class="state">{{ log.dataState }}</td>
+          <td class="task">{{ log?.taskDesc }}</td>
+          <td class="start-time">{{ log?.startTime }}</td>
+          <td class="end-time">{{ log?.endTime }}</td>
+          <td class="exception">{{ log?.exception }}</td>
+          <td class="status" [ngSwitch]="log?.dataState">
+            <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="log?.dataState === 2">{{ log?.dataState | status }}</nz-tag>
+            <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="log?.dataState === 0">{{ log?.dataState | status }}</nz-tag>
+            <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ log?.dataState | status }}</nz-tag>
+          </td>
         </tr>
       </tbody>
     </nz-table>

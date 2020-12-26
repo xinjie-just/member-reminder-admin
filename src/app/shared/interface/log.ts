@@ -54,7 +54,8 @@ export interface RemindTaskSearchRequestParams {
 export interface RemindTaskSearchRecordsParams {
   id: number;
   idUser: number;
-  userRealName: string;
+  userRealName?: string;
+  realName?: string;
   idNode: number;
   nodeName: string;
   idManageUser: number;
@@ -76,4 +77,9 @@ export interface AddTempTaskRequestParams {
   idRole?: number;
   idUser?: number;
   remindDate: string;
+}
+
+// 锁定或解锁
+export interface lockOrUnlockRequestParams {
+  idTask: number;
 }
