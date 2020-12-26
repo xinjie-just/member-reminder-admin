@@ -32,9 +32,15 @@ export class LogService {
    * 获取提醒任务日志
    */
   getRemindLogs(params: RemindTaskSearchRequestParams): Observable<any> {
-    return this.http.get(
-      `api/system/admin/remindTaskPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&idNode=${params.idNode}&executed=${params.executed}`,
-    );
+    if (params.idNode) {
+      return this.http.get(
+        `api/system/admin/remindTaskPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&idNode=${params.idNode}&executed=${params.executed}`,
+      );
+    } else {
+      return this.http.get(
+        `api/system/admin/remindTaskPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}&executed=${params.executed}`,
+      );
+    }
   }
 
   /**
