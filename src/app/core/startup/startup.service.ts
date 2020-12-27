@@ -64,6 +64,7 @@ export class StartupService {
 
           // 如果是普通用户，用户管理菜单禁止
           if (
+            JSON.parse(localStorage.getItem('_token')) &&
             JSON.parse(localStorage.getItem('_token')).roleId &&
             JSON.parse(localStorage.getItem('_token')).roleId !== 1
           ) {

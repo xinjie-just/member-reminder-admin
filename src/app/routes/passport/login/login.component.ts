@@ -6,7 +6,6 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SocialService, ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
 import { StartupService } from '@core';
-import { Md5 } from 'ts-md5/dist/md5';
 import { UserService } from '@shared/service/user.service';
 import { ResponseParams } from '@shared/interface/response';
 import { LoginRequestParams } from '@shared/interface/user';

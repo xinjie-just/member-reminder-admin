@@ -10,6 +10,7 @@ import {
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateRoleComponent } from './add-or-update/add-or-update.component';
 import { CurrentUserInfo } from '@shared/interface/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-role',
@@ -35,10 +36,20 @@ export class RoleComponent implements OnInit {
     userId: null,
     userState: null,
   };
-  constructor(private roleService: RoleService, private msg: NzMessageService, private modalService: NzModalService) {}
+
+  constructor(
+    private roleService: RoleService,
+    private router: Router,
+    private msg: NzMessageService,
+    private modalService: NzModalService,
+  ) {}
 
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
+    if (!this.currentUserInfo) {
+      this.router.navigateByUrl('/passport/login');
+      this.msg.error('请先登录！');
+    }
     this.getRoles();
   }
 

@@ -56,7 +56,11 @@ export class HeaderUserComponent {
     private userService: UserService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
-    this.userName = JSON.parse(localStorage.getItem('_token'))['realName'];
+    if (JSON.parse(localStorage.getItem('_token'))) {
+      this.userName = JSON.parse(localStorage.getItem('_token'))['realName'];
+    } else {
+      this.userName = '';
+    }
   }
 
   logout() {
