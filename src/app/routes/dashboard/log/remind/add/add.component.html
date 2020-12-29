@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
-      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色" [nzAllowClear]="true">
         <ng-container *ngFor="let role of roles">
           <nz-option
             [nzValue]="role?.idRole"
@@ -33,7 +33,14 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
-      <input formControlName="content" name="content" id="content" nz-input placeholder="请输入提醒内容" />
+      <input
+        formControlName="content"
+        name="content"
+        id="content"
+        nz-input
+        placeholder="请输入提醒内容"
+        autocomplete="off"
+      />
       <ng-template #contentErrorTpl let-content>
         <ng-container *ngIf="content.hasError('required')">
           提醒内容是必填项!

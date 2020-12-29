@@ -10,6 +10,7 @@ import { Component, HostBinding, Input, ElementRef, AfterViewInit, ChangeDetecti
         (focus)="qFocus()"
         (blur)="qBlur()"
         [placeholder]="'menu.search.placeholder' | translate"
+        autocomplete="off"
       />
     </nz-input-group>
   `,

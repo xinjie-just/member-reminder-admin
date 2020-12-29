@@ -23,6 +23,7 @@
           nzPlaceHolder="全部"
           class="step-select"
           (ngModelChange)="onChangeStep($event)"
+          [nzAllowClear]="true"
         >
           <ng-container *ngFor="let step of steps">
             <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>
@@ -36,6 +37,7 @@
           nzPlaceHolder="全部"
           class="status-select"
           (ngModelChange)="onChangeStep($event)"
+          [nzAllowClear]="true"
         >
           <ng-container *ngFor="let status of statusOptions">
             <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>

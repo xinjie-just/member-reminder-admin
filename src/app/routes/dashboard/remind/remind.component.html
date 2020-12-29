@@ -9,6 +9,7 @@
           nzPlaceHolder="全部"
           class="stage-select"
           (ngModelChange)="onChangeStage($event)"
+          [nzAllowClear]="true"
         >
           <ng-container *ngFor="let stage of stages">
             <nz-option [nzValue]="stage.idStage" [nzLabel]="stage.stageName"></nz-option>
@@ -22,6 +23,7 @@
           nzPlaceHolder="全部"
           class="step-select"
           (ngModelChange)="onChangeStep($event)"
+          [nzAllowClear]="true"
         >
           <ng-container *ngFor="let step of steps">
             <nz-option [nzValue]="step.idNode" [nzLabel]="step.name"></nz-option>

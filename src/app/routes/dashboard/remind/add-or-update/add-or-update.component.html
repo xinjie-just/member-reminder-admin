@@ -7,6 +7,7 @@
         formControlName="stage"
         nzPlaceHolder="请选择一个阶段"
         (ngModelChange)="onChangeStage($event)"
+        [nzAllowClear]="true"
       >
         <ng-container *ngFor="let stage of stages">
           <nz-option [nzValue]="stage?.idStage" [nzLabel]="stage?.stageName"></nz-option>
@@ -23,7 +24,13 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'step'" nzRequired>步骤</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
-      <nz-select id="step" formControlName="step" nzPlaceHolder="请选择一个步骤" (ngModelChange)="onChangeStep($event)">
+      <nz-select
+        id="step"
+        formControlName="step"
+        nzPlaceHolder="请选择一个步骤"
+        (ngModelChange)="onChangeStep($event)"
+        [nzAllowClear]="true"
+      >
         <ng-container *ngFor="let step of steps">
           <nz-option [nzValue]="step?.idNode" [nzLabel]="step?.name"></nz-option>
         </ng-container>
@@ -39,7 +46,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'reminder'" nzRequired>提醒事项</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="reminderErrorTpl">
-      <nz-select id="reminder" formControlName="reminder" nzPlaceHolder="请选择提醒事项">
+      <nz-select id="reminder" formControlName="reminder" nzPlaceHolder="请选择提醒事项" [nzAllowClear]="true">
         <ng-container *ngFor="let reminder of reminders">
           <nz-option [nzValue]="reminder?.idReminder" [nzLabel]="reminder?.content"></nz-option>
         </ng-container>
@@ -55,7 +62,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
-      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择提醒角色">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择提醒角色" [nzAllowClear]="true">
         <ng-container *ngFor="let role of roles">
           <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
         </ng-container>
@@ -71,7 +78,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'remindType'" nzRequired>提醒类型</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="remindTypeErrorTpl">
-      <nz-select id="remindType" formControlName="remindType" nzPlaceHolder="请选择提醒类型">
+      <nz-select id="remindType" formControlName="remindType" nzPlaceHolder="请选择提醒类型" [nzAllowClear]="true">
         <ng-container *ngFor="let remindType of remindTypes">
           <nz-option [nzValue]="remindType?.value" [nzLabel]="remindType?.label"></nz-option>
         </ng-container>
@@ -87,7 +94,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
-      <input nz-input formControlName="content" required id="content" placeholder="请输入提醒内容" />
+      <input nz-input formControlName="content" required id="content" placeholder="请输入提醒内容" autocomplete="off" />
       <ng-template #contentErrorTpl let-content>
         <ng-container *ngIf="content.hasError('required')">
           提醒内容是必填项!

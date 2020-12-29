@@ -4,7 +4,14 @@
       <nz-form-item>
         <nz-form-control [nzErrorTip]="accountErrorTip">
           <nz-input-group nzPrefixIcon="user">
-            <input nz-input id="phone" type="text" placeholder="请输入用户手机号" formControlName="phone" />
+            <input
+              nz-input
+              id="phone"
+              type="text"
+              placeholder="请输入用户手机号"
+              formControlName="phone"
+              autocomplete="off"
+            />
           </nz-input-group>
 
           <ng-template #accountErrorTip let-phone>
@@ -27,6 +34,7 @@
               id="password"
               placeholder="请输入密码"
               formControlName="password"
+              autocomplete="off"
             />
           </nz-input-group>
           <ng-template #suffixTemplate>

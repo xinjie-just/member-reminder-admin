@@ -2,7 +2,15 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'phone'" nzRequired>电话</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="phoneErrorTpl">
-      <input formControlName="phone" name="phone" id="phone" nz-input [disabled]="true" placeholder="请输入电话" />
+      <input
+        formControlName="phone"
+        name="phone"
+        id="phone"
+        nz-input
+        [disabled]="true"
+        placeholder="请输入电话"
+        autocomplete="off"
+      />
       <ng-template #phoneErrorTpl let-phone>
         <ng-container *ngIf="phone.hasError('required')">
           电话是必填项!
@@ -13,7 +21,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>角色</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
-      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色">
+      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色" [nzAllowClear]="true">
         <ng-container *ngFor="let role of roles">
           <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
         </ng-container>
@@ -28,7 +36,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'name'" nzRequired>姓名</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
-      <input nz-input formControlName="name" required id="name" placeholder="请输入姓名" />
+      <input nz-input formControlName="name" required id="name" placeholder="请输入姓名" autocomplete="off" />
       <ng-template #nameErrorTpl let-name>
         <ng-container *ngIf="name.hasError('required')">
           姓名是必填项!

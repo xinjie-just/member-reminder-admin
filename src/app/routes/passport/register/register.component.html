@@ -4,7 +4,7 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="mailErrorTip">
       <nz-input-group nzSize="large" nzAddonBeforeIcon="user">
-        <input nz-input formControlName="mail" placeholder="Email" />
+        <input nz-input formControlName="mail" placeholder="Email" autocomplete="off" />
       </nz-input-group>
       <ng-template #mailErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.email.required' | translate }}</ng-container>
@@ -25,7 +25,7 @@
         [nzOverlayStyle]="{ 'width.px': 240 }"
         [nzPopoverContent]="pwdCdkTpl"
       >
-        <input nz-input type="password" formControlName="password" placeholder="Password" />
+        <input nz-input type="password" formControlName="password" placeholder="Password" autocomplete="off" />
       </nz-input-group>
       <ng-template #pwdCdkTpl>
         <div style="padding: 4px 0;">
@@ -50,7 +50,7 @@
   <nz-form-item>
     <nz-form-control [nzErrorTip]="confirmErrorTip">
       <nz-input-group nzSize="large" nzAddonBeforeIcon="lock">
-        <input nz-input type="password" formControlName="confirm" placeholder="Confirm Password" />
+        <input nz-input type="password" formControlName="confirm" placeholder="Confirm Password" autocomplete="off" />
       </nz-input-group>
       <ng-template #confirmErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.confirm-password.required' | translate }}</ng-container>
@@ -62,12 +62,12 @@
     <nz-form-control [nzErrorTip]="mobileErrorTip">
       <nz-input-group nzSize="large" [nzAddOnBefore]="addOnBeforeTemplate">
         <ng-template #addOnBeforeTemplate>
-          <nz-select formControlName="mobilePrefix" style="width: 100px;">
+          <nz-select formControlName="mobilePrefix" style="width: 100px;" [nzAllowClear]="true">
             <nz-option [nzLabel]="'+86'" [nzValue]="'+86'"></nz-option>
             <nz-option [nzLabel]="'+87'" [nzValue]="'+87'"></nz-option>
           </nz-select>
         </ng-template>
-        <input formControlName="mobile" nz-input placeholder="Phone number" />
+        <input formControlName="mobile" nz-input placeholder="Phone number" autocomplete="off" />
       </nz-input-group>
       <ng-template #mobileErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.phone-number.required' | translate }}</ng-container>
@@ -80,7 +80,7 @@
       <nz-row [nzGutter]="8">
         <nz-col [nzSpan]="16">
           <nz-input-group nzSize="large" nzAddonBeforeIcon="mail">
-            <input nz-input formControlName="captcha" placeholder="Captcha" />
+            <input nz-input formControlName="captcha" placeholder="Captcha" autocomplete="off" />
           </nz-input-group>
         </nz-col>
         <nz-col [nzSpan]="8">

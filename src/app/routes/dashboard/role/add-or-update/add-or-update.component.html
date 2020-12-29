@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'name'" nzRequired>角色名称</nz-form-label>
     <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
-      <input nz-input formControlName="name" required id="name" placeholder="请输入角色名称" />
+      <input nz-input formControlName="name" required id="name" placeholder="请输入角色名称" autocomplete="off" />
       <ng-template #nameErrorTpl let-name>
         <ng-container *ngIf="name.hasError('required')">
           角色名称是必填项!
