@@ -13,6 +13,8 @@ import { RemindService } from '@shared/service/remind.service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { AddOrUpdateRemindComponent } from './add-or-update/add-or-update.component';
 import {
+  QueryReminderByNodeRequestParams,
+  QueryReminderByNodeResposeDataParams,
   StageSearchResponseDataParams,
   StepSearchRequestParams,
   StepSearchResponsePageParams,
@@ -44,6 +46,7 @@ export class RemindComponent implements OnInit {
   stage: number = null;
   step: number = null;
   reminds: RemindSearchResponseRecordsParams[] = [];
+  reminders: QueryReminderByNodeResposeDataParams[] = []; // 某步骤下的全部提醒事项
 
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
@@ -124,6 +127,7 @@ export class RemindComponent implements OnInit {
   onChangeStep(step: number) {
     this.step = step;
     this.getReminds(step);
+    this.getReminders(step);
   }
 
   /**
@@ -169,6 +173,26 @@ export class RemindComponent implements OnInit {
     );
   }
 
+  getReminders(step?: number) {
+    const params: QueryReminderByNodeRequestParams = {
+      idNode: step,
+    };
+    this.stageService.queryReminderByStep(params).subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          // const info: QueryReminderByNodeResposeDataParams = value.data;
+          this.reminders = value.data;
+        } else {
+          this.reminders = [];
+          this.msg.error(value.message);
+        }
+      },
+      (error) => {
+        this.msg.error(error);
+      },
+    );
+  }
+
   /**
    * 新建或修改提醒配置
    */
@@ -179,6 +203,7 @@ export class RemindComponent implements OnInit {
       nzWidth: 600,
       nzComponentParams: {
         remindInfo: remind ? remind : null,
+        reminders: this.reminders,
       },
       nzFooter: null,
     });

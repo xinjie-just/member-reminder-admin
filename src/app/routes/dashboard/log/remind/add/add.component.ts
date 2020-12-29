@@ -1,7 +1,7 @@
 import { LogService } from '@shared/service/log.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddTempTaskRequestParams, RemindTaskSearchRequestParams } from '@shared/interface/log';
+import { AddTempTaskRequestParams } from '@shared/interface/log';
 import { ResponseParams } from '@shared/interface/response';
 import {
   RoleSearchRequestParams,
@@ -11,11 +11,12 @@ import {
 import { RoleService } from '@shared/service/role.service';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { DatePipe } from '@angular/common';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styles: [],
+  styleUrls: ['./add.component.less'],
   providers: [DatePipe],
 })
 export class AddComponent implements OnInit {
@@ -23,6 +24,7 @@ export class AddComponent implements OnInit {
   uploading = false;
   roles: RoleSearchResponseRecordsParams[] = [];
   remindDate = '';
+  today = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -71,6 +73,11 @@ export class AddComponent implements OnInit {
     console.log('选择的日期', date);
     this.remindDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
+
+  disabledDate = (current: Date): boolean => {
+    // Can not select days before today and today
+    return differenceInCalendarDays(current, this.today) < 0;
+  };
 
   /**
    * 添加临时提醒

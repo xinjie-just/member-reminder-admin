@@ -39,6 +39,7 @@ export class UpdatePasswordComponent implements OnInit {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
     this.form = this.fb.group({
+      phoneNum: [null, [Validators.required]],
       oldPassword: [null, [Validators.required]],
       password: [null, [Validators.required]],
       verifyPassword: [null, [Validators.required, this.confirmationValidator]],
@@ -48,8 +49,7 @@ export class UpdatePasswordComponent implements OnInit {
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.form.patchValue({
-      phone: this.currentUserInfo.phone,
-      oldPassword: '',
+      phoneNum: this.currentUserInfo.phone,
     });
   }
 

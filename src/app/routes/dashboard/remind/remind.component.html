@@ -59,7 +59,6 @@
           <th class="index" [nzWidth]="'60px'">序号</th>
           <th class="stage" [nzWidth]="'170px'">阶段</th>
           <th class="step" [nzWidth]="'120px'">步骤</th>
-          <th class="reminder" [nzWidth]="'100px'">提醒事项</th>
           <th class="role" [nzWidth]="'110px'">需提醒角色</th>
           <th class="remind-type" [nzWidth]="'120px'">提醒类型</th>
           <th class="content" [nzWidth]="'150px'">提醒内容</th>
@@ -76,15 +75,14 @@
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
           <td class="stage">{{ remind?.stageName }}</td>
           <td class="step">{{ remind?.nodeName }}</td>
-          <td class="reminder">{{ remind?.reminder }}</td>
           <td class="role">{{ remind?.roleName }}</td>
           <td class="remind-type">{{ remind?.remindType | remindType }}</td>
           <!-- 提醒类型:日常提醒1/办理提醒2/手动添加提醒3 -->
           <td class="content">{{ remind?.content }}</td>
-          <td class="remind-lead-day">{{ remind?.remindLeadDay }}</td>
-          <td class="remind-batch-num">{{ remind?.remindBatchNum }}</td>
-          <td class="interval-duration">{{ remind?.intervalDuration }}</td>
-          <td class="remind-times">{{ remind?.remindTimes }}</td>
+          <td class="remind-lead-day">{{ remind?.remindLeadDay + '天' }}</td>
+          <td class="remind-batch-num">{{ remind?.remindBatchNum + '批' }}</td>
+          <td class="interval-duration">{{ remind?.intervalDuration + '天' }}</td>
+          <td class="remind-times">{{ remind?.remindTimes + '次' }}</td>
           <td class="status" [ngSwitch]="remind?.dataState">
             <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="remind?.dataState === 2">{{
               remind?.dataState | status

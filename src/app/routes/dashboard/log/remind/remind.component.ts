@@ -21,7 +21,7 @@ import { CurrentUserInfo } from '@shared/interface/user';
 @Component({
   selector: 'app-remind',
   templateUrl: './remind.component.html',
-  styles: [],
+  styleUrls: ['./remind.component.less'],
 })
 export class RemindLogComponent implements OnInit {
   pageIndex = 1; // 当前页码
@@ -35,7 +35,10 @@ export class RemindLogComponent implements OnInit {
   step: number = null;
 
   status = 0;
-  statusOptions: { value: number; label: string }[] = [];
+  statusOptions: { value: number; label: string }[] = [
+    { value: 0, label: '未执行' },
+    { value: 1, label: '已执行' },
+  ];
   remindLogs: RemindTaskSearchRecordsParams[] = [];
 
   currentUserInfo: CurrentUserInfo = {
@@ -60,6 +63,7 @@ export class RemindLogComponent implements OnInit {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
 
     this.getStages();
+    this.getReminds();
   }
 
   search() {

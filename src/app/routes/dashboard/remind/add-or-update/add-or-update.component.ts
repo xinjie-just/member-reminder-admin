@@ -38,6 +38,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
     remindLeadDay: null,
     intervalDuration: null,
     dataState: null,
+    idStage: null,
     stageName: null,
     nodeName: null,
     reminder: null,
@@ -81,8 +82,24 @@ export class AddOrUpdateRemindComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.remindInfo) {
+      this.form.patchValue({
+        stage: this.remindInfo.idStage,
+        step: this.remindInfo.idNode,
+        role: this.remindInfo.idRole,
+        remindType: this.remindInfo.remindType,
+        // reminder: this.remindInfo.idReminder,
+        content: this.remindInfo.content,
+        remindLeadDay: this.remindInfo.remindLeadDay,
+        remindBatchNum: this.remindInfo.remindBatchNum,
+        intervalDuration: this.remindInfo.intervalDuration,
+        remindTimes: this.remindInfo.remindTimes,
+      });
+    }
     this.getStages();
     this.getRoles();
+    this.getSteps();
+    this.onChangeStep(this.remindInfo.idNode);
   }
 
   /**
@@ -152,6 +169,9 @@ export class AddOrUpdateRemindComponent implements OnInit {
         if (value.code === 200) {
           // const info: QueryReminderByNodeResposeDataParams = value.data;
           this.reminders = value.data;
+          this.form.patchValue({
+            reminder: this.remindInfo.idReminder,
+          });
         } else {
           this.reminders = [];
           this.msg.error(value.message);
@@ -176,6 +196,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
         if (value.code === 200) {
           const info: RoleSearchResponsePageParams = value.data.page;
           this.roles = info.records;
+          console.log('角色', this.roles);
         } else {
           this.roles = [];
           this.msg.error(value.message);

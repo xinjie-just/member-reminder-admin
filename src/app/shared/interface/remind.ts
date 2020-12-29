@@ -35,6 +35,7 @@ export interface RemindSearchResponseRecordsParams {
   remindLeadDay: number;
   intervalDuration: number;
   dataState: number;
+  idStage: number;
   stageName: string;
   nodeName: string;
   reminder: string;

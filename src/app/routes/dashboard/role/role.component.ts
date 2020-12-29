@@ -133,7 +133,7 @@ export class RoleComponent implements OnInit {
     this.roleService.deleteRole(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('角色 <i>${role.roleName}</i> 删除成功');
+          this.msg.success(`角色 <i>${role.roleName}</i> 删除成功`);
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
           this.msg.error(value.message);

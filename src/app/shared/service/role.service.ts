@@ -18,9 +18,13 @@ export class RoleService {
    * @param params RoleSearchRequestParams
    */
   getRoles(params: RoleSearchRequestParams): Observable<any> {
-    return this.http.get(
-      `api/role/getPage?roleName=${params.roleName}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
-    );
+    if (params.roleName) {
+      return this.http.get(
+        `api/role/getPage?roleName=${params.roleName}&pageNo=${params.pageNo}&pageSize=${params.pageSize}`,
+      );
+    } else {
+      return this.http.get(`api/role/getPage?pageNo=${params.pageNo}&pageSize=${params.pageSize}`);
+    }
   }
 
   /**

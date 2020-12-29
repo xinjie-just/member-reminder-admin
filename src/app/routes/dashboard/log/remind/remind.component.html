@@ -37,7 +37,6 @@
           nzPlaceHolder="全部"
           class="status-select"
           (ngModelChange)="onChangeStep($event)"
-          [nzAllowClear]="true"
         >
           <ng-container *ngFor="let status of statusOptions">
             <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
