@@ -1,5 +1,5 @@
 <div>
-  <nz-card nzTitle="定时任务日志管理">
+  <nz-card nzTitle="提醒任务管理">
     <div nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
       <div nz-col>
         <label for="stage">阶段：</label>
@@ -51,8 +51,8 @@
   </nz-card>
   <nz-card>
     <nz-table
-      #logsTable
-      [nzData]="remindLogs"
+      #tasksTable
+      [nzData]="tasks"
       [nzSize]="'middle'"
       [nzFrontPagination]="false"
       [nzTotal]="total"
@@ -63,8 +63,8 @@
       [nzLoadingDelay]="2"
       [(nzPageIndex)]="pageIndex"
       [(nzPageSize)]="pageSize"
-      (nzPageIndexChange)="getReminds()"
-      (nzPageSizeChange)="getReminds()"
+      (nzPageIndexChange)="getTasks()"
+      (nzPageSizeChange)="getTasks()"
     >
       <thead>
         <tr>
@@ -87,30 +87,34 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let log of logsTable.data; let i = index">
+        <tr *ngFor="let task of tasksTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
-          <td class="stage">{{ log?.stageName }}</td>
-          <td class="step">{{ log?.nodeName }}</td>
-          <td class="realname">{{ log?.manageUserRealName || log?.realName }}</td>
-          <td class="type">{{ log?.remindType | remindType }}</td>
-          <td class="content">{{ log?.content }}</td>
-          <td class="plan-date">{{ log?.planDate }}</td>
+          <td class="stage">{{ task?.stageName }}</td>
+          <td class="step">{{ task?.nodeName }}</td>
+          <td class="realname">{{ task?.manageUserRealName || task?.realName }}</td>
+          <td class="type">{{ task?.remindType | remindType }}</td>
+          <td class="content">{{ task?.content }}</td>
+          <td class="plan-date">{{ task?.planDate }}</td>
           <ng-container *ngIf="status === 0">
-            <td class="status" [ngSwitch]="log?.dataState">
-              <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="log?.dataState === 2">{{ log?.dataState | status }}</nz-tag>
-              <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="log?.dataState === 0">{{ log?.dataState | status }}</nz-tag>
-              <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ log?.dataState | status }}</nz-tag>
+            <td class="status" [ngSwitch]="task?.dataState">
+              <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="task?.dataState === 2">{{
+                task?.dataState | status
+              }}</nz-tag>
+              <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="task?.dataState === 0">{{
+                task?.dataState | status
+              }}</nz-tag>
+              <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ task?.dataState | status }}</nz-tag>
             </td>
             <td class="handle">
-              <button nz-button nzType="link" (click)="lockOrUnlockRemind(log)" *ngIf="currentUserInfo.roleId === 1">
-                {{ log.dataState === 0 ? '解锁' : '锁定' }}
+              <button nz-button nzType="link" (click)="lockOrUnlockTask(task)" *ngIf="currentUserInfo.roleId === 1">
+                {{ task.dataState === 0 ? '解锁' : '锁定' }}
               </button>
             </td>
           </ng-container>
           <ng-container *ngIf="status === 1">
-            <td class="content">{{ log?.actualTime }}</td>
-            <td class="plan-date">{{ log?.readTime }}</td>
-            <td class="status">{{ log.completionTime }}</td>
+            <td class="content">{{ task?.actualTime }}</td>
+            <td class="plan-date">{{ task?.readTime }}</td>
+            <td class="status">{{ task.completionTime }}</td>
           </ng-container>
         </tr>
       </tbody>

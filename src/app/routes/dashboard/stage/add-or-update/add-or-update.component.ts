@@ -32,8 +32,6 @@ export class AddOrUpdateStageComponent implements OnInit {
   uploading = false;
   steps: StepSearchResponseRecordsParams[] = [];
 
-  durations: { value: number; label: string }[] = [];
-
   samePreSteps: { value: number; label: string }[] = [
     { value: 1, label: '是' },
     { value: 0, label: '否' },
@@ -43,6 +41,47 @@ export class AddOrUpdateStageComponent implements OnInit {
   nodeBizTypes: { value: number; label: string }[] = [
     { value: 1, label: '提醒办理' },
     { value: 2, label: '等待批复' },
+  ];
+  durations: {
+    value: number;
+    label: string;
+  }[] = [
+    {
+      value: 0,
+      label: '7',
+    },
+    {
+      value: 1,
+      label: '15',
+    },
+    {
+      value: 2,
+      label: '30',
+    },
+    {
+      value: 3,
+      label: '60',
+    },
+    {
+      value: 4,
+      label: '90',
+    },
+    {
+      value: 5,
+      label: '120',
+    },
+    {
+      value: 6,
+      label: '150',
+    },
+    {
+      value: 7,
+      label: '180',
+    },
+    {
+      value: 8,
+      label: '365',
+    },
   ];
 
   constructor(
@@ -56,16 +95,13 @@ export class AddOrUpdateStageComponent implements OnInit {
       stepName: [null, [Validators.required]],
       nodeBizType: [1, [Validators.required]],
       step: [null, [Validators.required]],
-      duration: [1, [Validators.required]],
-      samePreStep: [1, [Validators.required]],
+      duration: [2, [Validators.required]],
+      samePreStep: [0, [Validators.required]],
       sort: [1, [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    for (let i = 1; i < 32; i++) {
-      this.durations.push({ value: i, label: String(i) });
-    }
     for (let i = 1; i < 11; i++) {
       this.sorts.push({ value: i, label: String(i) });
     }
@@ -80,6 +116,7 @@ export class AddOrUpdateStageComponent implements OnInit {
         sort: this.stepInfo.sort,
       });
     }
+    this.getSteps();
   }
 
   /**

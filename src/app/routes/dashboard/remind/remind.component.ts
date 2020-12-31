@@ -126,8 +126,10 @@ export class RemindComponent implements OnInit {
    */
   onChangeStep(step: number) {
     this.step = step;
-    this.getReminds(step);
-    this.getReminders(step);
+    this.getReminds();
+    if (this.step) {
+      this.getReminders(step);
+    }
   }
 
   /**
@@ -142,14 +144,14 @@ export class RemindComponent implements OnInit {
   /**
    * 提醒配置搜索
    */
-  getReminds(step?: number): void {
+  getReminds(): void {
     this.tableLoading = true;
     let params: RemindSearchRequestParams = {
       pageNo: this.pageIndex,
       pageSize: this.pageSize,
     };
-    if (step) {
-      params = { ...params, idNode: step };
+    if (this.step) {
+      params = { ...params, idNode: this.step };
     }
     this.remindService.getReminds(params).subscribe(
       (value: ResponseParams) => {

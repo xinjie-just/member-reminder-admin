@@ -19,11 +19,11 @@ import { LogService } from '@shared/service/log.service';
 import { CurrentUserInfo } from '@shared/interface/user';
 
 @Component({
-  selector: 'app-remind',
-  templateUrl: './remind.component.html',
-  styleUrls: ['./remind.component.less'],
+  selector: 'app-task',
+  templateUrl: './task.component.html',
+  styleUrls: ['./task.component.less'],
 })
-export class RemindLogComponent implements OnInit {
+export class TaskComponent implements OnInit {
   pageIndex = 1; // 当前页码
   pageSize = 10; // 每页显示数据量
   total = 0; // 总数据量
@@ -39,7 +39,7 @@ export class RemindLogComponent implements OnInit {
     { value: 0, label: '未执行' },
     { value: 1, label: '已执行' },
   ];
-  remindLogs: RemindTaskSearchRecordsParams[] = [];
+  tasks: RemindTaskSearchRecordsParams[] = [];
 
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
@@ -63,13 +63,13 @@ export class RemindLogComponent implements OnInit {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
 
     this.getStages();
-    this.getReminds();
+    this.getTasks();
   }
 
   search() {
     this.pageIndex = 1;
     this.pageSize = 10;
-    this.getReminds();
+    this.getTasks();
   }
 
   /**
@@ -130,14 +130,14 @@ export class RemindLogComponent implements OnInit {
    */
   onChangeStep(step: number) {
     this.step = step;
-    this.getReminds(step);
+    this.getTasks(step);
   }
 
   /**
    * 获取临时任务日志
    * @param step number
    */
-  getReminds(step?: number) {
+  getTasks(step?: number) {
     this.tableLoading = true;
     let params: RemindTaskSearchRequestParams = {
       executed: this.status,
@@ -151,10 +151,10 @@ export class RemindLogComponent implements OnInit {
       (value: ResponseParams) => {
         if (value.code === 200) {
           const info: LogSearchResponsePageParams = value.data.page;
-          this.remindLogs = value.data.page.records;
+          this.tasks = value.data.page.records;
           this.total = info.total;
         } else {
-          this.remindLogs = [];
+          this.tasks = [];
           this.total = 0;
           this.msg.error(value.message);
         }
@@ -190,7 +190,7 @@ export class RemindLogComponent implements OnInit {
    * 锁定或解锁用户
    * @param remind RemindTaskSearchRecordsParams
    */
-  lockOrUnlockRemind(remind: RemindTaskSearchRecordsParams): void {
+  lockOrUnlockTask(remind: RemindTaskSearchRecordsParams): void {
     const type = remind.dataState === 0 ? '解锁' : '锁定';
     const contentStr = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     this.modalService.confirm({

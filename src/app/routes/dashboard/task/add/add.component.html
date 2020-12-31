@@ -36,19 +36,21 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容详情</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
-      <input
+      <textarea
         formControlName="content"
         name="content"
         id="content"
         nz-input
-        placeholder="请输入提醒内容"
+        placeholder="请输入提醒内容详情"
         autocomplete="off"
-      />
+        [nzAutosize]="{ minRows: 2, maxRows: 5 }"
+      >
+      </textarea>
       <ng-template #contentErrorTpl let-content>
         <ng-container *ngIf="content.hasError('required')">
-          提醒内容是必填项!
+          提醒内容详情是必填项!
         </ng-container>
       </ng-template>
     </nz-form-control>

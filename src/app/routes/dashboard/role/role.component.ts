@@ -53,6 +53,11 @@ export class RoleComponent implements OnInit {
     this.getRoles();
   }
 
+  inputClear(): void {
+    this.name = '';
+    this.search();
+  }
+
   /**
    * 查询角色
    */

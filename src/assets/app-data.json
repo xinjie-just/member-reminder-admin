@@ -35,6 +35,11 @@
           "link": "/dashboard/remind"
         },
         {
+          "text": "提醒任务管理",
+          "icon": { "type": "img", "value": "assets/menu-icon/task.svg" },
+          "link": "/dashboard/task"
+        },
+        {
           "text": "日志管理",
           "icon": { "type": "img", "value": "assets/menu-icon/log.svg" },
           "link": "/dashboard/log",
@@ -42,10 +47,6 @@
             {
               "text": "业务操作日志",
               "link": "/dashboard/log/operation"
-            },
-            {
-              "text": "提醒任务日志",
-              "link": "/dashboard/log/remind"
             },
             {
               "text": "定时发送日志",

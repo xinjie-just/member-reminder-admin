@@ -4,6 +4,7 @@ import { StageComponent } from './stage/stage.component';
 import { RemindComponent } from './remind/remind.component';
 import { RoleComponent } from './role/role.component';
 import { UserComponent } from './user/user.component';
+import { TaskComponent } from './task/task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'role', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'stage', component: StageComponent },
   { path: 'remind', component: RemindComponent },
+  { path: 'task', component: TaskComponent },
   { path: 'log', loadChildren: () => import('./log/log.module').then((m) => m.LogModule) },
 ];
 

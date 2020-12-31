@@ -102,6 +102,11 @@ export class UserComponent implements OnInit {
     this.getUers(this.step);
   }
 
+  inputClear() {
+    this.username = '';
+    this.search();
+  }
+
   /**
    * 查询用户
    */

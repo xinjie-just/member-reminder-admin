@@ -22,20 +22,20 @@
       <thead>
         <tr>
           <th class="index" [nzWidth]="'70px'">序号</th>
-          <th class="task" [nzWidth]="'70px'">任务</th>
-          <th class="start-time" [nzWidth]="'110px'">开始时间</th>
-          <th class="end-time" [nzWidth]="'370px'">结束时间</th>
-          <th class="exception" [nzWidth]="'170px'">异常信息</th>
-          <th class="state" [nzWidth]="'170px'">数据状态</th>
+          <th class="task" [nzWidth]="'180px'">任务</th>
+          <th class="start-time" [nzWidth]="'150px'">开始时间</th>
+          <th class="end-time" [nzWidth]="'150px'">结束时间</th>
+          <th class="exception-info" [nzWidth]="'190px'">异常信息</th>
+          <th class="state" [nzWidth]="'70px'">数据状态</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let log of logsTable.data; let i = index">
           <td class="index">{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
           <td class="task">{{ log?.taskDesc }}</td>
-          <td class="start-time">{{ log?.startTime }}</td>
-          <td class="end-time">{{ log?.endTime }}</td>
-          <td class="exception">{{ log?.exception }}</td>
+          <td class="start-time">{{ log?.startTime | date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+          <td class="end-time">{{ log?.endTime | date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+          <td class="exception-info">{{ log?.exception || '-' }}</td>
           <td class="status" [ngSwitch]="log?.dataState">
             <nz-tag [nzColor]="'#ff6112'" *ngSwitchCase="log?.dataState === 2">{{ log?.dataState | status }}</nz-tag>
             <nz-tag [nzColor]="'#ffa742'" *ngSwitchCase="log?.dataState === 0">{{ log?.dataState | status }}</nz-tag>

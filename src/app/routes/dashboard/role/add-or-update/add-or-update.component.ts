@@ -48,7 +48,7 @@ export class AddOrUpdateRoleComponent implements OnInit {
       this.roleService.updateRole(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('角色问题成功');
+            this.msg.success('角色修改成功');
             this.modal.destroy({ data: 'success' });
           } else {
             this.msg.error(value.message);

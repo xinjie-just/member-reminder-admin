@@ -58,6 +58,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
   steps: StepSearchResponseRecordsParams[] = [];
   reminders: QueryReminderByNodeResposeDataParams[] = []; // 某步骤下的全部提醒事项
   roles: RoleSearchResponseRecordsParams[] = [];
+  selectedReminder: { idReminder: number; content: string } = { idReminder: null, content: null };
 
   constructor(
     private fb: FormBuilder,
@@ -181,6 +182,21 @@ export class AddOrUpdateRemindComponent implements OnInit {
         this.msg.error(error);
       },
     );
+  }
+
+  /**
+   * 改变提醒事项，填充提醒内容详情
+   */
+  onChangeReminder(reminder: number) {
+    this.reminders.forEach((item) => {
+      if (reminder === item.idReminder) {
+        this.selectedReminder.content = item.content;
+      }
+    });
+
+    this.form.patchValue({
+      content: this.selectedReminder.content,
+    });
   }
 
   /**

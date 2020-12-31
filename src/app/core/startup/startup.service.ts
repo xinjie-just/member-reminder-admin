@@ -68,7 +68,22 @@ export class StartupService {
             JSON.parse(localStorage.getItem('_token')).roleId &&
             JSON.parse(localStorage.getItem('_token')).roleId !== 1
           ) {
-            res.menu[0].children.pop(); // 去掉最后的日志管理，把日志管理放到最后
+            res.menu[0].children.pop();
+            res.menu[0].children.pop(); // 去掉最后的日志管理和提醒任务管理
+            /* res.menu[0].children = res.menu[0].children.map((item, i, arr) => {
+              const link = item.link;
+              const text = item.text;
+              let index = null;
+              if (link.includes('task') || text.includes('提醒任务')) {
+                index = arr.indexOf(item);
+                arr.splice(item, index);
+              }
+              if (link.includes('log') || text.includes('日志')) {
+                index = arr.indexOf(item);
+                arr.splice(item, index);
+              }
+              return { ...{ ...arr } };
+            }); */
             this.menuService.resume();
           }
 
