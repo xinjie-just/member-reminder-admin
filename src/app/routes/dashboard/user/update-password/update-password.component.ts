@@ -41,7 +41,7 @@ export class UpdatePasswordComponent implements OnInit {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
     this.form = this.fb.group({
-      phoneNum: [null, [Validators.required]],
+      phoneNum: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
       oldPassword: [null, [Validators.required]],
       password: [null, [Validators.required]],
       verifyPassword: [null, [Validators.required, this.confirmationValidator]],

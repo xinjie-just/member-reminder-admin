@@ -1,3 +1,10 @@
+<nz-alert
+  [nzType]="'info'"
+  nzMessage="提示：最多添加5项提醒事项；每一项提醒事项中提醒内容需4-100个字符"
+  nzShowIcon
+  nzCloseText="关闭"
+  class="info"
+></nz-alert>
 <form nz-form [formGroup]="form">
   <nz-spin *ngIf="uploading" nzTip="数据初始化中..."> </nz-spin>
 

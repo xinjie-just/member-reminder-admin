@@ -15,6 +15,7 @@ import { AddOrUpdateRemindComponent } from './remind/add-or-update/add-or-update
 import { ViewProcessComponent } from './user/view-process/view-process.component';
 import { TaskComponent } from './task/task.component';
 import { ReminderComponent } from './stage/reminder/reminder.component';
+import { AddTaskComponent } from './task/add/add.component';
 
 const COMPONENTS = [
   RoleComponent,
@@ -27,6 +28,9 @@ const COMPONENTS = [
   AddOrUpdateStageComponent,
   AddOrUpdateRemindComponent,
   ViewProcessComponent,
+  AddTaskComponent,
+  ReminderComponent,
+  UpdatePasswordComponent,
 ];
 const COMPONENTS_NOROUNT = [
   AddComponent,
@@ -37,7 +41,7 @@ const COMPONENTS_NOROUNT = [
 
 @NgModule({
   imports: [SharedModule, DashboardRoutingModule],
-  declarations: [...COMPONENTS, UpdatePasswordComponent, ReminderComponent],
+  declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS_NOROUNT],
 })
 export class DashboardModule {}

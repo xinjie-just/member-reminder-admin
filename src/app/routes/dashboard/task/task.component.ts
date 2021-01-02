@@ -1,4 +1,4 @@
-import { AddComponent } from './add/add.component';
+import { AddTaskComponent } from './add/add.component';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -175,7 +175,7 @@ export class TaskComponent implements OnInit {
   add() {
     const addModal = this.modalService.create({
       nzTitle: '新增临时提醒',
-      nzContent: AddComponent,
+      nzContent: AddTaskComponent,
       nzFooter: null,
     });
 

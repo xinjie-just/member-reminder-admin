@@ -19,7 +19,7 @@ import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
   styleUrls: ['./add.component.less'],
   providers: [DatePipe],
 })
-export class AddComponent implements OnInit {
+export class AddTaskComponent implements OnInit {
   form: FormGroup;
   uploading = false;
   roles: RoleSearchResponseRecordsParams[] = [];
