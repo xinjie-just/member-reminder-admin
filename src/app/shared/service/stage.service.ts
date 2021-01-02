@@ -5,6 +5,8 @@ import {
   StepDeleteRequestParams,
   StepAddOrUpdateRequestParams,
   QueryReminderByNodeRequestParams,
+  ReminderSaveRequestParams,
+  ReminderDeleteRequestParams,
 } from '@shared/interface/stage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -66,5 +68,21 @@ export class StageService {
    */
   queryReminderByStep(params: QueryReminderByNodeRequestParams): Observable<any> {
     return this.http.get(`api/stageNode/queryReminderByNode?idNode=${params.idNode}`);
+  }
+
+  /**
+   * 为步骤新增或修改提醒事项
+   * @param params ReminderSaveRequestParams
+   */
+  addOrUpdateReminder(params: ReminderSaveRequestParams): Observable<any> {
+    return this.http.post(`api/stageNode/addReminder`, params);
+  }
+
+  /**
+   * 删除提醒事项
+   * @param params ReminderDeleteRequestParams
+   */
+  deleteReminder(params: ReminderDeleteRequestParams): Observable<any> {
+    return this.http.get(`api/stageNode/admin/deleteReminder?idReminder=${params.idReminder}`);
   }
 }

@@ -7,10 +7,12 @@ import {
   StepSearchResponsePageParams,
   StepDeleteRequestParams,
   StageSearchResponseDataParams,
+  ReminderSaveRequestParams,
 } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
 import { CurrentUserInfo } from '@shared/interface/user';
+import { ReminderComponent } from './reminder/reminder.component';
 @Component({
   selector: 'app-stage',
   templateUrl: './stage.component.html',
@@ -128,6 +130,27 @@ export class StageComponent implements OnInit {
 
     addOrUpdateModal.afterClose.subscribe((result) => {
       if (result && result.data === 'success') {
+        this.search(); // 新增或修改成功后，重置页码
+      }
+    });
+  }
+
+  reminder(step: StepSearchResponseRecordsParams) {
+    const addOrUpdateModal = this.modalService.create({
+      nzTitle: '提醒事项管理',
+      nzContent: ReminderComponent,
+      nzFooter: null,
+      nzWidth: 900,
+      nzComponentParams: {
+        idNode: step.idNode,
+      },
+      nzOnCancel: () => {
+        this.search();
+      },
+    });
+
+    addOrUpdateModal.afterClose.subscribe((result) => {
+      if (result && (result.data === 'success' || result.data === 'cancel')) {
         this.search(); // 新增或修改成功后，重置页码
       }
     });

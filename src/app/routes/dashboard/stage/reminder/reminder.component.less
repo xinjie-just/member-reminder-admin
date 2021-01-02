@@ -1,0 +1,66 @@
+:host {
+  ::ng-deep {
+    .handle {
+      margin-bottom: 20px;
+    }
+
+    .answer-form-label {
+      line-height: 26px;
+    }
+
+    .answer-form-control {
+      .ant-form-item-control {
+        line-height: 26px;
+      }
+    }
+
+    .save-btn,
+    .dynamic-delete-button {
+      position: relative;
+      margin-left: 8px;
+      color: #aaa;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        color: #666;
+      }
+    }
+
+    .save-btn {
+      background-color: transparent;
+      border: none;
+      &.empty {
+        visibility: hidden;
+      }
+    }
+
+    .dynamic-add-button {
+      font-size: 14px;
+    }
+
+    .dynamic-delete-button {
+      margin-left: 8px;
+      background-color: transparent;
+      border: none;
+    }
+
+    .text-right {
+      text-align: right;
+
+      button {
+        &:not(:last-of-type) {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    .reminder-input {
+      width: calc(~'100% - 96px');
+    }
+  }
+}

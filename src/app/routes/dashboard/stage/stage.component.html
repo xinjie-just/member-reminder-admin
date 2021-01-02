@@ -34,14 +34,14 @@
     >
       <thead>
         <tr>
-          <th class="index">序号</th>
-          <th class="stage">阶段</th>
-          <th class="step">步骤</th>
-          <th class="type">步骤类型</th>
-          <th class="duration">本阶段时常(天)</th>
-          <th class="same-pre-step">是否与上一阶段同时开始</th>
-          <th class="status">数据状态</th>
-          <th class="handle">操作</th>
+          <th class="index" [nzWidth]="'70px'">序号</th>
+          <th class="stage" [nzWidth]="'170px'">阶段</th>
+          <th class="step" [nzWidth]="'140px'">步骤</th>
+          <th class="type" [nzWidth]="'70px'">步骤类型</th>
+          <th class="duration" [nzWidth]="'70px'">本阶段时常(天)</th>
+          <th class="same-pre-step" [nzWidth]="'120px'">是否与上一阶段同时开始</th>
+          <th class="status" [nzWidth]="'70px'">数据状态</th>
+          <th class="handle" [nzWidth]="'220px'">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -59,6 +59,8 @@
             <nz-tag [nzColor]="'#10B6B4'" *ngSwitchDefault>{{ step?.dataState | status }}</nz-tag>
           </td>
           <td class="handle">
+            <button nz-button nzType="link" (click)="reminder(step)">提醒事项管理</button>
+            <nz-divider nzType="vertical"></nz-divider>
             <button nz-button nzType="link" (click)="addOrUpdateStage(step)">修改</button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button nz-button nzType="link" *ngIf="currentUserInfo.roleId === 1" (click)="deleteStep(step)">

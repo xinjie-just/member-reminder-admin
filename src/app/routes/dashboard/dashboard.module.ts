@@ -14,6 +14,7 @@ import { UpdatePasswordComponent } from './user/update-password/update-password.
 import { AddOrUpdateRemindComponent } from './remind/add-or-update/add-or-update.component';
 import { ViewProcessComponent } from './user/view-process/view-process.component';
 import { TaskComponent } from './task/task.component';
+import { ReminderComponent } from './stage/reminder/reminder.component';
 
 const COMPONENTS = [
   RoleComponent,
@@ -36,7 +37,7 @@ const COMPONENTS_NOROUNT = [
 
 @NgModule({
   imports: [SharedModule, DashboardRoutingModule],
-  declarations: [...COMPONENTS, UpdatePasswordComponent],
+  declarations: [...COMPONENTS, UpdatePasswordComponent, ReminderComponent],
   entryComponents: [...COMPONENTS_NOROUNT],
 })
 export class DashboardModule {}

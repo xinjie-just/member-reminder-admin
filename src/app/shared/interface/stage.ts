@@ -92,3 +92,15 @@ export interface QueryReminderByNodeResposeDataParams {
   content: string;
   dataState: number;
 }
+
+// 为步骤新增或修改提醒事项
+export interface ReminderSaveRequestParams {
+  content: string;
+  idNode: number;
+  idReminder?: number;
+}
+
+// 删除提醒事项
+export interface ReminderDeleteRequestParams {
+  idReminder: number;
+}

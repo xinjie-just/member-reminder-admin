@@ -1,0 +1,71 @@
+<form nz-form [formGroup]="form">
+  <nz-spin *ngIf="uploading" nzTip="数据初始化中..."> </nz-spin>
+
+  <div nz-row nzJustify="end" class="handle">
+    <div nz-col>
+      <button
+        nz-button
+        nzType="dashed"
+        class="dynamic-add-button"
+        [title]="listOfControl.length > 4 ? '最多5项提醒事项' : '添加一项提醒事项'"
+        (click)="addField($event)"
+        [disabled]="listOfControl.length > 4"
+      >
+        <i nz-icon nzType="plus-circle"></i>添加提醒事项
+      </button>
+    </div>
+  </div>
+
+  <section *ngFor="let control of listOfControl; let i = index">
+    <nz-form-item class="form-item">
+      <nz-form-label nzSpan="3" [nzFor]="control.reminderInstance" nzRequired>提醒内容</nz-form-label>
+      <nz-form-control nzSpan="21" [nzErrorTip]="reminderErrorTpl">
+        <textarea
+          #textareaTem
+          class="reminder-input"
+          nz-input
+          required
+          placeholder="请输入提醒事项内容(4-100个字符)"
+          [attr.id]="control.id + 1"
+          id="control.reminderInstance"
+          (change)="changeReminder(control.reminderInstance, control.id)"
+          [nzAutosize]="{ minRows: 1, maxRows: 3 }"
+          formControlName="{{ control.reminderInstance }}"
+        ></textarea>
+
+        <button
+          nz-icon
+          nzType="check-circle"
+          nzTheme="outline"
+          class="save-btn"
+          [class.empty]="textareaTem.value.length > 100 || textareaTem.value.length < 4"
+          (click)="saveReminder(control)"
+          [disabled]="textareaTem.value.length > 100 || textareaTem.value.length < 4"
+          [title]="
+            textareaTem.value.length > 100 || textareaTem.value.length < 4
+              ? '提醒事项内容必须是4-100个字符'
+              : '保存提醒事项'
+          "
+        ></button>
+
+        <button
+          nz-icon
+          nzType="minus-circle"
+          class="dynamic-delete-button"
+          title="删除该提醒事项"
+          (click)="removeField(control, $event, textareaTem)"
+        ></button>
+        <ng-template #reminderErrorTpl let-reminder>
+          <ng-container *ngIf="textareaTem.value.length > 100 || textareaTem.value.length < 4">
+            提醒事项内容必须是4-100个字符
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </section>
+
+  <div class="text-right">
+    <button nz-button type="button" (click)="cancel()">关闭</button>
+    <!-- <button nz-button [nzType]="'primary'" (click)="submit($event)">确认</button> -->
+  </div>
+</form>
