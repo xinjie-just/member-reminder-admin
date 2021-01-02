@@ -14,21 +14,21 @@
 
 二、官方文档
 
-Vue 官方文档：`https://cn.vuejs.org/v2/guide/`
+Angular 官方文档：`https://angular.cn/`
 
-Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
+ng-zorro 官方文档：`https://ng.ant.design/version/9.3.x/docs/introduce/zh`
 
-基于 vue-admin-template 模版开发：`https://github.com/PanJiaChen/vue-admin-template`
+基于 ng-alain 模版开发：`https://ng-alain.com/version/9.x/zh`
 
 ## 项目介绍
 
-- 党员发展工作提醒后台管理(member-reminder-admin)是一个 Vue 项目。
+- 党员发展工作提醒后台管理(member-reminder-admin)是一个 Angular 项目。
 - [党员发展工作提醒](https://github.com/xinjie-just/member-reminder-admin)，最新分支：feat/ngVersion。
 - 项目参与者：前端李芯杰，后端周杨，项目经理周杨。
 
 ## 快速入门
 
-- [如何开始使用？](https://panjiachen.github.io/vue-element-admin-site/zh/)。
+- [如何开始使用？](https://ng-alain.com/version/9.x/docs/getting-started/zh)。
 
 ### 启动项目
 
