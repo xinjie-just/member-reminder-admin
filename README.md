@@ -12,6 +12,8 @@
 
 4. servers 地址: [https://www.guizhouyichenjing.com:443](https://www.guizhouyichenjing.com:443)
 
+5. 测试服地址：[http://www.guizhouyichenjing.com/](http://www.guizhouyichenjing.com/)
+
 二、官方文档
 
 Angular 官方文档：`https://angular.cn/`

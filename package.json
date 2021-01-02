@@ -46,8 +46,6 @@
     "lodash": "^4.17.15",
     "ng-alain": "^9.1.0",
     "ng-zorro-antd": "^9.1.0",
-    "ngx-tinymce": "^9.0.0",
-    "ngx-ueditor": "^9.0.0",
     "rxjs": "~6.5.5",
     "screenfull": "^5.0.2",
     "ts-md5": "^1.2.7",
