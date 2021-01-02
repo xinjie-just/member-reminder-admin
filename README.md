@@ -23,7 +23,7 @@ Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
 ## 项目介绍
 
 - 党员发展工作提醒后台管理(member-reminder-admin)是一个 Vue 项目。
-- [党员发展工作提醒](https://github.com/xinjie-just/member-reminder-admin)，最新分支：main。
+- [党员发展工作提醒](https://github.com/xinjie-just/member-reminder-admin)，最新分支：feat/ngVersion。
 - 项目参与者：前端李芯杰，后端周杨，项目经理周杨。
 
 ## 快速入门
@@ -35,8 +35,6 @@ Element-UI 官方文档：`https://element.eleme.cn/2.14/#/zh-CN`
 1. `npm install` 安装项目依赖
 
 2. `npm run dev` 已开发模式启动项目
-
-3. 账号：15982280388，密码：280388
 
 ### 打包部署上线
 
