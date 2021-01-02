@@ -13,6 +13,8 @@ import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
   styles: [],
 })
 export class UpdatePasswordComponent implements OnInit {
+  @Input() phone: string = '';
+  @Input() userName: string = '';
   form: FormGroup;
   oldPasswordVisible = false; // 密码或普通字符串转换
   passwordVisible = false; // 密码或普通字符串转换
@@ -21,8 +23,8 @@ export class UpdatePasswordComponent implements OnInit {
   uploading = false;
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
-    phone: null,
-    realName: null,
+    // phone: null,
+    // realName: null,
     roleId: null,
     startTime: null,
     token: null,
@@ -49,7 +51,7 @@ export class UpdatePasswordComponent implements OnInit {
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     this.form.patchValue({
-      phoneNum: this.currentUserInfo.phone,
+      phoneNum: this.phone,
     });
   }
 
@@ -81,7 +83,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.userService.updatePassword(params).subscribe(
       (value: ResponseParams) => {
         if (!value.code) {
-          this.msg.success(`用户 "${this.currentUserInfo.realName}" 密码修改成功`);
+          this.msg.success(`用户 <i>${this.userName}</i> 密码修改成功`);
           //修改成功后，退出登录，需要重新登录。
           this.tokenService.clear();
           localStorage.clear();

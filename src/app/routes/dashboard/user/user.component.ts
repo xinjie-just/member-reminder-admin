@@ -47,8 +47,8 @@ export class UserComponent implements OnInit {
   tableLoading = true; // 表格数据加载中
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
-    phone: null,
-    realName: null,
+    // phone: null,
+    // realName: null,
     roleId: null,
     startTime: null,
     token: null,

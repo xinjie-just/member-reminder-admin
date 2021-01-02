@@ -88,8 +88,8 @@ export class UserLoginComponent {
           roleId: userInfo.idRole,
           userState: userInfo.dataState, // 0-锁定，1-正常，2-假删除
           lastLoginTime: userInfo.lastLoginTime,
-          phone: userInfo.phoneNum,
-          realName: userInfo.realName,
+          // phone: userInfo.phoneNum,
+          // realName: userInfo.realName,
           startTime: userInfo.startTime,
         });
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响

@@ -29,8 +29,8 @@ export class StageComponent implements OnInit {
   stage = null;
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
-    phone: null,
-    realName: null,
+    // phone: null,
+    // realName: null,
     roleId: null,
     startTime: null,
     token: null,

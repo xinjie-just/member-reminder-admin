@@ -1,11 +1,13 @@
+import { CurrentUserInfo } from '@shared/interface/user';
 import { UpdatePasswordComponent } from './../../../../routes/dashboard/user/update-password/update-password.component';
 import { ResponseParams } from './../../../../shared/interface/response';
 import { UserService } from '@shared/service/user.service';
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { QueryUserByIdRequestParams } from '@shared/interface/user';
 
 @Component({
   selector: 'header-user',
@@ -17,7 +19,7 @@ import { NzModalService } from 'ng-zorro-antd';
       [nzDropdownMenu]="userMenu"
     >
       <nz-avatar [nzSrc]="settings.user.avatar" nzSize="small" class="mr-sm"></nz-avatar>
-      {{ userName }}
+      {{ userInfo.realName }}
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
@@ -47,20 +49,59 @@ import { NzModalService } from 'ng-zorro-antd';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderUserComponent {
+export class HeaderUserComponent implements OnInit {
   userName = '';
+  userId: number = null;
+  userInfo: CurrentUserInfo = {
+    lastLoginTime: null,
+    roleId: null,
+    phone: null,
+    realName: null,
+    startTime: null,
+    token: null,
+    userId: null,
+    userState: null,
+  };
   constructor(
     public settings: SettingsService,
     private modalService: NzModalService,
     private router: Router,
     private userService: UserService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private msg: NzMessageService,
   ) {
     if (JSON.parse(localStorage.getItem('_token'))) {
-      this.userName = JSON.parse(localStorage.getItem('_token'))['realName'];
-    } else {
-      this.userName = '';
+      this.userId = JSON.parse(localStorage.getItem('_token'))['userId'];
     }
+  }
+
+  ngOnInit(): void {
+    this.getUserById();
+  }
+
+  /**
+   * 通过用户ID获取用户信息
+   */
+  getUserById(): void {
+    let params: QueryUserByIdRequestParams = {
+      idUser: this.userId,
+    };
+    this.userService.getUerById(params).subscribe(
+      (value: ResponseParams) => {
+        if (value.code === 200) {
+          this.userInfo = value.data;
+        } else {
+          this.msg.error('用户信息获取失败，请联系管理员解决！', {
+            nzDuration: 5000,
+          });
+        }
+      },
+      () => {
+        this.msg.error('用户信息获取失败，请联系管理员解决！', {
+          nzDuration: 5000,
+        });
+      },
+    );
   }
 
   logout() {
@@ -80,6 +121,7 @@ export class HeaderUserComponent {
     this.modalService.create({
       nzTitle: '修改密码',
       nzContent: UpdatePasswordComponent,
+      nzComponentParams: { phone: this.userInfo.phone, userName: this.userName },
       nzFooter: null,
     });
   }

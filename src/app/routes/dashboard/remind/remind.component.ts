@@ -50,8 +50,8 @@ export class RemindComponent implements OnInit {
 
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
-    phone: null,
-    realName: null,
+    // phone: null,
+    // realName: null,
     roleId: null,
     startTime: null,
     token: null,

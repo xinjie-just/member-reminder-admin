@@ -12,6 +12,7 @@ import {
   UserUpdateRoleRequestParams,
   LockOrUnlockUserRequestParams,
   QueryAllNodeStatusRequestParams,
+  QueryUserByIdRequestParams,
 } from '@shared/interface/user';
 import { Observable } from 'rxjs';
 import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';
@@ -147,5 +148,13 @@ export class UserService {
     } else {
       return this.http.get(`api/miniProgram/queryPersonAllNodeState?idUser=${params.phoneNum}`);
     }
+  }
+
+  /**
+   * 根据ID获取用户信息
+   * @param params QueryUserByIdRequestParams
+   */
+  getUerById(params: QueryUserByIdRequestParams): Observable<any> {
+    return this.http.get(`api/user/queryUserById?idUser=${params.idUser}`);
   }
 }

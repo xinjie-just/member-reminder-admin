@@ -84,8 +84,8 @@ export interface UserUpdateRoleRequestParams {
 // 登录的用户信息
 export interface CurrentUserInfo {
   lastLoginTime: string;
-  phone: string;
-  realName: string;
+  phone?: string;
+  realName?: string;
   roleId: number;
   startTime: string;
   token: string;
@@ -115,4 +115,8 @@ export interface QueryAllNodeStatusResponseParams {
   nodeState: 0; //步骤状态
   endTime: string;
   dataState: number;
+}
+
+export interface QueryUserByIdRequestParams {
+  idUser: number;
 }
