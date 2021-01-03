@@ -50,6 +50,7 @@ export class UpdatePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
+
     this.form.patchValue({
       phoneNum: this.phone,
     });
@@ -82,7 +83,7 @@ export class UpdatePasswordComponent implements OnInit {
     };
     this.userService.updatePassword(params).subscribe(
       (value: ResponseParams) => {
-        if (!value.code) {
+        if (value.code === 200) {
           this.msg.success(`用户 <i>${this.userName}</i> 密码修改成功`);
           //修改成功后，退出登录，需要重新登录。
           this.tokenService.clear();

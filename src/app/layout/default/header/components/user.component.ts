@@ -2,7 +2,7 @@ import { CurrentUserInfo } from '@shared/interface/user';
 import { UpdatePasswordComponent } from './../../../../routes/dashboard/user/update-password/update-password.component';
 import { ResponseParams } from './../../../../shared/interface/response';
 import { UserService } from '@shared/service/user.service';
-import { Component, Inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
@@ -19,7 +19,7 @@ import { QueryUserByIdRequestParams } from '@shared/interface/user';
       [nzDropdownMenu]="userMenu"
     >
       <nz-avatar [nzSrc]="settings.user.avatar" nzSize="small" class="mr-sm"></nz-avatar>
-      {{ userInfo.realName }}
+      {{ userName }}
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
@@ -51,6 +51,7 @@ import { QueryUserByIdRequestParams } from '@shared/interface/user';
 })
 export class HeaderUserComponent implements OnInit {
   userName = '';
+  phone = '';
   userId: number = null;
   userInfo: CurrentUserInfo = {
     lastLoginTime: null,
@@ -69,6 +70,7 @@ export class HeaderUserComponent implements OnInit {
     private userService: UserService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private msg: NzMessageService,
+    private cdr: ChangeDetectorRef,
   ) {
     if (JSON.parse(localStorage.getItem('_token'))) {
       this.userId = JSON.parse(localStorage.getItem('_token'))['userId'];
@@ -89,17 +91,21 @@ export class HeaderUserComponent implements OnInit {
     this.userService.getUerById(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
+          this.cdr.markForCheck(); // 把该视图显示标记为已更改，以便它再次进行检查
+
           this.userInfo = value.data;
+          this.userName = value.data.realName;
+          this.phone = value.data.phoneNum;
         } else {
-          this.msg.error('用户信息获取失败，请联系管理员解决！', {
+          this.msg.error('用户信息获取失败，请联系管理员解决111！', {
             nzDuration: 5000,
           });
         }
       },
       () => {
-        this.msg.error('用户信息获取失败，请联系管理员解决！', {
+        /* this.msg.error('用户信息获取失败，请联系管理员解决222！', {
           nzDuration: 5000,
-        });
+        }); */
       },
     );
   }
@@ -121,7 +127,7 @@ export class HeaderUserComponent implements OnInit {
     this.modalService.create({
       nzTitle: '修改密码',
       nzContent: UpdatePasswordComponent,
-      nzComponentParams: { phone: this.userInfo.phone, userName: this.userName },
+      nzComponentParams: { phone: this.phone, userName: this.userName },
       nzFooter: null,
     });
   }
