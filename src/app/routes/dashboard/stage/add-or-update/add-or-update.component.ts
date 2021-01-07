@@ -45,44 +45,7 @@ export class AddOrUpdateStageComponent implements OnInit {
   durations: {
     value: number;
     label: string;
-  }[] = [
-    {
-      value: 0,
-      label: '7',
-    },
-    {
-      value: 1,
-      label: '15',
-    },
-    {
-      value: 2,
-      label: '30',
-    },
-    {
-      value: 3,
-      label: '60',
-    },
-    {
-      value: 4,
-      label: '90',
-    },
-    {
-      value: 5,
-      label: '120',
-    },
-    {
-      value: 6,
-      label: '150',
-    },
-    {
-      value: 7,
-      label: '180',
-    },
-    {
-      value: 8,
-      label: '365',
-    },
-  ];
+  }[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -95,13 +58,21 @@ export class AddOrUpdateStageComponent implements OnInit {
       stepName: [null, [Validators.required]],
       nodeBizType: [1, [Validators.required]],
       step: [null, [Validators.required]],
-      duration: [2, [Validators.required]],
+      duration: [30, [Validators.required]],
       samePreStep: [0, [Validators.required]],
       sort: [1, [Validators.required]],
     });
   }
 
   ngOnInit(): void {
+    const list = [7, 15, 30, 60, 90, 120, 180, 365];
+    this.durations = list.map((item) => {
+      return {
+        value: Number(item),
+        label: String(item),
+      };
+    });
+
     for (let i = 1; i < 11; i++) {
       this.sorts.push({ value: i, label: String(i) });
     }

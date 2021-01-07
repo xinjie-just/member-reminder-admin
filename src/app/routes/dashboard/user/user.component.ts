@@ -104,7 +104,7 @@ export class UserComponent implements OnInit {
 
   inputClear() {
     this.username = '';
-    this.search();
+    // this.search();
   }
 
   /**
@@ -167,7 +167,6 @@ export class UserComponent implements OnInit {
           this.roles = info.records;
         } else {
           this.roles = [];
-          this.total = 0;
           this.msg.error(value.message);
         }
       },

@@ -97,13 +97,13 @@ export class HeaderUserComponent implements OnInit {
           this.userName = value.data.realName;
           this.phone = value.data.phoneNum;
         } else {
-          this.msg.error('用户信息获取失败，请联系管理员解决111！', {
+          /* this.msg.error('用户信息获取失败，请联系管理员解决！', {
             nzDuration: 5000,
-          });
+          }); */
         }
       },
       () => {
-        /* this.msg.error('用户信息获取失败，请联系管理员解决222！', {
+        /* this.msg.error('用户信息获取失败，请联系管理员解决！', {
           nzDuration: 5000,
         }); */
       },

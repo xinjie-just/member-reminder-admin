@@ -55,7 +55,7 @@ export class RoleComponent implements OnInit {
 
   inputClear(): void {
     this.name = '';
-    this.search();
+    // this.search();
   }
 
   /**

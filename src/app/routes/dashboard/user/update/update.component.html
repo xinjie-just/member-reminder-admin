@@ -21,7 +21,14 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'role'" nzRequired>角色</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
-      <nz-select id="role" formControlName="role" nzPlaceHolder="请选择一个角色" [nzAllowClear]="true">
+      <nz-select
+        id="role"
+        formControlName="role"
+        nzPlaceHolder="请选择一个角色"
+        [nzAllowClear]="true"
+        [nzDisabled]="role === 1"
+        [title]="role === 1 ? '管理员角色不允许修改' : ''"
+      >
         <ng-container *ngFor="let role of roles">
           <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
         </ng-container>
