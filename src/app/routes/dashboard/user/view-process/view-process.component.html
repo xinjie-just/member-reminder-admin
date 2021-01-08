@@ -26,13 +26,13 @@
         进行中：#25B5BC 0
         已完成：#37464D 1 -->
       <td [ngSwitch]="process?.dataState">
-        <nz-tag [nzColor]="'#e41e35'" *ngSwitchCase="process?.dataState === -1">{{
-          process?.dataState | nodeStatus
+        <nz-tag [nzColor]="'#e41e35'" *ngSwitchCase="process?.nodeState === -1">{{
+          process?.nodeState | nodeStatus
         }}</nz-tag>
-        <nz-tag [nzColor]="'#25b5bc'" *ngSwitchCase="process?.dataState === 0">{{
-          process?.dataState | nodeStatus
+        <nz-tag [nzColor]="'#25b5bc'" *ngSwitchCase="process?.nodeState === 0">{{
+          process?.nodeState | nodeStatus
         }}</nz-tag>
-        <nz-tag [nzColor]="'#37464d'" *ngSwitchDefault>{{ process?.dataState | nodeStatus }}</nz-tag>
+        <nz-tag [nzColor]="'#37464d'" *ngSwitchDefault>{{ process?.nodeState | nodeStatus }}</nz-tag>
       </td>
       <td>{{ process?.endTime }}</td>
     </tr>
