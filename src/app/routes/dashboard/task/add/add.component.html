@@ -25,6 +25,8 @@
       <nz-date-picker
         class="date-select"
         formControlName="date"
+        [nzPlaceHolder]="'请选择日期(大于今日)'"
+        [nzShowToday]="false"
         (ngModelChange)="onChangeDate($event)"
         [nzDisabledDate]="disabledDate"
       ></nz-date-picker>
@@ -43,14 +45,22 @@
         name="content"
         id="content"
         nz-input
-        placeholder="请输入提醒内容详情"
+        placeholder="请输入提醒内容详情(10-500字)"
         autocomplete="off"
         [nzAutosize]="{ minRows: 2, maxRows: 5 }"
+        minlength="10"
+        maxlength="500"
       >
       </textarea>
       <ng-template #contentErrorTpl let-content>
         <ng-container *ngIf="content.hasError('required')">
           提醒内容详情是必填项!
+        </ng-container>
+        <ng-container *ngIf="content.hasError('minlength')">
+          提醒内容详情最少10个字!
+        </ng-container>
+        <ng-container *ngIf="content.hasError('maxlength')">
+          提醒内容详情最多500个字!
         </ng-container>
       </ng-template>
     </nz-form-control>

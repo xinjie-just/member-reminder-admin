@@ -76,7 +76,7 @@ export class AddTaskComponent implements OnInit {
 
   disabledDate = (current: Date): boolean => {
     // Can not select days before today and today
-    return differenceInCalendarDays(current, this.today) < 0;
+    return differenceInCalendarDays(current, this.today) <= 0;
   };
 
   /**

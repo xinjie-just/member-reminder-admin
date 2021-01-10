@@ -84,11 +84,11 @@ export class UserComponent implements OnInit {
           this.steps = info.records;
         } else {
           this.steps = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '步骤列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('步骤列表获取失败！', error);
       },
     );
   }
@@ -138,11 +138,11 @@ export class UserComponent implements OnInit {
         } else {
           this.users = [];
           this.total = 0;
-          this.msg.error(value.message);
+          this.msg.error(value.message || '用户列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('用户列表获取失败！', error);
         this.tableLoading = false;
       },
       () => {
@@ -167,11 +167,11 @@ export class UserComponent implements OnInit {
           this.roles = info.records;
         } else {
           this.roles = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '角色列表获取失败！');
         }
       },
-      () => {
-        this.msg.error('角色信息获取失败！');
+      (error) => {
+        this.msg.error('角色列表获取失败！', error);
       },
     );
   }
@@ -238,14 +238,14 @@ export class UserComponent implements OnInit {
     this.userService.deleteUser(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('用户删除成功');
+          this.msg.success('用户删除成功！');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '用户删除失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('用户删除失败！', error);
       },
     );
   }
@@ -282,10 +282,10 @@ export class UserComponent implements OnInit {
     this.userService.resetPassword(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('用户密码重置成功');
+          this.msg.success('用户密码重置成功！');
           this.search(); // 用户密码成功后，重置页码，回到第一页
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '用户密码重置失败！');
         }
       },
       (error) => {
@@ -319,7 +319,7 @@ export class UserComponent implements OnInit {
             this.msg.success('锁定成功！');
             this.search(); // 锁定成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '锁定失败！');
           }
         },
         (error) => {
@@ -333,7 +333,7 @@ export class UserComponent implements OnInit {
             this.msg.success('解锁成功！');
             this.search(); // 解锁成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '解锁失败！');
           }
         },
         (error) => {
