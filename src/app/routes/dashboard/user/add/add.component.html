@@ -22,21 +22,39 @@
   <nz-form-item>
     <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'name'" nzRequired>姓名</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
-      <input nz-input formControlName="name" required id="name" placeholder="请输入姓名" autocomplete="off" />
+      <input
+        nz-input
+        formControlName="name"
+        required
+        id="name"
+        placeholder="请输入姓名（2-10个字）"
+        autocomplete="off"
+        minlength="2"
+        maxlength="10"
+      />
       <ng-template #nameErrorTpl let-name>
         <ng-container *ngIf="name.hasError('required')">
           姓名是必填项!
+        </ng-container>
+        <ng-container *ngIf="name.hasError('minlength')">
+          姓名最少2个字!
+        </ng-container>
+        <ng-container *ngIf="name.hasError('maxlength')">
+          姓名最多10个字!
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'phone'" nzRequired>电话</nz-form-label>
+    <nz-form-label [nzSm]="4" [nzXs]="8" [nzFor]="'phone'" nzRequired>手机号</nz-form-label>
     <nz-form-control [nzSm]="20" [nzXs]="16" [nzErrorTip]="phoneErrorTpl">
-      <input formControlName="phone" name="phone" id="phone" nz-input placeholder="请输入电话" autocomplete="off" />
+      <input formControlName="phone" name="phone" id="phone" nz-input placeholder="请输入手机号" autocomplete="off" />
       <ng-template #phoneErrorTpl let-phone>
         <ng-container *ngIf="phone.hasError('required')">
-          电话是必填项!
+          手机号是必填项!
+        </ng-container>
+        <ng-container *ngIf="phone.hasError('pattern')">
+          手机号格式错误!
         </ng-container>
       </ng-template>
     </nz-form-control>

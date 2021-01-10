@@ -31,9 +31,7 @@ export class UserLoginComponent {
     private settingService: SettingsService,
   ) {
     this.form = fb.group({
-      // phone: [null, [Validators.required, Validators.pattern(/^[0-9A-Za-z]{4,20}$/)]],
       phone: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      // password: [null, [Validators.required, Validators.pattern(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/)]],
       password: [null, [Validators.required]],
     });
     modalSrv.closeAll();

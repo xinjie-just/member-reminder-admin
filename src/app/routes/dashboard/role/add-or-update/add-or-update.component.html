@@ -2,10 +2,25 @@
   <nz-form-item>
     <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'name'" nzRequired>角色名称</nz-form-label>
     <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="nameErrorTpl">
-      <input nz-input formControlName="name" required id="name" placeholder="请输入角色名称" autocomplete="off" />
+      <input
+        nz-input
+        formControlName="name"
+        required
+        id="name"
+        placeholder="请输入角色名称（2-16个字）"
+        autocomplete="off"
+        minlength="2"
+        maxlength="16"
+      />
       <ng-template #nameErrorTpl let-name>
         <ng-container *ngIf="name.hasError('required')">
           角色名称是必填项!
+        </ng-container>
+        <ng-container *ngIf="name.hasError('minlength')">
+          角色名称最少2个字!
+        </ng-container>
+        <ng-container *ngIf="name.hasError('maxlength')">
+          角色名称最多16字!
         </ng-container>
       </ng-template>
     </nz-form-control>

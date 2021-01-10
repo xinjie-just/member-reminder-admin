@@ -73,14 +73,22 @@
         formControlName="content"
         required
         id="content"
-        placeholder="请输入提醒内容详情"
+        placeholder="请输入提醒内容详情（4-400个字）"
         autocomplete="off"
-        [nzAutosize]="{ minRows: 2, maxRows: 5 }"
+        [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+        minlength="4"
+        maxlength="400"
       >
       </textarea>
       <ng-template #contentErrorTpl let-content>
         <ng-container *ngIf="content.hasError('required')">
           提醒内容详情是必填项!
+        </ng-container>
+        <ng-container *ngIf="content.hasError('minlength')">
+          提醒内容详情最少4个字!
+        </ng-container>
+        <ng-container *ngIf="content.hasError('maxlength')">
+          提醒内容详情最多400个字!
         </ng-container>
       </ng-template>
     </nz-form-control>

@@ -22,12 +22,20 @@
         formControlName="stepName"
         required
         id="stepName"
-        placeholder="请输入步骤名称"
+        placeholder="请输入步骤名称（2-24个字）"
         autocomplete="off"
+        minlength="2"
+        maxlength="24"
       />
       <ng-template #stepNameErrorTpl let-stepName>
         <ng-container *ngIf="stepName.hasError('required')">
           步骤名称是必填项!
+        </ng-container>
+        <ng-container *ngIf="stepName.hasError('minlength')">
+          步骤名称最少2个字!
+        </ng-container>
+        <ng-container *ngIf="stepName.hasError('maxlength')">
+          步骤名称最多24个字!
         </ng-container>
       </ng-template>
     </nz-form-control>

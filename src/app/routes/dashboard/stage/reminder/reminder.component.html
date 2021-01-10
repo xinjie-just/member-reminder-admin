@@ -32,12 +32,14 @@
           class="reminder-input"
           nz-input
           required
-          placeholder="请输入提醒事项内容(4-100个字符)"
+          placeholder="请输入提醒事项内容（4-100个字）"
           [attr.id]="control.id + 1"
           id="control.reminderInstance"
           (change)="changeReminder(control.reminderInstance, control.id)"
           [nzAutosize]="{ minRows: 1, maxRows: 3 }"
           formControlName="{{ control.reminderInstance }}"
+          minlength="4"
+          maxlength="100"
         ></textarea>
 
         <button
@@ -63,8 +65,14 @@
           (click)="removeField(control, $event, textareaTem)"
         ></button>
         <ng-template #reminderErrorTpl let-reminder>
-          <ng-container *ngIf="textareaTem.value.length > 100 || textareaTem.value.length < 4">
-            提醒事项内容必须是4-100个字符
+          <ng-container *ngIf="reminder.hasError('required')">
+            提醒事项内容是必填项！
+          </ng-container>
+          <ng-container *ngIf="reminder.hasError('minlength')">
+            提醒事项内容最少4个字！
+          </ng-container>
+          <ng-container *ngIf="reminder.hasError('maxlength')">
+            提醒事项内容最多100个字！
           </ng-container>
         </ng-template>
       </nz-form-control>

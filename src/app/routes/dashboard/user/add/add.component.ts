@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
     this.form = this.fb.group({
       role: [null, [Validators.required]],
       name: [null, [Validators.required]],
-      phone: [null, [Validators.required]],
+      phone: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
     });
   }
 
