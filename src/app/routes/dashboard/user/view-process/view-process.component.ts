@@ -48,11 +48,11 @@ export class ViewProcessComponent implements OnInit {
           this.processes = value.data;
         } else {
           this.processes = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '查询个人用户所有节点状态失败！');
         }
       },
-      () => {
-        this.msg.error('查询个人用户所有节点状态失败！');
+      (error) => {
+        this.msg.error('查询个人用户所有节点状态失败！', error);
         this.tableLoading = false;
       },
       () => {

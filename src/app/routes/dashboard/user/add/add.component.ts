@@ -45,15 +45,15 @@ export class AddComponent implements OnInit {
     this.userService.createUser(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('用户新增成功');
+          this.msg.success('用户新增成功！');
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '用户新增失败！');
           this.modal.destroy({ data: 'error' });
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('用户新增失败！', error);
         this.uploading = false;
       },
       () => {

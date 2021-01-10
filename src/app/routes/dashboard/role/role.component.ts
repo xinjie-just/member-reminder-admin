@@ -86,11 +86,11 @@ export class RoleComponent implements OnInit {
         } else {
           this.roles = [];
           this.total = 0;
-          this.msg.error(value.message);
+          this.msg.error(value.message || '角色列表获取失败！');
         }
       },
       () => {
-        // this.msg.error(error);  // 注释掉，避免未登录状态下从工作台进入时出现[object, object]
+        // this.msg.error(error);  // 注释掉，避免未登录状态下出现[object, object]
       },
       () => {
         this.tableLoading = false;
@@ -138,14 +138,14 @@ export class RoleComponent implements OnInit {
     this.roleService.deleteRole(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success(`角色 <i>${role.roleName}</i> 删除成功`);
+          this.msg.success(`角色 <i>${role.roleName}</i> 删除成功！`);
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || `角色 <i>${role.roleName}</i> 删除失败！`);
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error(`角色 <i>${role.roleName}</i> 删除失败！`, error);
       },
     );
   }

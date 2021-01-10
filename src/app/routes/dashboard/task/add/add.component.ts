@@ -60,17 +60,16 @@ export class AddTaskComponent implements OnInit {
           this.roles = info.records;
         } else {
           this.roles = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '获取角色列表失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('获取角色列表失败！', error);
       },
     );
   }
 
   onChangeDate(date: Date) {
-    console.log('选择的日期', date);
     this.remindDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
@@ -92,15 +91,15 @@ export class AddTaskComponent implements OnInit {
     this.logService.addTempTask(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('临时提醒新增成功');
+          this.msg.success('临时提醒新增成功！');
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '临时提醒新增失败！');
           this.modal.destroy({ data: 'error' });
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('临时提醒新增失败！', error);
         this.uploading = false;
       },
       () => {

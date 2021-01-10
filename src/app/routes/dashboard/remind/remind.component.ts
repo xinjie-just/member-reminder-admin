@@ -75,11 +75,11 @@ export class RemindComponent implements OnInit {
           this.stages = value.data;
         } else {
           this.stages = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '阶段列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('阶段列表获取失败！', error);
       },
     );
   }
@@ -111,11 +111,11 @@ export class RemindComponent implements OnInit {
           this.steps = info.records;
         } else {
           this.steps = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '步骤列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('步骤列表获取失败！', error);
       },
     );
   }
@@ -162,11 +162,11 @@ export class RemindComponent implements OnInit {
         } else {
           this.reminds = [];
           this.total = 0;
-          this.msg.error(value.message);
+          this.msg.error(value.message || '提醒配置列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('提醒配置列表获取失败！', error);
         this.tableLoading = false;
       },
       () => {
@@ -182,15 +182,14 @@ export class RemindComponent implements OnInit {
     this.stageService.queryReminderByStep(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          // const info: QueryReminderByNodeResposeDataParams = value.data;
           this.reminders = value.data;
         } else {
           this.reminders = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '提醒事项获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('提醒事项获取失败！', error);
       },
     );
   }
@@ -222,8 +221,9 @@ export class RemindComponent implements OnInit {
    * @param user RemindSearchResponseRecordsParams
    */
   deleteRemind(remind: RemindSearchResponseRecordsParams): void {
+    const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     this.nzModalService.confirm({
-      nzTitle: `你确定要删除提醒配置 <i>${remind.content}</i> 吗?`,
+      nzTitle: `你确定要删除提醒配置 <i>${content}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.delete(remind),
@@ -231,20 +231,21 @@ export class RemindComponent implements OnInit {
     });
   }
   delete(remind: RemindSearchResponseRecordsParams): void {
+    const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     const params: DeleteRemindRequestParams = {
       idConfig: remind.id,
     };
     this.remindService.deleteRemind(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('删除成功');
+          this.msg.success(`提醒配置 <i>${content}</i> 删除成功！`);
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || `提醒配置 <i>${content}</i> 删除失败！`);
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error(`提醒配置 <i>${content}</i> 删除失败！`, error);
       },
     );
   }
@@ -255,8 +256,9 @@ export class RemindComponent implements OnInit {
    */
   lockOrUnlockRemind(remind: RemindSearchResponseRecordsParams): void {
     const type = remind.dataState === 0 ? '解锁' : '锁定';
+    const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     this.nzModalService.confirm({
-      nzTitle: `你确定要${type}提醒配置 <i>${remind.content}</i> 吗?`,
+      nzTitle: `你确定要${type}提醒配置 <i>${content}</i> 吗?`,
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.lockOrUnlock(remind),
@@ -264,6 +266,7 @@ export class RemindComponent implements OnInit {
     });
   }
   lockOrUnlock(remind: RemindSearchResponseRecordsParams): void {
+    const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     const params: lockOrUnlockRemindRequestParams = {
       idConfig: remind.id,
     };
@@ -271,28 +274,28 @@ export class RemindComponent implements OnInit {
       this.remindService.lockRemind(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('锁定成功！');
+            this.msg.success(`提醒配置 <i>${content}</i> 锁定成功！`);
             this.search(); // 锁定成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || `提醒配置 <i>${content}</i> 锁定失败！`);
           }
         },
         (error) => {
-          this.msg.error('锁定失败！', error);
+          this.msg.error(`提醒配置 <i>${content}</i> 锁定失败！`, error);
         },
       );
     } else {
       this.remindService.unlockRemind(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('解锁成功！');
+            this.msg.success(`提醒配置 <i>${content}</i> 解锁成功！`);
             this.search(); // 解锁成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || `提醒配置 <i>${content}</i> 解锁失败！`);
           }
         },
         (error) => {
-          this.msg.error('解锁失败！', error);
+          this.msg.error(`提醒配置 <i>${content}</i> 解锁失败！`, error);
         },
       );
     }

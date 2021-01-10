@@ -73,12 +73,12 @@ export class ReminderComponent implements OnInit {
           this.initFrom();
         } else {
           this.reminders = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '获取提醒事项失败！');
         }
       },
       (error) => {
+        this.msg.error('获取提醒事项失败！', error);
         this.uploading = false;
-        this.msg.error(error);
       },
       () => {
         this.uploading = false;
@@ -177,11 +177,11 @@ export class ReminderComponent implements OnInit {
           this.msg.success('删除提醒事项成功！');
           this.deleteInstance(control);
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '删除提醒事项失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('删除提醒事项失败！', error);
       },
     );
   }
@@ -211,13 +211,13 @@ export class ReminderComponent implements OnInit {
       this.stageService.addOrUpdateReminder(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('提醒事项修改成功');
+            this.msg.success('提醒事项修改成功！');
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '提醒事项修改失败！');
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('提醒事项修改失败！', error);
         },
       );
     } else {
@@ -225,13 +225,13 @@ export class ReminderComponent implements OnInit {
       this.stageService.addOrUpdateReminder(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('提醒事项新增成功');
+            this.msg.success('提醒事项新增成功！');
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '提醒事项新增失败！');
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('提醒事项新增失败！', error);
         },
       );
     }

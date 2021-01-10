@@ -82,11 +82,11 @@ export class TaskComponent implements OnInit {
           this.stages = value.data;
         } else {
           this.stages = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '阶段列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('阶段列表获取失败！', error);
       },
     );
   }
@@ -115,11 +115,11 @@ export class TaskComponent implements OnInit {
           this.steps = info.records;
         } else {
           this.steps = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '步骤列表获取失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('步骤列表获取失败！', error);
       },
     );
   }
@@ -134,7 +134,7 @@ export class TaskComponent implements OnInit {
   }
 
   /**
-   * 获取临时任务日志
+   * 获取临时任务
    * @param step number
    */
   getTasks(step?: number) {
@@ -156,12 +156,12 @@ export class TaskComponent implements OnInit {
         } else {
           this.tasks = [];
           this.total = 0;
-          this.msg.error(value.message);
+          this.msg.error(value.message || '临时任务列表获取失败！');
         }
       },
       (error) => {
+        this.msg.error('临时任务列表获取失败！', error);
         this.tableLoading = false;
-        this.msg.error(error);
       },
       () => {
         this.tableLoading = false;
@@ -213,7 +213,7 @@ export class TaskComponent implements OnInit {
             this.msg.success('锁定成功！');
             this.search(); // 锁定成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '锁定失败！');
           }
         },
         (error) => {
@@ -227,7 +227,7 @@ export class TaskComponent implements OnInit {
             this.msg.success('解锁成功！');
             this.search(); // 解锁成功后，重置页码
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '解锁失败！');
           }
         },
         (error) => {

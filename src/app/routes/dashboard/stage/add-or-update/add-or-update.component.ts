@@ -106,11 +106,11 @@ export class AddOrUpdateStageComponent implements OnInit {
           this.steps = info.records;
         } else {
           this.steps = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '获取步骤列表失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('获取步骤列表失败！', error);
       },
     );
   }
@@ -136,15 +136,16 @@ export class AddOrUpdateStageComponent implements OnInit {
       this.stageService.addOrUpdateStep(updateParams).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('步骤修改成功');
+            this.msg.success('步骤修改成功！');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '步骤修改失败！');
             this.modal.destroy({ data: 'error' });
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('步骤修改失败！', error);
+          this.uploading = false;
         },
         () => {
           this.uploading = false;
@@ -155,15 +156,16 @@ export class AddOrUpdateStageComponent implements OnInit {
       this.stageService.addOrUpdateStep(addParams).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('步骤新增成功');
+            this.msg.success('步骤新增成功！');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '步骤新增失败！');
             this.modal.destroy({ data: 'error' });
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('步骤新增失败！', error);
+          this.uploading = false;
         },
         () => {
           this.uploading = false;

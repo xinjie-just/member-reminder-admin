@@ -84,19 +84,20 @@ export class UpdatePasswordComponent implements OnInit {
     this.userService.updatePassword(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success(`用户 <i>${this.userName}</i> 密码修改成功`);
+          this.msg.success(`用户 <i>${this.userName}</i> 密码修改成功！`);
           //修改成功后，退出登录，需要重新登录。
           this.tokenService.clear();
           localStorage.clear();
           this.router.navigateByUrl(this.tokenService.login_url);
           this.modal.destroy({ data: 'success' });
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || `用户 <i>${this.userName}</i> 密码修改失败！`);
           this.modal.destroy({ data: 'error' });
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error(`用户 <i>${this.userName}</i> 密码修改失败！`, error);
+        this.uploading = false;
       },
       () => {
         this.uploading = false;

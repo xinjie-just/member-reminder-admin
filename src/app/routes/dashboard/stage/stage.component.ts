@@ -70,11 +70,11 @@ export class StageComponent implements OnInit {
           this.stages = value.data;
         } else {
           this.stages = [];
-          this.msg.error(value.message);
+          this.msg.error(value.message || '获取阶段列表失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('获取阶段列表失败！', error);
       },
     );
   }
@@ -101,11 +101,11 @@ export class StageComponent implements OnInit {
         } else {
           this.steps = [];
           this.total = 0;
-          this.msg.error(value.message);
+          this.msg.error(value.message || '获取步骤列表失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('获取步骤列表失败！', error);
         this.tableLoading = false;
       },
       () => {
@@ -176,14 +176,14 @@ export class StageComponent implements OnInit {
     this.stageService.deleteStep(params).subscribe(
       (value: ResponseParams) => {
         if (value.code === 200) {
-          this.msg.success('步骤删除成功');
+          this.msg.success('步骤删除成功！');
           this.search(); // 删除成功后，重置页码，避免当前页没有数据
         } else {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '步骤删除失败！');
         }
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error('步骤删除失败！', error);
       },
     );
   }

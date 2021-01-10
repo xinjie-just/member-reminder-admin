@@ -62,8 +62,13 @@ export class UpdateComponent implements OnInit {
 
     Promise.all([updateRealNamePromise, updateRolePromise])
       .then((value) => {
-        this.msg.success('用户信息修改成功！');
-        this.modal.destroy({ data: 'success' });
+        if (value[0]['code'] === 200 && value[1]['code'] === 200) {
+          this.msg.success('用户信息修改成功！');
+          this.modal.destroy({ data: 'success' });
+        } else {
+          this.msg.error('用户信息修改失败！');
+          this.modal.destroy({ data: 'error' });
+        }
       })
       .catch(() => {
         this.msg.error('用户信息修改失败！');

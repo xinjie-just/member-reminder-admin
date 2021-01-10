@@ -48,15 +48,15 @@ export class AddOrUpdateRoleComponent implements OnInit {
       this.roleService.updateRole(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('角色修改成功');
+            this.msg.success('角色修改成功！');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '角色修改失败！');
             this.modal.destroy({ data: 'error' });
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('角色修改失败！', error);
           this.uploading = false;
         },
         () => {
@@ -71,15 +71,15 @@ export class AddOrUpdateRoleComponent implements OnInit {
       this.roleService.addeRole(params).subscribe(
         (value: ResponseParams) => {
           if (value.code === 200) {
-            this.msg.success('角色新增成功');
+            this.msg.success('角色新增成功！');
             this.modal.destroy({ data: 'success' });
           } else {
-            this.msg.error(value.message);
+            this.msg.error(value.message || '角色新增失败！');
             this.modal.destroy({ data: 'error' });
           }
         },
         (error) => {
-          this.msg.error(error);
+          this.msg.error('角色新增失败！', error);
           this.uploading = false;
         },
         () => {
