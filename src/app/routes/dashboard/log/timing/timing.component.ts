@@ -11,7 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-timing',
   templateUrl: './timing.component.html',
-  styles: [],
+  styleUrls: ['./timing.component.less'],
 })
 export class TimingLogComponent implements OnInit {
   tableLoading = false;

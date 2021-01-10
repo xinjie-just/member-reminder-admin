@@ -302,6 +302,7 @@ export class UserComponent implements OnInit {
     const type = user.dataState === 0 ? '解锁' : '锁定';
     this.modalService.confirm({
       nzTitle: `你确定要${type}用户 <i>${user.realName}</i> 吗?`,
+      nzContent: user.dataState === 0 ? '' : '锁定后，该用户将无法登录！',
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.lockOrUnlock(user),

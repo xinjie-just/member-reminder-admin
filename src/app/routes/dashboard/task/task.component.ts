@@ -195,7 +195,7 @@ export class TaskComponent implements OnInit {
     const contentStr = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     this.modalService.confirm({
       nzTitle: `你确定要${type}提醒任务 <i>${contentStr}</i> 吗?`,
-      nzContent: remind.dataState === 0 ? '' : '锁定后，提醒任务将失效',
+      nzContent: remind.dataState === 0 ? '' : '锁定后，提醒任务将失效！',
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.lockOrUnlock(remind),

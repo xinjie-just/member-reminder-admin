@@ -259,6 +259,7 @@ export class RemindComponent implements OnInit {
     const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     this.nzModalService.confirm({
       nzTitle: `你确定要${type}提醒配置 <i>${content}</i> 吗?`,
+      nzContent: remind.dataState === 0 ? '' : '锁定后，将不能配置提醒！',
       nzOkText: '确定',
       nzOkType: 'danger',
       nzOnOk: () => this.lockOrUnlock(remind),
