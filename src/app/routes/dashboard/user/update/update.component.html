@@ -30,7 +30,7 @@
         [title]="role === 1 ? '管理员角色不允许修改' : ''"
       >
         <ng-container *ngFor="let role of roles">
-          <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
+          <nz-option [nzValue]="role?.idRole" [nzDisabled]="role?.idRole === 1" [nzLabel]="role?.roleName"></nz-option>
         </ng-container>
       </nz-select>
       <ng-template #roleErrorTpl let-role>
