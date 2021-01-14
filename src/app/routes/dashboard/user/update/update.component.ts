@@ -16,7 +16,7 @@ export class UpdateComponent implements OnInit {
     realName: null,
     phoneNum: null,
   };
-  @Input() role: number;
+  @Input() selectedRole: { roleId: number; roleName: string } = { roleId: null, roleName: null };
 
   form: FormGroup;
   uploading = false;
@@ -35,8 +35,9 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('selectedRole', this.selectedRole);
     this.form.patchValue({
-      role: this.role,
+      role: this.selectedRole.roleId,
       name: this.user.realName,
       phone: this.user.phoneNum,
     });

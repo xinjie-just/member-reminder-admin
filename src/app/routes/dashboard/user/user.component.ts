@@ -207,7 +207,7 @@ export class UserComponent implements OnInit {
       nzComponentParams: {
         user,
         roles: this.roles,
-        role: user.idRole,
+        selectedRole: { roleId: user.idRole, roleName: user.roleName },
       },
     });
 

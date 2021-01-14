@@ -84,7 +84,15 @@
           <td>{{ user?.startTime }}</td>
           <td>{{ user?.nodeName }}</td>
           <td>
-            <button nz-button nzType="link" (click)="viewProcess(user)">查看流程</button>
+            <button
+              nz-button
+              nzType="link"
+              [disabled]="user?.roleName !== '个人'"
+              [title]="user?.roleName !== '个人' ? '非个人角色的用户不能查看流程' : ''"
+              (click)="viewProcess(user)"
+            >
+              查看流程
+            </button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
             <button nz-button nzType="link" (click)="lockOrUnlockUser(user)" *ngIf="currentUserInfo.roleId === 1">
               {{ user?.dataState === 0 ? '解锁' : '锁定' }}

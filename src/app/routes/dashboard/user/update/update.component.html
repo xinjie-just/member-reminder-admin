@@ -26,11 +26,23 @@
         formControlName="role"
         nzPlaceHolder="请选择一个角色"
         [nzAllowClear]="true"
-        [nzDisabled]="role === 1"
-        [title]="role === 1 ? '管理员角色不允许修改' : ''"
+        [nzDisabled]="selectedRole.roleId === 1"
+        [title]="selectedRole.roleId === 1 ? '管理员角色不允许修改' : ''"
       >
+        <!-- 非个人角色用户不能改为个人角色；所有角色不能改为管理员角色；管理员角色不能修改 -->
         <ng-container *ngFor="let role of roles">
-          <nz-option [nzValue]="role?.idRole" [nzDisabled]="role?.idRole === 1" [nzLabel]="role?.roleName"></nz-option>
+          <nz-option
+            [nzValue]="role?.idRole"
+            [nzDisabled]="role?.idRole === 1 || (selectedRole.roleName !== '个人' && role?.roleName === '个人')"
+            [nzLabel]="role?.roleName"
+            [title]="
+              role?.idRole === 1
+                ? '不能修改为管理员'
+                : selectedRole.roleName !== '个人' && role?.roleName === '个人'
+                ? '非个人角色用户不能改为个人角色'
+                : ''
+            "
+          ></nz-option>
         </ng-container>
       </nz-select>
       <ng-template #roleErrorTpl let-role>
