@@ -24,7 +24,8 @@ export interface RemindSearchResponsePageParams {
 }
 
 export interface RemindSearchResponseRecordsParams {
-  id: number;
+  id?: number;
+  idConfig: number;
   idNode: number;
   idRole: number;
   remindType: number;

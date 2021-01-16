@@ -233,7 +233,7 @@ export class RemindComponent implements OnInit {
   delete(remind: RemindSearchResponseRecordsParams): void {
     const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     const params: DeleteRemindRequestParams = {
-      idConfig: remind.id,
+      idConfig: remind.idConfig,
     };
     this.remindService.deleteRemind(params).subscribe(
       (value: ResponseParams) => {
@@ -269,7 +269,7 @@ export class RemindComponent implements OnInit {
   lockOrUnlock(remind: RemindSearchResponseRecordsParams): void {
     const content = remind.content.length > 10 ? remind.content.substring(0, 10) + '...' : remind.content;
     const params: lockOrUnlockRemindRequestParams = {
-      idConfig: remind.id,
+      idConfig: remind.idConfig,
     };
     if (remind.dataState !== 0) {
       this.remindService.lockRemind(params).subscribe(

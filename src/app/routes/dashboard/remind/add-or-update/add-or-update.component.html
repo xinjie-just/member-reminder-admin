@@ -27,7 +27,7 @@
       <nz-select
         id="step"
         formControlName="step"
-        nzPlaceHolder="请选择一个步骤"
+        nzPlaceHolder="请选择一个步骤（先选择阶段）"
         (ngModelChange)="onChangeStep($event)"
         [nzAllowClear]="true"
       >
@@ -49,7 +49,7 @@
       <nz-select
         id="reminder"
         formControlName="reminder"
-        nzPlaceHolder="请选择提醒事项"
+        nzPlaceHolder="请选择提醒事项（先选择步骤）"
         [nzAllowClear]="true"
         (ngModelChange)="onChangeReminder($event)"
       >
@@ -73,7 +73,11 @@
         formControlName="content"
         required
         id="content"
-        placeholder="请输入提醒内容详情（4-400个字）"
+        [placeholder]="
+          remindInfo
+            ? '请输入提醒内容详情（4-400个字，若值为空将自动填充提醒事项内容）'
+            : '请输入提醒内容详情（4-400个字，将自动填充提醒事项内容）'
+        "
         autocomplete="off"
         [nzAutosize]="{ minRows: 2, maxRows: 6 }"
         minlength="4"

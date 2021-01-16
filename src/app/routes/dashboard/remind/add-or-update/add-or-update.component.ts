@@ -100,7 +100,9 @@ export class AddOrUpdateRemindComponent implements OnInit {
     this.getStages();
     this.getRoles();
     this.getSteps();
-    this.onChangeStep(this.remindInfo.idNode);
+    if (this.remindInfo) {
+      this.onChangeStep(this.remindInfo.idNode);
+    }
   }
 
   /**
@@ -127,7 +129,14 @@ export class AddOrUpdateRemindComponent implements OnInit {
    * @param stage: number
    */
   onChangeStage(stage: number) {
-    this.getSteps(stage);
+    if (!stage) {
+      this.form.patchValue({
+        step: null,
+        reminder: null,
+      });
+    } else {
+      this.getSteps(stage);
+    }
   }
 
   /**
@@ -162,25 +171,33 @@ export class AddOrUpdateRemindComponent implements OnInit {
    * 根据步骤 ID 获取该步骤下面的全部提醒事项
    */
   onChangeStep(step: number): void {
-    const params: QueryReminderByNodeRequestParams = {
-      idNode: step,
-    };
-    this.stageService.queryReminderByStep(params).subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 200) {
-          this.reminders = value.data;
-          this.form.patchValue({
-            reminder: this.remindInfo.idReminder,
-          });
-        } else {
-          this.reminders = [];
-          this.msg.error(value.message || '提醒事项获取失败！');
-        }
-      },
-      (error) => {
-        this.msg.error('提醒事项获取失败！', error);
-      },
-    );
+    if (!step) {
+      this.form.patchValue({
+        reminder: null,
+      });
+    } else {
+      const params: QueryReminderByNodeRequestParams = {
+        idNode: step,
+      };
+      this.stageService.queryReminderByStep(params).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.reminders = value.data;
+            if (this.remindInfo) {
+              this.form.patchValue({
+                reminder: this.remindInfo.idReminder,
+              });
+            }
+          } else {
+            this.reminders = [];
+            this.msg.error(value.message || '提醒事项获取失败！');
+          }
+        },
+        (error) => {
+          this.msg.error('提醒事项获取失败！', error);
+        },
+      );
+    }
   }
 
   /**
@@ -192,10 +209,11 @@ export class AddOrUpdateRemindComponent implements OnInit {
         this.selectedReminder.content = item.content;
       }
     });
-
-    this.form.patchValue({
-      content: this.selectedReminder.content,
-    });
+    if (!this.remindInfo || !this.form.get('content').value) {
+      this.form.patchValue({
+        content: this.selectedReminder.content,
+      });
+    }
   }
 
   /**
@@ -240,46 +258,48 @@ export class AddOrUpdateRemindComponent implements OnInit {
       remindType: this.form.get('remindType').value,
     };
 
-    // 新增
-    this.remindService.addOrUpdateRemind(addParams).subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 200) {
-          this.msg.success('提醒配置新增成功');
-          this.modal.destroy({ data: 'success' });
-        } else {
-          this.msg.error(value.message || '提醒配置新增失败！');
-          this.modal.destroy({ data: 'error' });
-        }
-      },
-      (error) => {
-        this.msg.error('提醒配置新增失败！', error);
-        this.uploading = false;
-      },
-      () => {
-        this.uploading = false;
-      },
-    );
-
     // 修改
-    let updateParams = { ...addParams, id: this.remindInfo.id };
-    this.remindService.addOrUpdateRemind(updateParams).subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 200) {
-          this.msg.success('提醒配置修改成功！');
-          this.modal.destroy({ data: 'success' });
-        } else {
-          this.msg.error(value.message || '提醒配置修改失败！');
-          this.modal.destroy({ data: 'error' });
-        }
-      },
-      (error) => {
-        this.msg.error('提醒配置修改失败！', error);
-        this.uploading = false;
-      },
-      () => {
-        this.uploading = false;
-      },
-    );
+    if (this.remindInfo) {
+      let updateParams = { ...addParams, id: this.remindInfo.idConfig };
+      this.remindService.addOrUpdateRemind(updateParams).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('提醒配置修改成功！');
+            this.modal.destroy({ data: 'success' });
+          } else {
+            this.msg.error(value.message || '提醒配置修改失败！');
+            this.modal.destroy({ data: 'error' });
+          }
+        },
+        (error) => {
+          this.msg.error('提醒配置修改失败！', error);
+          this.uploading = false;
+        },
+        () => {
+          this.uploading = false;
+        },
+      );
+    } else {
+      // 新增
+      this.remindService.addOrUpdateRemind(addParams).subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success('提醒配置新增成功');
+            this.modal.destroy({ data: 'success' });
+          } else {
+            this.msg.error(value.message || '提醒配置新增失败！');
+            this.modal.destroy({ data: 'error' });
+          }
+        },
+        (error) => {
+          this.msg.error('提醒配置新增失败！', error);
+          this.uploading = false;
+        },
+        () => {
+          this.uploading = false;
+        },
+      );
+    }
   }
 
   /**
