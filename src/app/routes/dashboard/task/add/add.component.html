@@ -45,10 +45,10 @@
         name="content"
         id="content"
         nz-input
-        placeholder="请输入提醒内容详情（10-500个字）"
+        placeholder="请输入提醒内容详情（4-500个字）"
         autocomplete="off"
         [nzAutosize]="{ minRows: 2, maxRows: 5 }"
-        minlength="10"
+        minlength="4"
         maxlength="500"
       >
       </textarea>
@@ -57,7 +57,7 @@
           提醒内容详情是必填项!
         </ng-container>
         <ng-container *ngIf="content.hasError('minlength')">
-          提醒内容详情最少10个字!
+          提醒内容详情最少4个字!
         </ng-container>
         <ng-container *ngIf="content.hasError('maxlength')">
           提醒内容详情最多500个字!
