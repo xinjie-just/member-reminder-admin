@@ -272,7 +272,7 @@ export class UserComponent implements OnInit {
     const password = user.phoneNum.slice(-6);
     this.modalService.confirm({
       nzTitle: `你确定要重置用户 <i>${user.realName}</i> 的密码吗？`,
-      nzContent: `<b>密码将重置为手机号后6位(${password})</b>`,
+      nzContent: `<b>密码将重置为手机号后6位('${password}')</b>`,
       nzOnOk: () => this.reset(user),
     });
   }

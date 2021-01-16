@@ -135,6 +135,8 @@ export class AddOrUpdateRemindComponent implements OnInit {
         step: null,
         reminder: null,
       });
+      this.steps = [];
+      this.reminders = [];
     } else {
       this.getSteps(stage);
     }
@@ -176,6 +178,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
       this.form.patchValue({
         reminder: null,
       });
+      this.reminders = [];
     } else {
       const params: QueryReminderByNodeRequestParams = {
         idNode: step,
