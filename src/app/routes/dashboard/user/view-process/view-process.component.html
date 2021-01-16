@@ -1,10 +1,15 @@
 <nz-table
   #processesTable
   [nzData]="processes"
-  [nzShowPagination]="false"
   [nzSize]="'middle'"
   [nzLoading]="tableLoading"
   [nzLoadingDelay]="2"
+  [nzTotal]="total"
+  [nzShowTotal]="totalTemplate"
+  [nzShowQuickJumper]="true"
+  [nzShowSizeChanger]="true"
+  [(nzPageIndex)]="pageIndex"
+  [(nzPageSize)]="pageSize"
 >
   <thead>
     <tr>
@@ -18,7 +23,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let process of processesTable.data; let i = index">
-      <td>{{ i + 1 }}</td>
+      <td>{{ (pageIndex - 1) * pageSize + i + 1 }}</td>
       <td>{{ process?.stageName }}</td>
       <td>{{ process?.nodeName }}</td>
       <td>{{ process?.result }}</td>
@@ -38,3 +43,4 @@
     </tr>
   </tbody>
 </nz-table>
+<ng-template #totalTemplate let-total>共 {{ total }} 条</ng-template>

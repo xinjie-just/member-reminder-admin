@@ -49,8 +49,9 @@ export class RoleComponent implements OnInit {
     if (!this.currentUserInfo) {
       this.router.navigateByUrl('/passport/login');
       this.msg.error('请先登录！');
+    } else {
+      this.getRoles();
     }
-    this.getRoles();
   }
 
   inputClear(): void {

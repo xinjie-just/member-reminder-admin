@@ -28,6 +28,7 @@ import { RoleService } from '@shared/service/role.service';
 export class AddOrUpdateRemindComponent implements OnInit {
   @Input() remindInfo: RemindSearchResponseRecordsParams = {
     id: null,
+    idConfig: null,
     idNode: null,
     idRole: null,
     remindType: null,

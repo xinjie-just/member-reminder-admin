@@ -96,17 +96,23 @@ export class TaskComponent implements OnInit {
    * @param stage: number
    */
   onChangeStage(stage: number) {
-    this.getSteps(stage);
+    this.stage = stage;
+    if (this.stage) {
+      this.getSteps();
+    } else {
+      this.step = null;
+      this.steps = [];
+    }
   }
 
   /**
    * 获取选择阶段下的步骤
    */
-  getSteps(stage?: number): void {
+  getSteps(): void {
     let params: StepSearchRequestParams = {
       pageNo: 1,
       pageSize: 10,
-      idStageNode: stage,
+      idStageNode: this.stage,
     };
     this.stageService.getSteps(params).subscribe(
       (value: ResponseParams) => {
@@ -130,22 +136,33 @@ export class TaskComponent implements OnInit {
    */
   onChangeStep(step: number) {
     this.step = step;
-    this.getTasks(step);
+    if (this.step) {
+      this.getTasks();
+    }
+  }
+
+  /**
+   * 改变状态
+   * @param status number
+   */
+  onChangeStatus(status: number) {
+    this.status = status;
+    this.getTasks();
   }
 
   /**
    * 获取临时任务
    * @param step number
    */
-  getTasks(step?: number) {
+  getTasks() {
     this.tableLoading = true;
     let params: RemindTaskSearchRequestParams = {
       executed: this.status,
       pageNo: 1,
       pageSize: 10,
     };
-    if (step) {
-      params = { ...params, idNode: step };
+    if (this.step) {
+      params = { ...params, idNode: this.step };
     }
     this.logService.getRemindLogs(params).subscribe(
       (value: ResponseParams) => {

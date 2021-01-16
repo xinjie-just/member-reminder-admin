@@ -89,20 +89,26 @@ export class RemindComponent implements OnInit {
    * @param stage: number
    */
   onChangeStage(stage: number) {
-    this.getSteps(stage);
+    this.stage = stage;
+    if (this.stage) {
+      this.getSteps();
+    } else {
+      this.step = null;
+      this.steps = [];
+    }
   }
 
   /**
    * 获取步骤
    * 获取所有步骤，idStageNode 不传
    */
-  getSteps(stage?: number): void {
+  getSteps(): void {
     let params: StepSearchRequestParams = {
       pageNo: 1,
       pageSize: 10,
     };
-    if (stage) {
-      params = { ...params, idStageNode: stage };
+    if (this.stage) {
+      params = { ...params, idStageNode: this.stage };
     }
     this.stageService.getSteps(params).subscribe(
       (value: ResponseParams) => {
@@ -128,7 +134,7 @@ export class RemindComponent implements OnInit {
     this.step = step;
     this.getReminds();
     if (this.step) {
-      this.getReminders(step);
+      this.getReminders();
     }
   }
 
@@ -175,9 +181,9 @@ export class RemindComponent implements OnInit {
     );
   }
 
-  getReminders(step?: number) {
+  getReminders() {
     const params: QueryReminderByNodeRequestParams = {
-      idNode: step,
+      idNode: this.step,
     };
     this.stageService.queryReminderByStep(params).subscribe(
       (value: ResponseParams) => {

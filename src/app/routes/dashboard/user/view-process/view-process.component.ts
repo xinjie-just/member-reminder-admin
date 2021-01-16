@@ -25,6 +25,9 @@ export class ViewProcessComponent implements OnInit {
     dataState: null,
   };
   tableLoading = false;
+  pageIndex = 1;
+  pageSize = 10;
+  total = 0;
 
   processes: QueryAllNodeStatusResponseParams[] = [];
 
@@ -46,6 +49,7 @@ export class ViewProcessComponent implements OnInit {
       (value: ResponseParams) => {
         if (value.code === 200) {
           this.processes = value.data;
+          this.total = value.data.length;
         } else {
           this.processes = [];
           this.msg.error(value.message || '查询个人用户所有节点状态失败！');

@@ -36,7 +36,7 @@
           [(ngModel)]="status"
           nzPlaceHolder="全部"
           class="status-select"
-          (ngModelChange)="onChangeStep($event)"
+          (ngModelChange)="onChangeStatus($event)"
         >
           <ng-container *ngFor="let status of statusOptions">
             <nz-option [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
@@ -81,7 +81,7 @@
           </ng-container>
           <ng-container *ngIf="status === 1">
             <th class="content" [nzWidth]="'170px'">实际提醒时间</th>
-            <th class="plan-date" [nzWidth]="'170px'">消息阅读时间</th>
+            <th class="read-date" [nzWidth]="'170px'">消息阅读时间</th>
             <th class="status" [nzWidth]="'170px'">完成时间</th>
           </ng-container>
         </tr>
@@ -113,7 +113,7 @@
           </ng-container>
           <ng-container *ngIf="status === 1">
             <td class="content">{{ task?.actualTime }}</td>
-            <td class="plan-date">{{ task?.readTime }}</td>
+            <td class="read-date">{{ task?.readTime | date: 'yyyy-MM-dd HH:MM:SS' }}</td>
             <td class="status">{{ task.completionTime }}</td>
           </ng-container>
         </tr>
