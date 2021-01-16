@@ -27,6 +27,7 @@ import { QueryUserByIdRequestParams } from '@shared/interface/user';
           <i nz-icon nzType="user" class="mr-sm"></i>
           {{ 'menu.account.center' | translate }}
         </div>
+        <li nz-menu-divider></li>
         <div nz-menu-item routerLink="/pro/account/settings">
           <i nz-icon nzType="setting" class="mr-sm"></i>
           {{ 'menu.account.settings' | translate }}
@@ -111,13 +112,25 @@ export class HeaderUserComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().subscribe((value: ResponseParams) => {
-      if (value.code === 2000) {
-      }
+    this.modalService.confirm({
+      nzTitle: '你确定要退出登录吗？',
+      nzOnOk: () => {
+        this.userService.logout().subscribe(
+          (value: ResponseParams) => {
+            if (value.code === 200) {
+              this.tokenService.clear();
+              localStorage.clear();
+              this.router.navigateByUrl(this.tokenService.login_url);
+            } else {
+              this.msg.error(value.message || '退出失败！请联系管理员！');
+            }
+          },
+          () => {
+            this.msg.error('退出失败！请联系管理员！');
+          },
+        );
+      },
     });
-    this.tokenService.clear();
-    localStorage.clear();
-    this.router.navigateByUrl(this.tokenService.login_url);
   }
 
   /**

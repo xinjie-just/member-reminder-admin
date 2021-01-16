@@ -139,12 +139,12 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindBatchNum'" nzRequired>提前批次</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindBatchNum'" nzRequired>提醒批次</nz-form-label>
     <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="remindBatchNumErrorTpl">
       <nz-input-number formControlName="remindBatchNum" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
       <ng-template #remindBatchNumErrorTpl let-remindBatchNum>
         <ng-container *ngIf="remindBatchNum.hasError('required')">
-          提前批次是必填项!
+          提醒批次是必填项!
         </ng-container>
       </ng-template>
     </nz-form-control>
