@@ -56,7 +56,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
 
     const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-    this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
+    if (errortext) {
+      this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
+    }
   }
 
   private handleData(ev: HttpResponseBase): Observable<any> {
