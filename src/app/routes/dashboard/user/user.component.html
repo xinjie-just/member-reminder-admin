@@ -94,13 +94,35 @@
               查看流程
             </button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
-            <button nz-button nzType="link" (click)="lockOrUnlockUser(user)" *ngIf="currentUserInfo.roleId === 1">
+            <button
+              nz-button
+              nzType="link"
+              (click)="lockOrUnlockUser(user)"
+              [disabled]="user.idRole === 1"
+              [title]="user.idRole === 1 ? '系统管理员用户不能被锁定' : ''"
+              *ngIf="currentUserInfo.roleId === 1"
+            >
               {{ user?.dataState === 0 ? '解锁' : '锁定' }}
             </button>
             <nz-divider nzType="vertical"></nz-divider>
-            <button nz-button nzType="link" (click)="updateUser(user)">修改</button>
+            <button
+              nz-button
+              nzType="link"
+              (click)="updateUser(user)"
+              [disabled]="user.idRole === 1"
+              [title]="user.idRole === 1 ? '系统管理员用户信息不能被修改' : ''"
+            >
+              修改
+            </button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
-            <button nz-button nzType="link" (click)="resetPassword(user)" *ngIf="currentUserInfo.roleId === 1">
+            <button
+              nz-button
+              nzType="link"
+              (click)="resetPassword(user)"
+              [disabled]="user.idRole === 1"
+              [title]="user.idRole === 1 ? '系统管理员用户不能被重置密码' : ''"
+              *ngIf="currentUserInfo.roleId === 1"
+            >
               重置密码
             </button>
             <nz-divider nzType="vertical" *ngIf="currentUserInfo.roleId === 1"></nz-divider>
