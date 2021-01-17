@@ -56,7 +56,7 @@ export class ReminderComponent implements OnInit {
    * 获取该步骤下的全部提醒事项
    * @param step number
    */
-  getReminders(step?: number) {
+  getReminders(step?: number): void {
     this.uploading = true;
     const params: QueryReminderByNodeRequestParams = {
       idNode: step,
@@ -89,7 +89,7 @@ export class ReminderComponent implements OnInit {
   /**
    * 初始化form实例
    */
-  initFrom() {
+  initFrom(): void {
     const reminderCount = this.reminders.length;
     const groupObj: { [key: string]: any[] } = {};
     if (reminderCount > 1) {
@@ -167,7 +167,7 @@ export class ReminderComponent implements OnInit {
       this.deleteInstance(control);
     }
   }
-  deleteReminder(control: ListOfControlObject) {
+  deleteReminder(control: ListOfControlObject): void {
     const params: ReminderDeleteRequestParams = {
       idReminder: control.idReminder,
     };
@@ -189,7 +189,7 @@ export class ReminderComponent implements OnInit {
    * 移除实例
    * @param control ListOfControlObject
    */
-  deleteInstance(control: ListOfControlObject) {
+  deleteInstance(control: ListOfControlObject): void {
     const index = this.listOfControl.indexOf(control);
     this.listOfControl.splice(index, 1);
     this.reminders.splice(index, 1);
@@ -200,7 +200,7 @@ export class ReminderComponent implements OnInit {
    * 新增或修改提醒事项
    * @param control ListOfControlObject
    */
-  saveReminder(control: ListOfControlObject) {
+  saveReminder(control: ListOfControlObject): void {
     let params: ReminderSaveRequestParams = {
       content: this.form.get(control.reminderInstance).value,
       idNode: this.idNode,
@@ -240,7 +240,7 @@ export class ReminderComponent implements OnInit {
   /**
    * 确认
    */
-  submit() {
+  submit(): void {
     this.modal.destroy({ data: 'success' });
   }
 

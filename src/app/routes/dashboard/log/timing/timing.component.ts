@@ -27,7 +27,7 @@ export class TimingLogComponent implements OnInit {
     this.getTimingLogs();
   }
 
-  getTimingLogs() {
+  getTimingLogs(): void {
     this.tableLoading = true;
     const params: TimingTaskSearchRequestParams = {
       pageNo: this.pageIndex,

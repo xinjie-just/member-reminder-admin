@@ -94,7 +94,7 @@ export class AddOrUpdateStageComponent implements OnInit {
    * 获取步骤
    * 获取所有步骤，idStageNode 不传
    */
-  getSteps() {
+  getSteps(): void {
     let params: StepSearchRequestParams = {
       pageNo: 1,
       pageSize: 999,

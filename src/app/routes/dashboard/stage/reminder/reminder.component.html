@@ -1,6 +1,6 @@
 <nz-alert
   [nzType]="'info'"
-  nzMessage="提示：最多添加5项提醒事项；每一项提醒事项中提醒内容需4-100个字符"
+  nzMessage="提示：最多添加5项提醒事项；每一项提醒事项中提醒内容需4-30个字符"
   nzShowIcon
   nzCloseText="关闭"
   class="info"
@@ -32,14 +32,14 @@
           class="reminder-input"
           nz-input
           required
-          placeholder="请输入提醒事项内容（4-100个字）"
+          placeholder="请输入提醒事项内容（4-30个字）"
           [attr.id]="control.id + 1"
           id="control.reminderInstance"
           (change)="changeReminder(control.reminderInstance, control.id)"
           [nzAutosize]="{ minRows: 1, maxRows: 3 }"
           formControlName="{{ control.reminderInstance }}"
           minlength="4"
-          maxlength="100"
+          maxlength="30"
         ></textarea>
 
         <button
@@ -47,12 +47,12 @@
           nzType="check-circle"
           nzTheme="outline"
           class="save-btn"
-          [class.empty]="textareaTem.value.length > 100 || textareaTem.value.length < 4"
+          [class.empty]="textareaTem.value.length > 30 || textareaTem.value.length < 4"
           (click)="saveReminder(control)"
-          [disabled]="textareaTem.value.length > 100 || textareaTem.value.length < 4"
+          [disabled]="textareaTem.value.length > 30 || textareaTem.value.length < 4"
           [title]="
-            textareaTem.value.length > 100 || textareaTem.value.length < 4
-              ? '提醒事项内容必须是4-100个字符'
+            textareaTem.value.length > 30 || textareaTem.value.length < 4
+              ? '提醒事项内容必须是4-30个字符'
               : '保存提醒事项'
           "
         ></button>
@@ -72,7 +72,7 @@
             提醒事项内容最少4个字！
           </ng-container>
           <ng-container *ngIf="reminder.hasError('maxlength')">
-            提醒事项内容最多100个字！
+            提醒事项内容最多30个字！
           </ng-container>
         </ng-template>
       </nz-form-control>

@@ -24,7 +24,7 @@ export class OperationLogComponent implements OnInit {
     this.getOperationLogs();
   }
 
-  getOperationLogs() {
+  getOperationLogs(): void {
     this.tableLoading = true;
     const params: OperationLogSearchRequestParams = {
       pageNo: this.pageIndex,

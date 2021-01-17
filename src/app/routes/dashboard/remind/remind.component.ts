@@ -13,8 +13,6 @@ import { RemindService } from '@shared/service/remind.service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { AddOrUpdateRemindComponent } from './add-or-update/add-or-update.component';
 import {
-  QueryReminderByNodeRequestParams,
-  QueryReminderByNodeResposeDataParams,
   StageSearchResponseDataParams,
   StepSearchRequestParams,
   StepSearchResponsePageParams,
@@ -32,7 +30,6 @@ export class RemindComponent implements OnInit {
     private remindService: RemindService,
     private msg: NzMessageService,
     private nzModalService: NzModalService,
-    private route: ActivatedRoute,
     private stageService: StageService,
   ) {}
 
@@ -46,7 +43,6 @@ export class RemindComponent implements OnInit {
   stage: number = null;
   step: number = null;
   reminds: RemindSearchResponseRecordsParams[] = [];
-  reminders: QueryReminderByNodeResposeDataParams[] = []; // 某步骤下的全部提醒事项
 
   currentUserInfo: CurrentUserInfo = {
     lastLoginTime: null,
@@ -88,7 +84,7 @@ export class RemindComponent implements OnInit {
    * 改变阶段获取步骤
    * @param stage: number
    */
-  onChangeStage(stage: number) {
+  onChangeStage(stage: number): void {
     this.stage = stage;
     if (this.stage) {
       this.getSteps();
@@ -130,12 +126,9 @@ export class RemindComponent implements OnInit {
    * 改变步骤
    * @param step number
    */
-  onChangeStep(step: number) {
+  onChangeStep(step: number): void {
     this.step = step;
     this.getReminds();
-    if (this.step) {
-      this.getReminders();
-    }
   }
 
   /**
@@ -181,25 +174,6 @@ export class RemindComponent implements OnInit {
     );
   }
 
-  getReminders() {
-    const params: QueryReminderByNodeRequestParams = {
-      idNode: this.step,
-    };
-    this.stageService.queryReminderByStep(params).subscribe(
-      (value: ResponseParams) => {
-        if (value.code === 200) {
-          this.reminders = value.data;
-        } else {
-          this.reminders = [];
-          this.msg.error(value.message || '提醒事项获取失败！');
-        }
-      },
-      (error) => {
-        this.msg.error('提醒事项获取失败！', error);
-      },
-    );
-  }
-
   /**
    * 新建或修改提醒配置
    */
@@ -207,10 +181,9 @@ export class RemindComponent implements OnInit {
     const addOrUpdateModal = this.nzModalService.create({
       nzTitle: remind ? '修改提醒配置' : '新增提醒配置',
       nzContent: AddOrUpdateRemindComponent,
-      nzWidth: 600,
+      nzWidth: 700,
       nzComponentParams: {
         remindInfo: remind ? remind : null,
-        reminders: this.reminders,
       },
       nzFooter: null,
     });

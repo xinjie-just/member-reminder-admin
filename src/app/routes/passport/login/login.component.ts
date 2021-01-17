@@ -52,7 +52,7 @@ export class UserLoginComponent {
 
   interval$: any;
 
-  submit() {
+  submit(): void {
     this.loading = true;
     this.error = '';
     this.phone.markAsDirty();

@@ -97,12 +97,12 @@ export class UserComponent implements OnInit {
    * 改变步骤
    * @param idNode number
    */
-  onChangeStep(idNode: number) {
+  onChangeStep(idNode: number): void {
     this.step = idNode;
     this.getUers(this.step);
   }
 
-  inputClear() {
+  inputClear(): void {
     this.username = '';
     // this.search();
   }
@@ -253,7 +253,7 @@ export class UserComponent implements OnInit {
   /**
    * 查看流程
    */
-  viewProcess(user: UserSearchResponseRecordsParams) {
+  viewProcess(user: UserSearchResponseRecordsParams): void {
     this.modalService.create({
       nzTitle: '用户入党流程查看',
       nzContent: ViewProcessComponent,
@@ -268,7 +268,7 @@ export class UserComponent implements OnInit {
   /**
    * 重置密码
    */
-  resetPassword(user: UserSearchResponseRecordsParams) {
+  resetPassword(user: UserSearchResponseRecordsParams): void {
     const password = user.phoneNum.slice(-6);
     this.modalService.confirm({
       nzTitle: `你确定要重置用户 <i>${user.realName}</i> 的密码吗？`,
@@ -276,7 +276,7 @@ export class UserComponent implements OnInit {
       nzOnOk: () => this.reset(user),
     });
   }
-  reset(user: UserSearchResponseRecordsParams) {
+  reset(user: UserSearchResponseRecordsParams): void {
     const params: ResetPasswordRequestParams = {
       idUser: user.idUser,
     };

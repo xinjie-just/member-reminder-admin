@@ -66,7 +66,7 @@ export class TaskComponent implements OnInit {
     this.getTasks();
   }
 
-  search() {
+  search(): void {
     this.pageIndex = 1;
     this.pageSize = 10;
     this.getTasks();
@@ -95,7 +95,7 @@ export class TaskComponent implements OnInit {
    * 改变阶段获取步骤
    * @param stage: number
    */
-  onChangeStage(stage: number) {
+  onChangeStage(stage: number): void {
     this.stage = stage;
     if (this.stage) {
       this.getSteps();
@@ -134,7 +134,7 @@ export class TaskComponent implements OnInit {
    * 改变步骤
    * @param step number
    */
-  onChangeStep(step: number) {
+  onChangeStep(step: number): void {
     this.step = step;
     if (this.step) {
       this.getTasks();
@@ -145,7 +145,7 @@ export class TaskComponent implements OnInit {
    * 改变状态
    * @param status number
    */
-  onChangeStatus(status: number) {
+  onChangeStatus(status: number): void {
     this.status = status;
     this.getTasks();
   }
@@ -154,7 +154,7 @@ export class TaskComponent implements OnInit {
    * 获取临时任务
    * @param step number
    */
-  getTasks() {
+  getTasks(): void {
     this.tableLoading = true;
     let params: RemindTaskSearchRequestParams = {
       executed: this.status,
@@ -189,7 +189,7 @@ export class TaskComponent implements OnInit {
   /**
    * 新增临时提醒
    */
-  add() {
+  add(): void {
     const addModal = this.modalService.create({
       nzTitle: '新增临时提醒',
       nzContent: AddTaskComponent,

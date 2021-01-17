@@ -1,7 +1,7 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()">
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'stage'" nzRequired>阶段</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'stage'" nzRequired>阶段</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="stageErrorTpl">
       <nz-select
         id="stage"
         formControlName="stage"
@@ -22,8 +22,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'step'" nzRequired>步骤</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'step'" nzRequired>步骤</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="stepErrorTpl">
       <nz-select
         id="step"
         formControlName="step"
@@ -44,8 +44,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'reminder'" nzRequired>提醒事项</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="reminderErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'reminder'" nzRequired>提醒事项</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="reminderErrorTpl">
       <nz-select
         id="reminder"
         formControlName="reminder"
@@ -66,8 +66,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容详情</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'content'" nzRequired>提醒内容详情</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="contentErrorTpl">
       <textarea
         nz-input
         formControlName="content"
@@ -99,8 +99,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'role'" nzRequired>需提醒角色</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="roleErrorTpl">
       <nz-select id="role" formControlName="role" nzPlaceHolder="请选择提醒角色" [nzAllowClear]="true">
         <ng-container *ngFor="let role of roles">
           <nz-option [nzValue]="role?.idRole" [nzLabel]="role?.roleName"></nz-option>
@@ -115,8 +115,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindType'" nzRequired>提醒类型</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="remindTypeErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'remindType'" nzRequired>提醒类型</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="remindTypeErrorTpl">
       <nz-select id="remindType" formControlName="remindType" nzPlaceHolder="请选择提醒类型" [nzAllowClear]="true">
         <ng-container *ngFor="let remindType of remindTypes">
           <nz-option [nzValue]="remindType?.value" [nzLabel]="remindType?.label"></nz-option>
@@ -131,8 +131,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindLeadDay'" nzRequired>提前提醒天数</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="remindLeadDayErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'remindLeadDay'" nzRequired>提前提醒天数</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="remindLeadDayErrorTpl">
       <nz-input-number formControlName="remindLeadDay" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
       <ng-template #remindLeadDayErrorTpl let-remindLeadDay>
         <ng-container *ngIf="remindLeadDay.hasError('required')">
@@ -143,8 +143,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindBatchNum'" nzRequired>提醒批次</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="remindBatchNumErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'remindBatchNum'" nzRequired>提醒批次</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="remindBatchNumErrorTpl">
       <nz-input-number formControlName="remindBatchNum" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
       <ng-template #remindBatchNumErrorTpl let-remindBatchNum>
         <ng-container *ngIf="remindBatchNum.hasError('required')">
@@ -155,8 +155,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'intervalDuration'" nzRequired>批次间隔天数</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="intervalDurationErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'intervalDuration'" nzRequired>批次间隔天数</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="intervalDurationErrorTpl">
       <nz-input-number formControlName="intervalDuration" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
       <ng-template #intervalDurationErrorTpl let-intervalDuration>
         <ng-container *ngIf="intervalDuration.hasError('required')">
@@ -167,8 +167,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="8" [nzFor]="'remindTimes'" nzRequired>每批次提醒次数</nz-form-label>
-    <nz-form-control [nzSm]="18" [nzXs]="16" [nzErrorTip]="remindTimesErrorTpl">
+    <nz-form-label [nzSm]="5" [nzXs]="8" [nzFor]="'remindTimes'" nzRequired>每批次提醒次数</nz-form-label>
+    <nz-form-control [nzSm]="19" [nzXs]="16" [nzErrorTip]="remindTimesErrorTpl">
       <nz-input-number formControlName="remindTimes" [nzMin]="1" [nzMax]="2000" [nzStep]="1"></nz-input-number>
       <ng-template #remindTimesErrorTpl let-remindTimes>
         <ng-container *ngIf="remindTimes.hasError('required')">

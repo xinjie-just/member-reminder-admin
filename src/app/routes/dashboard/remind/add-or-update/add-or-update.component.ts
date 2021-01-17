@@ -84,11 +84,12 @@ export class AddOrUpdateRemindComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // 阶段 stage、步骤 step、角色 role、提醒事项 reminder，等待获取到列表再赋值
     if (this.remindInfo) {
       this.form.patchValue({
-        stage: this.remindInfo.idStage,
-        step: this.remindInfo.idNode,
-        role: this.remindInfo.idRole,
+        // stage: this.remindInfo.idStage,
+        // step: this.remindInfo.idNode,
+        // role: this.remindInfo.idRole,
         remindType: this.remindInfo.remindType,
         // reminder: this.remindInfo.idReminder,
         content: this.remindInfo.content,
@@ -114,6 +115,11 @@ export class AddOrUpdateRemindComponent implements OnInit {
       (value: ResponseParams) => {
         if (value.code === 200) {
           this.stages = value.data;
+          if (this.remindInfo) {
+            this.form.patchValue({
+              stage: this.remindInfo.idStage,
+            });
+          }
         } else {
           this.stages = [];
           this.msg.error(value.message || '阶段列表获取失败！');
@@ -129,7 +135,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
    * 改变阶段获取步骤
    * @param stage: number
    */
-  onChangeStage(stage: number) {
+  onChangeStage(stage: number): void {
     if (!stage) {
       this.form.patchValue({
         step: null,
@@ -159,6 +165,11 @@ export class AddOrUpdateRemindComponent implements OnInit {
         if (value.code === 200) {
           const info: StepSearchResponsePageParams = value.data.page;
           this.steps = info.records;
+          if (this.remindInfo) {
+            this.form.patchValue({
+              step: this.remindInfo.idNode,
+            });
+          }
         } else {
           this.steps = [];
           this.msg.error(value.message || '步骤列表获取失败！');
@@ -207,7 +218,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
   /**
    * 改变提醒事项，填充提醒内容详情
    */
-  onChangeReminder(reminder: number) {
+  onChangeReminder(reminder: number): void {
     this.reminders.forEach((item) => {
       if (reminder === item.idReminder) {
         this.selectedReminder.content = item.content;
@@ -233,7 +244,11 @@ export class AddOrUpdateRemindComponent implements OnInit {
         if (value.code === 200) {
           const info: RoleSearchResponsePageParams = value.data.page;
           this.roles = info.records;
-          console.log('角色', this.roles);
+          if (this.remindInfo) {
+            this.form.patchValue({
+              role: this.remindInfo.idRole,
+            });
+          }
         } else {
           this.roles = [];
           this.msg.error(value.message || '角色列表获取失败！');

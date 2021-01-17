@@ -7,7 +7,6 @@ import {
   StepSearchResponsePageParams,
   StepDeleteRequestParams,
   StageSearchResponseDataParams,
-  ReminderSaveRequestParams,
 } from '@shared/interface/stage';
 import { ResponseParams } from '@shared/interface/response';
 import { AddOrUpdateStageComponent } from './add-or-update/add-or-update.component';
@@ -83,7 +82,7 @@ export class StageComponent implements OnInit {
    * 获取步骤
    * 获取所有步骤，idStageNode 不传
    */
-  getSteps(stage?: number) {
+  getSteps(stage?: number): void {
     this.tableLoading = true;
     let params: StepSearchRequestParams = {
       pageNo: this.pageIndex,
@@ -135,7 +134,7 @@ export class StageComponent implements OnInit {
     });
   }
 
-  reminder(step: StepSearchResponseRecordsParams) {
+  reminder(step: StepSearchResponseRecordsParams): void {
     const addOrUpdateModal = this.modalService.create({
       nzTitle: '提醒事项管理',
       nzContent: ReminderComponent,

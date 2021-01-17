@@ -69,7 +69,7 @@ export class AddTaskComponent implements OnInit {
     );
   }
 
-  onChangeDate(date: Date) {
+  onChangeDate(date: Date): void {
     this.remindDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
