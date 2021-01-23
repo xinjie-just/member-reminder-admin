@@ -1,6 +1,5 @@
 import { StageService } from './../../../shared/service/stage.service';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   DeleteRemindRequestParams,
   lockOrUnlockRemindRequestParams,
@@ -25,7 +24,7 @@ import { CurrentUserInfo } from '@shared/interface/user';
   templateUrl: './remind.component.html',
   styleUrls: ['./remind.component.less'],
 })
-export class RemindComponent implements OnInit {
+export class RemindComponent implements OnInit, OnDestroy {
   constructor(
     private remindService: RemindService,
     private msg: NzMessageService,
@@ -54,6 +53,9 @@ export class RemindComponent implements OnInit {
     userId: null,
     userState: null,
   };
+
+  checkConfigurationLoading = false;
+  timer: any = null;
 
   ngOnInit(): void {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
@@ -196,6 +198,38 @@ export class RemindComponent implements OnInit {
   }
 
   /**
+   * 一键配置检查
+   */
+  checkConfiguration(): void {
+    this.checkConfigurationLoading = true;
+    this.msg.info('检查中，请稍等...', {
+      nzDuration: 3000,
+    });
+    this.timer = setTimeout(() => {
+      this.remindService.checkConfiguration().subscribe(
+        (value: ResponseParams) => {
+          if (value.code === 200) {
+            this.msg.success(value.message || '一键配置检查操作成功', {
+              nzDuration: 4000,
+            });
+          } else {
+            this.msg.error(value.message || '一键配置检查操作失败', {
+              nzDuration: 4000,
+            });
+          }
+        },
+        () => {
+          this.msg.error('一键配置检查操作失败');
+          this.checkConfigurationLoading = false;
+        },
+        () => {
+          this.checkConfigurationLoading = false;
+        },
+      );
+    }, 4000);
+  }
+
+  /**
    * 删除提醒配置
    * @param user RemindSearchResponseRecordsParams
    */
@@ -279,5 +313,9 @@ export class RemindComponent implements OnInit {
         },
       );
     }
+  }
+
+  ngOnDestroy(): void {
+    clearTimeout(this.timer);
   }
 }

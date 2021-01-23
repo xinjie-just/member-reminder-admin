@@ -48,7 +48,7 @@ export class RoleComponent implements OnInit {
     this.currentUserInfo = JSON.parse(localStorage.getItem('_token'));
     if (!this.currentUserInfo) {
       this.router.navigateByUrl('/passport/login');
-      this.msg.error('请先登录！');
+      // this.msg.error('请先登录！');
     } else {
       this.getRoles();
     }

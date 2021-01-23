@@ -68,4 +68,12 @@ export class RemindService {
   unlockRemind(params: lockOrUnlockRemindRequestParams): Observable<any> {
     return this.http.get(`api/remindConfig/admin/unlockConfig?idConfig=${params.idConfig}`);
   }
+
+  /**
+   *  提醒配置解锁
+   * @param params lockOrUnlockRemindRequestParams
+   */
+  checkConfiguration(): Observable<any> {
+    return this.http.get(`api/remindConfig/oneClickConfigCheck`);
+  }
 }

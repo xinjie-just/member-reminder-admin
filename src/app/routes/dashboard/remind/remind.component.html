@@ -34,6 +34,20 @@
       </div>
       <div nz-col>
         <button nzType="primary" (click)="addOrUpdateRemind()" nz-button>新增提醒配置</button>
+        <button nzType="default" class="ml-md" (click)="checkConfiguration()" nz-button>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate" *ngIf="checkConfigurationLoading"> </nz-spin>
+          一键配置检查
+        </button>
+        <ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>
+        <i
+          nz-icon
+          nzType="question-circle"
+          nzTheme="outline"
+          nz-tooltip
+          [nzTooltipTitle]="'通过检查已经配置好的步骤数量、提醒事项数量和提醒配置数量的关系，判断可能的配置问题'"
+          [nzTooltipPlacement]="'bottomRight'"
+          class="check-configuration-tip"
+        ></i>
       </div>
     </div>
   </nz-card>

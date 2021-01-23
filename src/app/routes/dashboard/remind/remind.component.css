@@ -1,0 +1,17 @@
+:host ::ng-deep .stage-select {
+  width: 280px;
+}
+:host ::ng-deep .step-select {
+  width: 200px;
+}
+:host ::ng-deep .check-configuration-tip {
+  margin-left: 8px;
+  max-width: 60px;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+}
+:host ::ng-deep nz-spin {
+  display: inline-block;
+  margin-right: 8px;
+}
