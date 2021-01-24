@@ -11,7 +11,3 @@
   vertical-align: middle;
   font-size: 20px;
 }
-:host ::ng-deep nz-spin {
-  display: inline-block;
-  margin-right: 8px;
-}

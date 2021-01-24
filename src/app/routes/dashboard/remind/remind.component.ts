@@ -203,7 +203,7 @@ export class RemindComponent implements OnInit, OnDestroy {
   checkConfiguration(): void {
     this.checkConfigurationLoading = true;
     this.msg.info('检查中，请稍等...', {
-      nzDuration: 3000,
+      nzDuration: 2500,
     });
     this.timer = setTimeout(() => {
       this.remindService.checkConfiguration().subscribe(
@@ -226,7 +226,7 @@ export class RemindComponent implements OnInit, OnDestroy {
           this.checkConfigurationLoading = false;
         },
       );
-    }, 4000);
+    }, 3500);
   }
 
   /**

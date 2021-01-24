@@ -34,11 +34,15 @@
       </div>
       <div nz-col>
         <button nzType="primary" (click)="addOrUpdateRemind()" nz-button>新增提醒配置</button>
-        <button nzType="default" class="ml-md" (click)="checkConfiguration()" nz-button>
-          <nz-spin nzSimple [nzIndicator]="indicatorTemplate" *ngIf="checkConfigurationLoading"> </nz-spin>
+        <button
+          nzType="default"
+          class="ml-md"
+          [nzLoading]="checkConfigurationLoading"
+          (click)="checkConfiguration()"
+          nz-button
+        >
           一键配置检查
         </button>
-        <ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>
         <i
           nz-icon
           nzType="question-circle"
