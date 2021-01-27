@@ -110,7 +110,7 @@ export class AddOrUpdateStageComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('获取步骤列表失败！', error);
+        this.msg.error(error.message || '获取步骤列表失败！');
       },
     );
   }
@@ -144,7 +144,7 @@ export class AddOrUpdateStageComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('步骤修改失败！', error);
+          this.msg.error(error.message || '步骤修改失败！');
           this.uploading = false;
         },
         () => {
@@ -164,7 +164,7 @@ export class AddOrUpdateStageComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('步骤新增失败！', error);
+          this.msg.error(error.message || '步骤新增失败！');
           this.uploading = false;
         },
         () => {

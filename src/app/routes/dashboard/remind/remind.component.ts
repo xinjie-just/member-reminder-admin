@@ -77,7 +77,7 @@ export class RemindComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.msg.error('阶段列表获取失败！', error);
+        this.msg.error(error.message || '阶段列表获取失败！');
       },
     );
   }
@@ -119,7 +119,7 @@ export class RemindComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.msg.error('步骤列表获取失败！', error);
+        this.msg.error(error.message || '步骤列表获取失败！');
       },
     );
   }
@@ -167,7 +167,7 @@ export class RemindComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.msg.error('提醒配置列表获取失败！', error);
+        this.msg.error(error.message || '提醒配置列表获取失败！');
         this.tableLoading = false;
       },
       () => {
@@ -218,8 +218,8 @@ export class RemindComponent implements OnInit, OnDestroy {
             });
           }
         },
-        () => {
-          this.msg.error('一键配置检查操作失败');
+        (error) => {
+          this.msg.error(error.message || '一键配置检查操作失败');
           this.checkConfigurationLoading = false;
         },
         () => {
@@ -258,7 +258,7 @@ export class RemindComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        this.msg.error(`提醒配置 <i>${content}</i> 删除失败！`, error);
+        this.msg.error(error.message || `提醒配置 <i>${content}</i> 删除失败！`);
       },
     );
   }
@@ -295,7 +295,7 @@ export class RemindComponent implements OnInit, OnDestroy {
           }
         },
         (error) => {
-          this.msg.error(`提醒配置 <i>${content}</i> 锁定失败！`, error);
+          this.msg.error(error.message || `提醒配置 <i>${content}</i> 锁定失败！`);
         },
       );
     } else {
@@ -309,7 +309,7 @@ export class RemindComponent implements OnInit, OnDestroy {
           }
         },
         (error) => {
-          this.msg.error(`提醒配置 <i>${content}</i> 解锁失败！`, error);
+          this.msg.error(error.message || `提醒配置 <i>${content}</i> 解锁失败！`);
         },
       );
     }

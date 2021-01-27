@@ -43,7 +43,7 @@ export class OperationLogComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('业务日志查询失败！', error);
+        this.msg.error(error.message || '业务日志查询失败！');
         this.tableLoading = false;
       },
       () => {

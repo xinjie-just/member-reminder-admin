@@ -127,8 +127,8 @@ export class HeaderUserComponent implements OnInit {
               this.msg.error(value.message || '退出失败！请联系管理员！');
             }
           },
-          () => {
-            this.msg.error('退出失败！请联系管理员！');
+          (error) => {
+            this.msg.error(error.message || '退出失败！请联系管理员！');
           },
         );
       },

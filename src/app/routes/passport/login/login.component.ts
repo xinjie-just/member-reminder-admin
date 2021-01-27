@@ -72,7 +72,7 @@ export class UserLoginComponent {
     this.userService.login(loginRequestParams).subscribe(
       (value: ResponseParams) => {
         if (value.code !== 200) {
-          this.msg.error(value.message);
+          this.msg.error(value.message || '登录失败');
           return;
         }
         // 清空路由复用信息
@@ -100,7 +100,7 @@ export class UserLoginComponent {
         });
       },
       (error) => {
-        this.msg.error(error);
+        this.msg.error(error.message || '登录失败！');
         this.loading = false;
       },
       () => {

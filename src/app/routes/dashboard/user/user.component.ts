@@ -88,7 +88,7 @@ export class UserComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('步骤列表获取失败！', error);
+        this.msg.error(error.message || '步骤列表获取失败！');
       },
     );
   }
@@ -142,7 +142,7 @@ export class UserComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('用户列表获取失败！', error);
+        this.msg.error(error.message || '用户列表获取失败！');
         this.tableLoading = false;
       },
       () => {
@@ -171,7 +171,7 @@ export class UserComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('角色列表获取失败！', error);
+        this.msg.error(error.message || '角色列表获取失败！');
       },
     );
   }
@@ -245,7 +245,7 @@ export class UserComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('用户删除失败！', error);
+        this.msg.error(error.message || '用户删除失败！');
       },
     );
   }
@@ -290,7 +290,7 @@ export class UserComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('用户密码重置失败！', error);
+        this.msg.error(error.message || '用户密码重置失败！');
       },
     );
   }
@@ -325,7 +325,7 @@ export class UserComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('锁定失败！', error);
+          this.msg.error(error.message || '锁定失败！');
         },
       );
     } else {
@@ -339,7 +339,7 @@ export class UserComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('解锁失败！', error);
+          this.msg.error(error.message || '解锁失败！');
         },
       );
     }

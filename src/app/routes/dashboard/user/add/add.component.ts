@@ -53,7 +53,7 @@ export class AddComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('用户新增失败！', error);
+        this.msg.error(error.message || '用户新增失败！');
         this.uploading = false;
       },
       () => {

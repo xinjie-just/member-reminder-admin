@@ -96,7 +96,7 @@ export class UpdatePasswordComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error(`用户 <i>${this.userName}</i> 密码修改失败！`, error);
+        this.msg.error(error.message || `用户 <i>${this.userName}</i> 密码修改失败！`);
         this.uploading = false;
       },
       () => {

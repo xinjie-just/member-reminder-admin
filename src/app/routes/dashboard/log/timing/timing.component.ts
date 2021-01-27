@@ -46,7 +46,7 @@ export class TimingLogComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('定时任务日志查询失败！', error);
+        this.msg.error(error.message || '定时任务日志查询失败！');
         this.tableLoading = false;
       },
       () => {

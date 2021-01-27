@@ -64,7 +64,7 @@ export class AddTaskComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('获取角色列表失败！', error);
+        this.msg.error(error.message || '获取角色列表失败！');
       },
     );
   }
@@ -99,7 +99,7 @@ export class AddTaskComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('临时提醒新增失败！', error);
+        this.msg.error(error.message || '临时提醒新增失败！');
         this.uploading = false;
       },
       () => {

@@ -126,7 +126,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('阶段列表获取失败！', error);
+        this.msg.error(error.message || '阶段列表获取失败！');
       },
     );
   }
@@ -176,7 +176,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('步骤列表获取失败！', error);
+        this.msg.error(error.message || '步骤列表获取失败！');
       },
     );
   }
@@ -209,7 +209,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('提醒事项获取失败！', error);
+          this.msg.error(error.message || '提醒事项获取失败！');
         },
       );
     }
@@ -255,7 +255,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('角色列表获取失败！', error);
+        this.msg.error(error.message || '角色列表获取失败！');
       },
     );
   }
@@ -291,7 +291,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('提醒配置修改失败！', error);
+          this.msg.error(error.message || '提醒配置修改失败！');
           this.uploading = false;
         },
         () => {
@@ -311,7 +311,7 @@ export class AddOrUpdateRemindComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('提醒配置新增失败！', error);
+          this.msg.error(error.message || '提醒配置新增失败！');
           this.uploading = false;
         },
         () => {

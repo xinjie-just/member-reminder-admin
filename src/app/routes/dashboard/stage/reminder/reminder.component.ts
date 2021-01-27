@@ -77,7 +77,7 @@ export class ReminderComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('获取提醒事项失败！', error);
+        this.msg.error(error.message || '获取提醒事项失败！');
         this.uploading = false;
       },
       () => {
@@ -181,7 +181,7 @@ export class ReminderComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('删除提醒事项失败！', error);
+        this.msg.error(error.message || '删除提醒事项失败！');
       },
     );
   }
@@ -217,7 +217,7 @@ export class ReminderComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('提醒事项修改失败！', error);
+          this.msg.error(error.message || '提醒事项修改失败！');
         },
       );
     } else {
@@ -231,7 +231,7 @@ export class ReminderComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('提醒事项新增失败！', error);
+          this.msg.error(error.message || '提醒事项新增失败！');
         },
       );
     }

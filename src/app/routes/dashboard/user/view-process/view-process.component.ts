@@ -56,7 +56,7 @@ export class ViewProcessComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('查询个人用户所有节点状态失败！', error);
+        this.msg.error(error.message || '查询个人用户所有节点状态失败！');
         this.tableLoading = false;
       },
       () => {

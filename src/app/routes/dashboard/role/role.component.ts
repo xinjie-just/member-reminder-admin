@@ -90,8 +90,9 @@ export class RoleComponent implements OnInit {
           this.msg.error(value.message || '角色列表获取失败！');
         }
       },
-      () => {
-        // this.msg.error(error);  // 注释掉，避免未登录状态下出现[object, object]
+      (error) => {
+        this.msg.error(error.message || '角色列表获取失败！');
+        this.tableLoading = false;
       },
       () => {
         this.tableLoading = false;
@@ -146,7 +147,7 @@ export class RoleComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error(`角色 <i>${role.roleName}</i> 删除失败！`, error);
+        this.msg.error(error.message || `角色 <i>${role.roleName}</i> 删除失败！`);
       },
     );
   }

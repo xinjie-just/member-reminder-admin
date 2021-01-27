@@ -86,7 +86,7 @@ export class TaskComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('阶段列表获取失败！', error);
+        this.msg.error(error.message || '阶段列表获取失败！');
       },
     );
   }
@@ -125,7 +125,7 @@ export class TaskComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('步骤列表获取失败！', error);
+        this.msg.error(error.message || '步骤列表获取失败！');
       },
     );
   }
@@ -177,7 +177,7 @@ export class TaskComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('临时任务列表获取失败！', error);
+        this.msg.error(error.message || '临时任务列表获取失败！');
         this.tableLoading = false;
       },
       () => {
@@ -234,7 +234,7 @@ export class TaskComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('锁定失败！', error);
+          this.msg.error(error.message || '锁定失败！');
         },
       );
     } else {
@@ -248,7 +248,7 @@ export class TaskComponent implements OnInit {
           }
         },
         (error) => {
-          this.msg.error('解锁失败！', error);
+          this.msg.error(error.message || '解锁失败！');
         },
       );
     }

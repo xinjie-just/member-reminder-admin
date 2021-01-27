@@ -73,7 +73,7 @@ export class StageComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('获取阶段列表失败！', error);
+        this.msg.error(error.message || '获取阶段列表失败！');
       },
     );
   }
@@ -104,7 +104,7 @@ export class StageComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('获取步骤列表失败！', error);
+        this.msg.error(error.message || '获取步骤列表失败！');
         this.tableLoading = false;
       },
       () => {
@@ -182,7 +182,7 @@ export class StageComponent implements OnInit {
         }
       },
       (error) => {
-        this.msg.error('步骤删除失败！', error);
+        this.msg.error(error.message || '步骤删除失败！');
       },
     );
   }
