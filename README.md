@@ -1,5 +1,4 @@
 # 党员发展工作提醒管理后台
-
 ## 项目信息
 
 一、查看地址
@@ -36,8 +35,12 @@ ng-zorro 官方文档：`https://ng.ant.design/version/9.3.x/docs/introduce/zh`
 
 1. `npm install` 安装项目依赖
 
-2. `npm run dev` 已开发模式启动项目
+2. `npm run dev` 以开发模式启动项目
 
 ### 打包部署上线
 
-1. `npm run build:prod` 生成 dist 包，拷贝 dist 到服务器
+1. `npm run build` 生成 dist 包，拷贝 dist 到服务器
+
+## 语义话版本规范
+
+语义话版本规范请参考：[https://semver.org/lang/zh-CN/](https://semver.org/lang/zh-CN/)
